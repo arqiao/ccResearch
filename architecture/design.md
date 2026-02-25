@@ -90,7 +90,55 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 ---
 
-## 四、API Key 管理
+## 四、服务器网络代理
+
+### 方案选型
+
+服务器（阿里云）无法直接访问 GitHub，需要代理。选用 sing-box（系统已内置 1.12.22），vmess+ws 协议。
+
+| 端口 | 协议 | 用途 |
+|------|------|------|
+| 7890 | HTTP | git、curl 等命令行工具 |
+| 7891 | SOCKS5 | 备用 |
+
+配置文件：`/etc/sing-box/config.json`，服务：`systemctl status sing-box`
+
+### 节点订阅与自动切换
+
+订阅格式：Clash YAML，包含 27 个可用节点（日本、新加坡、香港、台湾、美国等）。
+
+脚本：`/root/proxy-switch.py`
+
+工作流程：
+```
+检测当前节点（curl GitHub，超时 5s）
+  ↓ 不通
+从订阅 URL 拉取节点列表（Clash YAML 解析）
+  ↓
+逐节点启动临时 sing-box 实例测速
+  ↓
+选最低延迟节点，更新 /etc/sing-box/config.json，重启 sing-box
+  ↓
+验证切换结果
+```
+
+用法：
+```bash
+python3 /root/proxy-switch.py          # 检测当前节点，不通则自动切换
+python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
+```
+
+### 自动检测 cron
+
+```
+*/10 * * * * python3 /root/proxy-switch.py >> /var/log/proxy-switch.log 2>&1
+```
+
+每 10 分钟检测一次，节点失效时自动切换，无需人工干预。OpenClaw 也可通过飞书群触发手动切换（见 TOOLS.md）。
+
+---
+
+## 五、API Key 管理
 
 ### 设计原则
 
