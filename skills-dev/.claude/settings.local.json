@@ -30,7 +30,7 @@
       "Bash(playwright install:*)",
       "Bash(python -c \"from playwright.sync_api import sync_playwright; p = sync_playwright\\(\\).start\\(\\); b = p.chromium.launch\\(headless=True\\); page = b.new_page\\(\\); page.goto\\(''https://www.baidu.com''\\); print\\(''Title:'', page.title\\(\\)\\); b.close\\(\\); p.stop\\(\\)\")",
       "Bash(python:*)",
-      "Bash(export BAIDU_API_KEY=\"REDACTED\")"
+      "Bash(export BAIDU_API_KEY=*)"
     ]
   }
 }
