@@ -1,0 +1,5 @@
+标题: Qwen Code新版本支持skill ！生态站队！ 
+日期: 20260103
+原文: https://mp.weixin.qq.com/s/kS2fJo962Aj7pjOAgA0FRQ
+
+ id="js_content" style="visibility: hidden; opacity: 0; "> Qwen code在最近的 v0.6.0 版本中，官方引入了 Skills 支持，对于个人开发者来说，制作通用Agent的门槛大幅降低，我们可以直接使用Qwen code作为Agent底层框架，不用自己再去实现工具调用、智能体策略和内存管理等复杂逻辑，再加上现在的Skills支持，我们可以直接基于Qwen code扩展自定义的Agent，打造自己的个人AI操作系统。 Skills本质就是Agent 的“扩展工具包”： 第一性原理解析Skills MCP强调标准化和互操作性，连接AI和外部世界。 Skills强调简洁和效率，把人类知识（特别是制度和SOP）注入到AI的管道。 Qwen code的价值其实代表了从“编码助手”向“全能Agent”的转型。 同时这两天 Agent Skills 火爆，阿里也来凑热闹了， 国产智能体框架加入支持 Skill 的行列，不过Qwen code的Skills与 Anthropic 的 Skills 文件夹格式却不太一样： Anthropic 版本的 Skills 文件夹根目录只有一个SKILL.md文件，而Qwen code则 增加了 reference.md 和 examples.md 。 因为 新增了 reference.md ，Anthropic 版本中的reference 子目录就没必要存在了。 阿里还将 Anthropic 的 assets目录改名为templates。 阿里在功能上跟进，但生态上划清界限，推动国内开发者留在本土开源体系内！ 

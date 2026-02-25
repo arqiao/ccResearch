@@ -1,0 +1,5 @@
+标题: 安装了72个Skills后，我的OpenClaw无所不能！
+日期: 20260214
+原文: https://mp.weixin.qq.com/s/VjtLUWo32Huh7Zaa8EIgrA
+
+ id="js_content" style="visibility: hidden; opacity: 0; "> 大家好，我是姚路行，一个爱搞AI的大厂程序员，也是一个90后奶爸 关注下 方 公众 号 ，回复【openclaw】免费拉你进OpenClaw学习群 上个月，我的 AI 助手还只是一个会写代码的工具人。 今天，它能帮我写公众号、管邮件、分析数据。而这一切，都源于我发现了一个宝藏项目—— awe som e-openclaw-skills ！ 地址： https://github.com/VoltAgent/awesome-openclaw-skills 这个合集收录了 3002 个社区构建的 OpenClaw Skills，涵盖了从内容创作到生活管理的方方面面。 我花了 十天时间 持续迭代，最终安装了 72 个适合自己的 Skill。 今天就来分享一下我的选择和心得，照着做你也能打造一个真正懂你的私人助手。 awesome-openclaw-skills 是什么 简单来说，它是 OpenClaw 官方的技能合集仓库，所有技能都来自 ClawHub（OpenClaw 的公共技能注册表）。 每个 Skill 都是一个小工具，能让你的 AI 助手获得特定能力。比如： 接入 Gmail 管理邮件 自动搜索 AI 热点信息 Github 项目开发、管理 最爽的是，这些技能都遵循 Anthropic 开发的 Agent Skill 开放标准，安装简单，即装即用。 安装方式： <code data-language-pending="" data-raw-code="my-skill/

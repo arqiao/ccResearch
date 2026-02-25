@@ -1,0 +1,225 @@
+标题: 飞书聊天直接生视频！OpenClaw × Seedance Skill王炸组合
+
+正文:
+
+点击上方👆蓝字关注我们！
+我们把强大的 Seedance 做成 Skill，在飞书聊天就能直接用：
+图生视频，文生视频，快试试你的 OpenClaw 加上 Seedance 的能力能玩出多少花！🤖
+直接看效果
+参考图视频，用这只小猫生成一个小猫开战斗机的视频，镜头在驾驶舱内正对小猫的面部
+帮我用seedance-video-generation这个skill根据你的记忆生成我的一天
+帮我生成给航天飞船启动的视频，15s左右
+生成一个15s左右的视频，内容是一首古诗：枯藤老树昏鸦，小桥流水人家，古道西风瘦马。夕阳西下，断肠人在天涯。
+我给你发了四张照片，分别是春夏秋冬。请帮我使用 SeeDance Skill 帮我生成一个视频，体验出春夏秋冬的变化，并且非常适合在抖音上发布
+请调用seedance-video-generation这个skill，基于这张参考图生成一段15s左右的主角在雨中穿过不同街区的电影镜头
+安装云 OpenClaw + 飞书聊天机器人教程
+1. 前往火山引擎 一键部署OpenClaw
+2. 点击购买部署
+3. 套餐选择
+4. 打开高级配置，设置Coding Plan API
+如果没有开通方舟Coding Plan，可以先开通并创建API Key
+5. 设置飞书 AppID和AppSecret
+步骤1：在飞书开放平台创建机器人应用
+登录飞书账号，进入开发者后台
+“创建企业自建应用”
+选择 “按能力添加” -> 添加机器人
+步骤2：
+进行飞书机器人的权限配置
+a. 在左侧目录树中找到：开发配置 -> 权限管理
+b. 选择“批量导入/导出权限”，复制右侧代码块中的JSON代码进行权限导入，给机器人开通im权限
+这里权限包括：消息读取、飞书文档读取、创建和编辑飞书文档
+c. 确认权限并申请开通
+d. 后续可在“开通权限”中为机器人开通更多权限
+{
+"scopes"
+: {
+"tenant"
+: [
+"docs:document.content:read"
+,
+"docs:document.media:upload"
+,
+"docs:document.subscription"
+,
+"docs:document.subscription:read"
+,
+"docs:permission.member:auth"
+,
+"docs:permission.member:create"
+,
+"docs:permission.member:delete"
+,
+"docs:permission.member:retrieve"
+,
+"docs:permission.member:transfer"
+,
+"docs:permission.member:update"
+,
+"docs:permission.setting:read"
+,
+"docs:permission.setting:readonly"
+,
+"docs:permission.setting:write_only"
+,
+"docx:document.block:convert"
+,
+"docx:document:create"
+,
+"docx:document:readonly"
+,
+"docx:document:write_only"
+,
+"im:chat:read"
+,
+"im:chat:update"
+,
+"im:message.group_at_msg:readonly"
+,
+"im:message.p2p_msg:readonly"
+,
+"im:message.pins:read"
+,
+"im:message.pins:write_only"
+,
+"im:message.reactions:read"
+,
+"im:message.reactions:write_only"
+,
+"im:message:readonly"
+,
+"im:message:recall"
+,
+"im:message:send_as_bot"
+,
+"im:message:send_multi_users"
+,
+"im:message:send_sys_msg"
+,
+"im:message:update"
+,
+"im:resource"
+],
+"user"
+: [
+"contact:contact.base:readonly"
+,
+"contact:user.employee_id:readonly"
+,
+"docx:document.block:convert"
+,
+"docx:document:create"
+,
+"docx:document:readonly"
+,
+"docx:document:write_only"
+]
+}
+}
+步骤3：
+进行飞书机器人的事件和回调配置
+在左侧目录树中找到“开发配置”->“事件与回调”
+点击“订阅方式”旁的按钮添加事件配置
+选择“使用 长连接 接收事件”
+添加事件 -> 接收消息
+步骤4：
+在机器人应用的凭证页面获取App ID和App Secret
+步骤5：
+粘贴到创建实例的消息渠道集成当中
+选择 飞书
+粘贴对应的App ID和App Secret
+步骤6：
+在飞书中使用OpenClaw
+a. 确保应用已发布
+b. 在飞书搜索框中搜索机器人应用的名称
+c. 检查应用可用范围是否包含自己的账号
+开通成功，后续也可以通过远程连接ECS Terminal快速修改模型和飞书APP的配置：
+如果开通了coding plan，在 --ark-coding-plan 中填 "true"，未开通填 "false"
+curl -fsSL https://openclaw.tos-cn-beijing.volces.com/setup.sh | bash -s -- \
+--ark-coding-plan
+"true"
+\
+--ark-api-key
+"替换为自己的方舟API Key"
+\
+--ark-model-id
+"doubao-seed-code"
+\
+--feishu-app-id
+"替换为飞书APP ID"
+\
+--feishu-app-secret
+"替换为飞书APP Secret"
+更多教程参考
+https://www.volcengine.com/docs/6396/2189942
+安装 Seedance 生视频 skill
+前置条件：安装 Clawhub skill，后面通过这个来按照其他skills。
+检查当前是否已经安装，如果没有安装可以直接点击安装；
+方式1：通过 OpenClaw Web控制台点击安装，安装完成后页面如下：
+方式2：通过远程连接ECS Terminal安装：
+npm install -g clawhub
+安装 seedance-video skill
+方法1：推荐
+直接聊天安装：
+帮我通过clawhub安装一下这个skill：
+https://clawhub.ai/JackyCSer/seedance-video-generation
+方法2：
+下载zip包：
+https://clawhub.ai/JackyCSer/seedance-video-generation
+放在本地OpenClaw skill目录：
+/Users/your_user_name/.openclaw/skills/
+安装完成后在OpenClaw Web控制台:
+http://127.0.0.1:18789/skills
+可以查看这个skill：
+在火山方舟
+系统管理
+（
+https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D
+）中获取API Key
+点击复制API key
+通过
+远程连接
+登录ECS Terminal，通过命令行配置 API Key：
+export
+ARK_API_KEY=
+'your-api-key-here'
+在ECS命令行Terminal中设置API Key：
+完成后即可在飞书聊天中生成视频。
+Seedance Video Skill 使用Q&A
+Skill下载地址：
+https://clawhub.ai/JackyCSer/seedance-video-generation
+目前支持哪些模型？
+Supported Models
+Model
+Model ID
+Capabilities
+Seedance 1.5 Pro
+doubao-seedance-1-5-pro-251215
+Text-to-video, Image-to-video (first frame, first+last frame), Audio support, Draft mode
+Seedance 1.0 Pro
+doubao-seedance-1-0-pro-250428
+Text-to-video, Image-to-video (first frame, first+last frame)
+Seedance 1.0 Pro Fast
+doubao-seedance-1-0-pro-fast-250528
+Text-to-video, Image-to-video (first frame only)
+Seedance 1.0 Lite T2V
+doubao-seedance-1-0-lite-t2v-250219
+Text-to-video only
+Seedance 1.0 Lite I2V
+doubao-seedance-1-0-lite-i2v-250219
+Image-to-video (first frame, first+last frame, reference images 1-4)
+Default model
+:
+doubao-seedance-1-5-pro-251215
+(latest, supports audio)
+如何切换使用不同模型？
+直接在对话跟你的OpenClaw对话即可：
+关于Seedance 2.0模型什么时候支持？
+我们会在火山引擎 Seedance 2.0 API GA(General Availability) 开放后立即支持；
+目前可以在火山方舟体验中心测试和实验
+：
+火山方舟 Seedance 2.0
+（
+https://console.volcengine.com/ark/region:ark+cn-beijing/experience/vision?modelId=doubao-seedance-2-0-260128&tab=GenVideo
+）
+点击下方
+【阅读原文】，查阅更多详细内容。

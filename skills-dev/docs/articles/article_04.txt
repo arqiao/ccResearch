@@ -1,0 +1,5 @@
+标题: 瞎咧咧Claude skills，很好用
+日期: 20251026
+原文: https://mp.weixin.qq.com/s/fgsfa1sHFGAiZGYexYJhkg
+
+ AIGC新知 , , window.__QMTPL_SSR_DATA__={tempkey__p__:'',hasBottomContent:'',only_comment__p__:'',is_cooling_appmsg:'0',not_show_banner:'',showProfile:'',round_head_img:'http://mmbiz.qpic.cn/mmbiz_png/Zvdfc01tMzib15y8u6Q3HFViclZibqskUX8dalxdsLCxvrteVEHLeIWrRqdkleZpkhWrZ7UPBiayZNdNicJxiamGHthw/0?wx_fmt=png',nick_name:'AIGC新知',needAlignLeft:'',needNoMinHeight:'',text_page_info:{is_user_title:'1'},formattedTitle:'',contentNoEncode:'',location:{poiid:'',districtid:'',name:'',address:'',latitude:'',longitude:'',content:''},shoptagInnerHtml:'',shopprofileInnerHtml:'',footer_gift_activity:{activity_id:''},lotteryInnerHtml:'',redpacket_cover_list:[],window_product_list:[],appmsg_link:{},articleInnerHtml:'',weapp_link:{},weappInnerHtml:'',single_video_snap_card:{},liveInnerHtml:'',super_vote_id:'',voteInnerHtml:'',canShowCard:'',claim_source:{claim_source:''},showBottomBorder:'',copyright_info:{copyright_stat:'0'},formatReadNum:'',ipWrpDisplay:'',ipWording:'',publishTime:'',uninteractive__p__:'',hasExtraCnt:'',hasBottomAd:''}; 

@@ -1,0 +1,829 @@
+标题: 【万字长文】Agent Skills黄金应用原则，都在Anthropic这篇技能创作最佳实践里
+
+正文:
+
+全文约1.2万字，阅读时间15分钟
+文/王吉伟
+最近
+Agent Skills
+（智能体技能）真的很火，因为它确实好用。
+并且随着更多
+Agent
+构建平台的支持，用起来也越来越简单。现在不用装
+claude code
+或者
+Open Code
+之类的终端，就能轻松使用它。
+比在
+Coze
+平台的技能商店选择你需要的技能，安装以后就可以使用。如果感觉商店的技能没有你想用的，也可以从其他技能市场找到你心仪的技能，下载以后在
+Coze
+创建技能时上传这个技能，这样就能在线使用这个技能了。就像我安装的这个画布设计技能，用起来还是挺有意思的。
+对于如何找到
+Agent Skills
+打包资源，这里提供几个来源，大家也可以在评论区补充：
+Skillsmp
+：
+https://skillsmp.com/
+Mcpmarket
+：
+https://mcpmarket.com/zh/tools/skills/n8n-pull-request-creator
+Agent Skills Directory
+：
+https://www.skillsdirectory.com/
+https://skills.sh/
+https://github.com/anthropics/skills/tree/main/skills
+https://github.com/heilcheng/awesome-agent-skills
+如果你不怕麻烦，还可以自己创建技能。其实也很简单，对话窗口中输入你的想法，最好是你工作时高频使用的工作流程，提交后等着大模型来给你完善和创建就好了。如果感觉在网页上使用不方便，还可以使用
+Trae
+、
+Cursor
+等
+IDE
+工具直接加载
+Skills
+。
+用这个方法，你可以把平时积累的提示词或者在提示词市场中找到的提示词做成技能。如果技能需要动态执行脚本一定要写清楚，方便让大模型给你适配。
+当然也可以把某个
+Github
+仓库直接制作成技能，相当一部分技能应该就是这样制作的，在执行技能时可以明显的看到技能在跑各种代码，等代码安装好以后再执行用户输入的需求。实话讲，这个安装的过程还是不短的。
+所以我感觉
+Agent Skill
+最好还是用纯提示词加上简单的脚本来实现，不然就不如直接vibe coding去开发带
+UI
+界面的应用了，交互感更好一些。
+当然，对于不懂代码的小白，这种方式倒是可以拉取一个
+Github
+项目了，间接实现了开源项目的在线或者本地化部署，哈哈，蛮有意思。
+话说，我在
+POE
+平台创建了不少的画布应用，回头也试试把全部
+HTML
+代码贴过来做成技能，看看能不能跑起来。
+关于
+skills
+的应用，最近我也看了一些教程。看完以后会有一种感觉，万物皆可
+Skill
+化。
+其实
+Anthropic
+的相关文档已经讲过，对于
+非通用
+的硬性流程
+、
+需要
+确定性
+工具
+/
+代码辅助
+的场景以及
+长度太大不能一次性加载涉及多文档
+的
+上下文
+的场景，明确可以使用
+Skills
+。而对于
+角色扮演包装
+、
+一次性任务
+、以及没有流程的
+纯知识堆砌
+场景，是不建议滥用
+Skills
+的。
+如果大家想详细了解
+Agent Skills
+，最好还是先看看Anthropic官方以及一些
+IDE
+工具商出的相关文档或者教程资源。这里贴几个资源地址：
+Athropic
+Claude Code
+：
+https://code.claude.com/docs/en/skills
+https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
+https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
+agentskills.io
+：
+https://agentskills.io/home
+OpenAI
+Codex
+：
+https://developers.openai.com/codex/skills/
+Visual Studio Code
+：
+https://code.visualstudio.com/docs/copilot/customization/agent-skills
+Cursor
+：
+https://cursor.com/docs/context/skills
+Cline
+：
+https://docs.cline.bot/features/skills
+OpenCode
+：
+https://opencode.ai/docs/skills/
+Gemini CLI
+：
+https://geminicli.com/docs/cli/skills/
+Ampcode
+：
+https://ampcode.com/manual#agent-skills
+最近
+Anthropic
+还出了一篇
+高质量
+Skills
+创作
+最佳实践文章
+，
+旨在使
+Skills
+简洁、结构良好且易于被
+Claude
+发现和有效使用。核心原则强调高效利用上下文窗口，假设
+Claude
+具备基础智能，并根据任务的脆弱性调整指导的详细程度。
+该
+文档强调通过多模型测试、文件系统式渐进式披露架构以及与
+Claude
+实例进行迭代开发，持续完善技能的有效性和鲁棒性。
+这里也贴上原文，相信对大家高效使用Agent Skills会有所帮助。
+省流版：
+简洁与上下文窗口管理：编写技能时应简洁，避免不必要的解释，因为上下文窗口是共享资源。
+Claude
+仅在技能相关时按需加载
+SKILL.md
+及其他文件，确保
+SKILL.md
+保持在
+500
+行以下。
+智能假设：默认假设
+Claude
+已经具备高度智能，只提供
+Claude
+缺乏的特定上下文信息。
+指导详细程度匹配：根据任务的脆弱性和可变性（高自由度、中等自由度、低自由度）调整提供给
+Claude
+的指导具体程度。
+多模型测试：在计划使用的所有
+Claude
+模型（
+Haiku
+、
+Sonnet
+、
+Opus
+）上测试技能，因为有效性会因模型而异，并确保说明适用于所有目标模型。
+技能元数据：
+SKILL.md
+的
+YAML
+前置事项必须包含
+name
+（小写、数字、连字符，无保留字，最多
+64
+字符）和
+description
+（第三人称、具体、包含功能和使用时机，最多
+1024
+字符），这些对技能发现至关重要。
+渐进式披露架构：将
+SKILL.md
+作为概述和导航目录，将详细内容（如指南、
+API
+参考、示例）拆分到单独的文件中，
+Claude
+仅在需要时按需加载这些文件，以优化令牌使用和上下文集中。
+结构化工作流与验证：将复杂操作分解为清晰的顺序步骤，提供清单，并实施
+“运行验证器→修复错误→重复”的验证循环模式，以提高输出质量并防止跳过关键验证步骤。
+避免过时信息与术语一致性：使用
+“旧模式”部分来处理可能过时的信息，并确保在整个技能描述和说明中使用一致的术语。
+输出模板与示例：提供输出格式模板和输入
+/
+输出示例，帮助
+Claude
+更清楚地理解所需的输出风格和细节程度。
+评估驱动开发：在大量编写文档之前，通过识别实际差距、创建测试场景和建立基线来构建评估，确保技能解决实际存在的问题。
+与
+Claude
+迭代开发：利用两个
+Claude
+实例（一个作为设计和改进技能的“专家”
+Claude A
+，另一个作为使用技能执行真实任务的“代理”
+Claude B
+）进行迭代开发，根据观察到的
+Claude B
+行为持续改进技能。
+可执行代码技能：对于包含可执行脚本的技能，应在脚本中明确处理错误、文档化配置参数，并优先使用预制脚本。需明确指示
+Claude
+是执行脚本还是将其作为参考读取，并推荐使用“计划
+-
+验证
+-
+执行”模式来处理复杂任务。
+运行时环境考量：技能在具有文件系统访问和
+Bash
+命令的代码执行环境中运行。需注意
+claude.ai
+和
+Anthropic API
+之间的差异，所有文件路径应使用
+Unix
+风格的正斜杠，并为
+MCP
+工具使用完全限定的名称。
+以下是原文。
+【
+赠书福利见文末
+】
+技能创作最佳实践
+Skill authoring best practices
+学习如何编写有效的技能，使 Claude 能够发现和成功使用。
+注：
+文中
+skills统一翻译为技能。
+好的技能应该简洁、结构良好且经过真实使用测试。本指南提供实用的创作决策，帮助您编写 Claude 能够有效发现和使用的技能。
+核心原则
+简洁是关键
+上下文窗口
+是一种公共资源。您的技能与 Claude 需要了解的所有其他内容共享上下文窗口，包括：
+系统提示
+对话历史
+其他技能的元数据
+您的实际请求
+技能中的每个token都没有直接成本。启动时，只有所有技能的元数据（名称和描述）被预加载。Claude 仅在技能变得相关时才读取 SKILL.md，并根据需要读取其他文件。但是，在 SKILL.md 中保持简洁仍然很重要：一旦 Claude 加载它，每个token都会与对话历史和其他上下文竞争。
+默认假设
+：Claude 已经非常聪明
+只添加 Claude 没有的上下文。质疑每一条信息：
+"Claude 真的需要这个解释吗？"
+"我能假设 Claude 知道这个吗？"
+"这段落值得它的
+token
+成本吗？"
+好的例子：简洁
+（大约 50 个
+token
+）：
+## 提取 PDF 文本
+使用 pdfplumber 进行文本提取：
+```python
+import
+pdfplumber
+with
+pdfplumber.
+open
+(
+"file.pdf"
+)
+as
+pdf:
+text = pdf.pages[
+0
+].extract_text()
+```
+不好的例子：过于冗长
+（大约 150 个
+token
+）：
+#
+# 提取 PDF 文本
+PDF（便携式文档格式）文件是一种常见的文件格式，包含
+文本、图像和其他内容。要从 PDF 中提取文本，您需要
+使用一个库。有许多库可用于 PDF 处理，但我们
+建议使用 pdfplumber，因为它易于使用且能处理大多数情况。
+首先，您需要使用 pip 安装它。然后您可以使用下面的代码...
+简洁版本假设 Claude 知道什么是 PDF 以及库如何工作。
+设置适当的自由度
+将具体程度与任务的脆弱性和可变性相匹配。
+高自由度
+（基于文本的说明）：
+使用场景：
+多种方法都有效
+决策取决于上下文
+启发式方法指导方法
+示例：
+## 代码审查流程
+1.
+分析代码结构和组织
+2.
+检查潜在的错误或边界情况
+3.
+建议改进可读性和可维护性
+4.
+验证是否遵守项目约定
+中等自由度
+（伪代码或带参数的脚本）：
+使用场景：
+存在首选模式
+某些变化是可以接受的
+配置影响行为
+示例：
+## 生成报告
+使用此模板并根据需要自定义：
+```python
+def
+generate_report
+(
+data,
+format
+=
+"markdown"
+, include_charts=
+True
+):
+# 处理数据
+# 以指定格式生成输出
+# 可选地包含可视化
+```
+低自由度
+（特定脚本，很少或没有参数）：
+使用场景：
+操作脆弱且容易出错
+一致性至关重要
+必须遵循特定的序列
+示例：
+## 数据库迁移
+运行完全相同的脚本：
+```bash
+python scripts/migrate.py --verify --backup
+`
+``
+不要修改命令或添加其他标志。
+类比
+：将 Claude 视为探索路径的机器人：
+两侧都是悬崖的狭窄桥：
+只有一种安全的前进方式。提供具体的护栏和精确的说明（低自由度）。示例：必须按精确顺序运行的数据库迁移。
+没有危险的开放田野：
+许多路径都能成功。给出一般方向并相信 Claude 会找到最佳路线（高自由度）。示例：上下文决定最佳方法的代码审查。
+使用您计划使用的所有模型进行测试
+技能作为模型的附加功能，因此有效性取决于底层模型。使用您计划使用的所有模型测试您的技能。
+按模型的测试考虑
+：
+Claude Haiku
+（快速、经济）：技能是否提供了足够的指导？
+Claude Sonnet
+（平衡）：技能是否清晰高效？
+Claude Opus
+（强大的推理）：技能是否避免过度解释？
+对 Opus 完美有效的东西可能需要为 Haiku 提供更多细节。如果您计划在多个模型中使用您的技能，请针对所有模型都能很好地工作的说明。
+技能结构
+**YAML 前置事项**：SKILL.md 前置事项需要两个字段：
+name
+：
+最多 64 个字符
+只能包含小写字母、数字和连字符
+不能包含 XML 标签
+不能包含保留字："anthropic"、"claude"
+description
+：
+必须非空
+最多 1024 个字符
+不能包含 XML 标签
+应描述技能的功能和使用时机
+有关完整的技能结构详情，请参阅
+技能概述
+。
+命名约定
+使用一致的命名模式使技能更容易引用和讨论。我们建议对技能名称使用
+动名词形式
+（动词 + -ing），因为这清楚地描述了技能提供的活动或能力。
+请记住，
+name
+字段必须仅使用小写字母、数字和连字符。
+好的命名示例（动名词形式）
+：
+processing-pdfs
+analyzing-spreadsheets
+managing-databases
+testing-code
+writing-documentation
+可接受的替代方案
+：
+名词短语：
+pdf-processing
+、
+spreadsheet-analysis
+面向行动：
+process-pdfs
+、
+analyze-spreadsheets
+避免
+：
+模糊的名称：
+helper
+、
+utils
+、
+tools
+过于通用：
+documents
+、
+data
+、
+files
+保留字：
+anthropic-helper
+、
+claude-tools
+技能集合中的不一致模式
+一致的命名使以下操作更容易：
+在文档和对话中引用技能
+一目了然地理解技能的功能
+组织和搜索多个技能
+维护专业、统一的技能库
+编写有效的描述
+description
+字段启用技能发现，应包括技能的功能和使用时机。
+**始终用第三人称编写**。描述被注入到系统提示中，不一致的视角可能会导致发现问题。
+好的："处理 Excel 文件并生成报告"
+避免："我可以帮助您处理 Excel 文件"
+避免："您可以使用此功能处理 Excel 文件"
+具体并包含关键术语
+。包括技能的功能和使用它的具体触发器/上下文。
+每个技能恰好有一个描述字段。描述对于技能选择至关重要：Claude 使用它从可能的 100+ 个可用技能中选择正确的技能。您的描述必须提供足够的细节，以便 Claude 知道何时选择此技能，而 SKILL.md 的其余部分提供实现细节。
+有效的示例：
+PDF 处理技能
+：
+description
+:
+从 PDF 文件中提取文本和表格、填充表单、合并文档。在处理 PDF 文件或用户提及 PDF、表单或文档提取时使用。
+Excel 分析技能
+：
+description
+:
+分析 Excel 电子表格、创建数据透视表、生成图表。在分析 Excel 文件、电子表格、表格数据或 .xlsx 文件时使用。
+Git 提交助手技能
+：
+description
+:
+通过分析 git 差异生成描述性提交消息。当用户要求帮助编写提交消息或审查暂存更改时使用。
+避免模糊的描述，如：
+description
+:
+帮助处理文档
+description
+:
+处理数据
+description
+:
+对文件进行各种操作
+渐进式披露模式
+SKILL.md 作为概述，指向 Claude 根据需要查看的详细材料，就像入职指南中的目录一样。有关渐进式披露如何工作的解释，请参阅概述中的
+技能如何工作
+。
+实用指导
+：
+保持 SKILL.md 正文在 500 行以下以获得最佳性能
+接近此限制时将内容拆分为单独的文件
+使用下面的模式有效地组织说明、代码和资源
+视觉概览：从简单到复杂
+基本技能仅包含一个 SKILL.md 文件，其中包含元数据和说明：
+随着您的技能增长，您可以捆绑 Claude 仅在需要时加载的其他内容：
+完整的技能目录结构可能如下所示：
+pdf/
+├── SKILL.md              # 主要说明（触发时加载）
+├── FORMS.md              # 表单填充指南（根据需要加载）
+├── reference.md          # API 参考（根据需要加载）
+├── examples.md           # 使用示例（根据需要加载）
+└── scripts/
+├── analyze_form.py   # 实用脚本（执行，不加载）
+├── fill_form.py      # 表单填充脚本
+└── validate.py       # 验证脚本
+模式 1：高级指南与参考
+---
+name: pdf-processing
+description: 从 PDF 文件中提取文本和表格、填充表单、合并文档。在处理 PDF 文件或用户提及 PDF、表单或文档提取时使用。
+---
+# PDF 处理
+## 快速开始
+使用 pdfplumber 提取文本：
+```python
+import pdfplumber
+with pdfplumber.open("file.pdf") as pdf:
+text = pdf.pages[0].extract_text()
+```
+## 高级功能
+**表单填充**
+：参阅 [
+FORMS.md
+](
+FORMS.md
+) 获取完整指南
+**API 参考**
+：参阅 [
+REFERENCE.md
+](
+REFERENCE.md
+) 获取所有方法
+**示例**
+：参阅 [
+EXAMPLES.md
+](
+EXAMPLES.md
+) 获取常见模式
+Claude 仅在需要时加载 FORMS.md、REFERENCE.md 或 EXAMPLES.md。
+模式 2：特定领域组织
+对于具有多个领域的技能，按领域组织内容以避免加载无关的上下文。当用户询问销售指标时，Claude 只需要读取与销售相关的架构，而不是财务或营销数据。这保持
+token
+使用低且上下文集中。
+bigquery-skill/
+├── SKILL.md (概述和导航)
+└── reference/
+├── finance.md (收入、计费指标)
+├── sales.md (机会、管道)
+├── product.md (API 使用、功能)
+└── marketing.md (活动、归因)
+SKILL.md
+# BigQuery 数据分析
+## 可用数据集
+**财务**：收入、ARR、计费 → 参阅 [reference/finance.md](reference/finance.md)
+**销售**：机会、管道、账户 → 参阅 [reference/sales.md](reference/sales.md)
+**产品**：API 使用、功能、采用 → 参阅 [reference/product.md](reference/product.md)
+**营销**：活动、归因、电子邮件 → 参阅 [reference/marketing.md](reference/marketing.md)
+## 快速搜索
+使用 grep 查找特定指标：
+```bash
+grep -i "revenue" reference/finance.md
+grep -i "pipeline" reference/sales.md
+grep -i "api usage" reference/product.md
+```
+模式 3：条件详情
+显示基本内容，链接到高级内容：
+#
+DOCX 处理
+#
+# 创建文档
+使用 docx-js 创建新文档。参阅 [DOCX-JS.md](DOCX-JS.md)。
+#
+# 编辑文档
+对于简单编辑，直接修改 XML。
+**对于跟踪更改**：参阅 [REDLINING.md](REDLINING.md)
+**对于 OOXML 详情**：参阅 [OOXML.md](OOXML.md)
+Claude 仅在用户需要这些功能时读取 REDLINING.md 或 OOXML.md。
+避免深层嵌套引用
+当从其他引用文件引用文件时，Claude 可能会部分读取文件。遇到嵌套引用时，Claude 可能会使用
+head -100
+等命令预览内容，而不是读取整个文件，导致信息不完整。
+保持引用距离 SKILL.md 一级
+。所有参考文件应直接从 SKILL.md 链接，以确保 Claude 在需要时读取完整文件。
+不好的例子：太深
+：
+# SKILL
+.md
+参阅
+[advanced.md]
+(advanced
+.md
+)...
+# advanced
+.md
+参阅
+[details.md]
+(
+details
+.md
+)...
+#
+details
+.md
+这是实际信息...
+好的例子：一级深
+：
+# SKILL.md
+**基本使用**
+：[SKILL.md 中的说明]
+**高级功能**
+：参阅 [
+advanced.md
+](
+advanced.md
+)
+**API 参考**
+：参阅 [
+reference.md
+](
+reference.md
+)
+**示例**
+：参阅 [
+examples.md
+](
+examples.md
+)
+使用目录结构化较长的参考文件
+对于超过100行的参考文件，在顶部包含目录。这确保 Claude 即使在部分读取时也能看到可用信息的完整范围。
+示例
+：
+# API 参考
+## 内容
+-
+身份验证和设置
+-
+核心方法（创建、读取、更新、删除）
+-
+高级功能（批量操作、webhooks）
+-
+错误处理模式
+-
+代码示例
+## 身份验证和设置
+...
+## 核心方法
+...
+Claude 可以根据需要读取完整文件或跳转到特定部分。
+有关此基于文件系统的架构如何启用渐进式披露的详情，请参阅下面"高级"部分中的运行时环境部分。
+工作流和反馈循环
+对复杂任务使用工作流
+将复杂操作分解为清晰的顺序步骤。对于特别复杂的工作流，提供一个清单，Claude 可以将其复制到其响应中并在进行时检查。
+示例 1：研究综合工作流
+（适用于没有代码的技能）：
+## 研究综合工作流
+复制此清单并跟踪您的进度：
+```
+研究进度：
+- [ ] 步骤 1：阅读所有源文档
+- [ ] 步骤 2：识别关键主题
+- [ ] 步骤 3：交叉参考声明
+- [ ] 步骤 4：创建结构化摘要
+- [ ] 步骤 5：验证引用
+```
+**步骤 1：阅读所有源文档**
+查看
+`sources/`
+目录中的每个文档。记下主要论点和支持证据。
+**步骤 2：识别关键主题**
+寻找跨源的模式。哪些主题重复出现？源在哪里一致或不一致？
+**步骤 3：交叉参考声明**
+对于每个主要声明，验证它出现在源材料中。记下哪个源支持每个点。
+**步骤 4：创建结构化摘要**
+按主题组织发现。包括：
+-
+主要声明
+-
+来自源的支持证据
+-
+相互矛盾的观点（如果有）
+**步骤 5：验证引用**
+检查每个声明是否引用了正确的源文档。如果引用不完整，返回步骤 3。
+此示例展示了工作流如何应用于不需要代码的分析任务。清单模式适用于任何复杂的多步骤流程。
+示例 2：PDF 表单填充工作流
+（适用于有代码的技能）：
+## PDF 表单填充工作流
+复制此清单并在完成项目时检查：
+```
+任务进度：
+- [ ] 步骤 1：分析表单（运行 analyze_form.py）
+- [ ] 步骤 2：创建字段映射（编辑 fields.json）
+- [ ] 步骤 3：验证映射（运行 validate_fields.py）
+- [ ] 步骤 4：填充表单（运行 fill_form.py）
+- [ ] 步骤 5：验证输出（运行 verify_output.py）
+```
+**步骤 1：分析表单**
+运行：
+`python scripts/analyze_form.py input.pdf`
+这提取表单字段及其位置，保存到
+`fields.json`
+。
+**步骤 2：创建字段映射**
+编辑
+`fields.json`
+为每个字段添加值。
+**步骤 3：验证映射**
+运行：
+`python scripts/validate_fields.py fields.json`
+在继续之前修复任何验证错误。
+**步骤 4：填充表单**
+运行：
+`python scripts/fill_form.py input.pdf fields.json output.pdf`
+**步骤 5：验证输出**
+运行：
+`python scripts/verify_output.py output.pdf`
+如果验证失败，返回步骤 2。
+清晰的步骤防止 Claude 跳过关键验证。清单帮助 Claude 和您跟踪多步骤工作流的进度。
+实现反馈循环
+常见模式
+：运行验证器 → 修复错误 → 重复
+此模式大大提高输出质量。
+示例 1：风格指南合规性
+（适用于没有代码的技能）：
+#
+# 内容审查流程
+1. 按照 STYLE_GUIDE.md 中的指南起草您的内容
+2. 根据清单审查：
+- 检查术语一致性
+- 验证示例遵循标准格式
+- 确认所有必需部分都存在
+3. 如果发现问题：
+- 用特定部分参考记录每个问题
+- 修改内容
+- 再次审查清单
+4. 仅当满足所有要求时才继续
+5. 完成并保存文档
+这展示了使用参考文档而不是脚本的验证循环模式。"验证器"是 STYLE_GUIDE.md，Claude 通过读取和比较来执行检查。
+示例 2：文档编辑流程
+（适用于有代码的技能）：
+## 文档编辑流程
+1.
+对
+`word/document.xml`
+进行编辑
+2.
+**立即验证**
+：
+`python ooxml/scripts/validate.py unpacked_dir/`
+3.
+如果验证失败：
+- 仔细查看错误消息
+- 修复 XML 中的问题
+- 再次运行验证
+4.
+**仅在验证通过时继续**
+5.
+重建：
+`python ooxml/scripts/pack.py unpacked_dir/ output.docx`
+6.
+测试输出文档
+验证循环可以及早捕获错误。
+内容指南
+避免时间敏感信息
+不要包含会过时的信息：
+不好的例子：时间敏感
+（会变成错误）：
+如果您在 2025 年 8 月之前执行此操作，请使用旧 API。
+2025 年 8 月之后，使用新 API。
+好的例子
+（使用"旧模式"部分）：
+## 当前方法
+使用 v2 API 端点：`api.example.com/v2/messages`
+## 旧模式
+<details>
+<summary>旧版 v1 API（已弃用 2025-08）</summary>
+v1 API 使用：`api.example.com/v1/messages`
+此端点不再受支持。
+</details>
+旧模式部分提供历史背景，而不会使主要内容混乱。
+使用一致的术语
+选择一个术语并在整个技能中使用它：
+好的 - 一致
+：
+始终"API 端点"
+始终"字段"
+始终"提取"
+不好的 - 不一致
+：
+混合"API 端点"、"URL"、"API 路由"、"路径"
+混合"字段"、"框"、"元素"、"控件"
+混合"提取"、"拉取"、"获取"、"检索"
+一致性帮助 Claude 理解和遵循说明。
+常见模式
+模板模式
+为输出格式提供模板。将严格程度与您的需求相匹配。
+对于严格要求
+（如 API 响应或数据格式）：
+#
+# 报告结构
+始终使用此精确的模板结构：
+```markdown
+#
+[分析标题]
+#
+# 执行摘要
+[关键发现的一段概述]
+#
+# 关键发现
+- 带有支持数据的发现 1
+- 带有支持数据的发现 2
+- 带有支持数据的发现 3
+#
+# 建议
+1. 具体可行的建议
+2. 具体可行的建议
+```
+对于灵活指导
+（当适应有用时）：
+#
+# 报告结构
+这是一个合理的默认格式，但根据分析使用您的最佳判断：
+```markdown
+#
+[分析标题]
+#
+# 执行摘要
+[概述]
+#
+# 关键发现
+[根据您发现的内容调整部分]
+#
+# 建议
+[根据具体背景定制]
+```
+根据特定分析类型根据需要调整部分。
+示例模式
+对于输出质量取决于看到示例的技能，提供输入/输出对，就像在常规提示中一样：
+## 提交消息格式
+按照这些示例生成提交消息：
+**示例
+1
+：**
+输入：使用 JWT token添加用户身份验证

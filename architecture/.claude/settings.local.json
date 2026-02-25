@@ -17,7 +17,9 @@
       "Bash(powershell.exe:*)",
       "Bash(scp:*)",
       "Bash(ls:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(tail:*)",
+      "Bash(head:*)"
     ]
   }
 }
