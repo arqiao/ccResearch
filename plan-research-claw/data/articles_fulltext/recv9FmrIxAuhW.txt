@@ -1,0 +1,11 @@
+# 刚刚，阿里云正式上线Moltbot（原名：Clawdbot）全套云服务
+# URL: https://mp.weixin.qq.com/s/0JOTBt9Q0x04gc1M4lEe0Q
+# 日期: 2026-01-29
+# 来源: 微信-人生建筑师
+# 分类: 安装部署 / 国内云平台
+# 字数: 189
+
+刚刚，阿里云正式上线Moltbot（原名：Clawdbot）全套云服务，全面提供Agent所需的算力、模型和消息应用等。
+此外，阿里云无影云电脑也已上线内置Moltbot和各种应用软件的专属镜像，预装了包括VS Code、TMUX、钉钉、WPS等组件，并支持钉钉、QQ等软件唤醒Moltbot，只需一键导入镜像即可启动。 
+
+详情可见刚刚，阿里云上线Clawdbot全套云服务！

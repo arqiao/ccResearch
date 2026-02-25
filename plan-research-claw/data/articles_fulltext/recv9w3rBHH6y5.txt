@@ -1,0 +1,130 @@
+# Clawdbot 配置第三方 Claude API：告别官方账号的烦恼
+# URL: https://mp.weixin.qq.com/s/s7xzFbnaxE_BVZB2vLgvcA
+# 日期: 2026-01-26
+# 来源: 微信-AI工具进化论
+# 分类: 配置与技巧 / 
+# 字数: 2359
+
+最近 Clawdbot 在 Twitter 上火得一塌糊涂。简单说，它是一个跑在你自己电脑上的 AI 助手，可以通过 Telegram、WhatsApp、Discord 等聊天软件跟它对话，让它帮你干活——浏览网页、读写文件、执行脚本、定时任务，什么都能做。
+有人说它是「开源版 Siri，但比 Siri 强一百倍」。Karpathy 都在推上点赞，说明确实有点东西。
+今天折腾了一晚上，终于把 Clawdbot 配上了我的中转 Claude 模型。踩了不少坑，但搞定之后真的爽，不用再操心 Claude 官方账号的问题了。
+为什么要用第三方 API？
+Clawdbot 默认用 Anthropic 官方 API。问题是：
+需要一个 Claude 账号（国内用户懂的）
+国产模型效果又不太行
+我的解决方案：用第三方的 Claude API 中转服务。好处是不需要官方账号，直接用中转商提供的 API key 就行。
+太长不看版
+把这整篇文章复制给 Claude Code，然后告诉它：
+帮我按照这篇教程配置 Clawdbot 的第三方 Claude API。
+我的信息：
+baseUrl：[填你的中转地址，不要带 /v1]
+apiKey：[填你的 API 密钥]
+整篇文章复制过去，不要只复制部分内容，那样容易出错。Claude Code 会按照教程帮你配置好，你只需要提供 baseUrl 和 API key。
+配置步骤（手动版）
+第一步：编辑配置文件
+打开
+~/.clawdbot/clawdbot.json
+，在
+models
+部分添加自定义提供商。
+第二步：完整配置示例
+{
+"models": {
+"providers": {
+"cc": {
+"baseUrl": "https://你的中转服务地址",
+"apiKey": "sk-ant-***你的API密钥***",
+"api": "anthropic-messages",
+"models": [
+{
+"id": "claude-opus-4-5-20251101",
+"name": "Claude Opus 4.5",
+"reasoning": true,
+"input": ["text", "image"],
+"cost": {
+"input": 0,
+"output": 0,
+"cacheRead": 0,
+"cacheWrite": 0
+},
+"contextWindow": 200000,
+"maxTokens": 4096
+}
+]
+}
+}
+},
+"agents": {
+"defaults": {
+"model": {
+"primary": "cc/claude-opus-4-5-20251101"
+}
+}
+}
+}
+第三步：几个关键点
+1. api 字段必须是
+anthropic-messages
+这是我踩的第一个坑。写成
+anthropic
+或
+openai-responses
+都不行，必须是
+anthropic-messages
+。
+2. baseUrl 不要带版本路径
+正确：https://example.com/api
+错误：https://example.com/api/v1
+Clawdbot 会自动加
+/v1
+，你写了就变成
+/v1/v1
+，直接 404。
+3. 模型 ID 要和中转服务支持的一致
+比如中转服务支持
+claude-opus-4-5-20251101
+，你就写这个。写错了会报错。
+第四步：重启网关
+clawdbot gateway restart
+第五步：验证
+clawdbot channels status --probe
+看到 reachable 就说明配置成功了。
+常见问题
+403 错误
+API key 可能只授权给特定客户端（比如只能用于 Claude Code CLI）。联系中转服务商，确认 key 支持通用 API 请求。
+404 错误
+检查 baseUrl 是不是带了
+/v1
+。去掉它。
+消息发出没回复
+查日志：
+find ~/.clawdbot/agents/main/sessions -name "*.jsonl" -exec ls -t {} \; | head -1
+然后
+tail
+看看有没有 error 信息。
+配置前先测试 API
+建议先用 curl 测一下 API 能不能通：
+curl -X POST https://你的中转地址/v1/messages \
+-H "x-api-key: 你的API密钥" \
+-H "Content-Type: application/json" \
+-H "anthropic-version: 2023-06-01" \
+-d '{
+"model": "claude-opus-4-5-20251101",
+"max_tokens": 100,
+"messages": [{"role": "user", "content": "hello"}]
+}'
+返回 200 和正常内容就说明 API 没问题，可以配置 Clawdbot 了。
+总结
+核心就三点：
+api 必须是 anthropic-messages
+baseUrl 不带版本路径
+API key 要支持通用请求
+配置好之后，Clawdbot 就能用第三方 Claude 模型了。不用折腾官方账号，省心。
+---------
+Clawdbot 跑在 telegram 里的效果：
+（可以看到失败了好多好多次，终于成功了！）
+如果你还没装
+Clawdbot，可以去试试：
+https://clawd.bot/
+顺便也拉了一个
+Clawdbot 讨论群：

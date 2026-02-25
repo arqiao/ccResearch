@@ -1,0 +1,233 @@
+# 想用Clawdbot何必抢Mac mini，手把手教你打造最强本地Agent，立省200美元 | 附保姆级教程
+# URL: https://mp.weixin.qq.com/s/NaVOe3BKVrk5Nf2Xtqk2NQ
+# 日期: 2026-01-28
+# 来源: 微信-APPSO
+# 分类: 安装部署 / macOS本地
+# 字数: 10667
+
+今年，本地 Agent 产品真的火了，说是一周一爆款，一点都不为过。
+前有 Claude Cowork 一发布就创下将近五千万次的浏览；后有 Clawdbot（现在已经改名叫 Moltbot），在 GitHub 上的 Star 数量，直线突破，从两千狂飙到 7 万。
+本周你漏掉了什么
+这么多工具，根本尝试不过来，况且像 Clawdbot 这种需要自己部署服务器的 AI，着实很劝退想要尝试的电脑小白用户。Cowork 就更过分了，目前只开放给 200 美元/月的 Max 订阅用户。
+但无论是 Cowork 还是 Clawdbot，其实还有个更聪明的选择；
+它们俩能做的事，本质上都是从 Claude Code 进化来的。
+这个已经推出快一年的工具，在今年突然再次流行起来。
+国内模型厂商，像是 MiniMax 和阶跃，也推出了 Agent 2.0 桌面版 App 和 AI 桌面伙伴，主打就是「
+中国版 Cowork
+」。这些应用无一例外地都是从 Claude Code 的概念进阶而来，打造一个本地版的 Agent。
+向左滑动查看更多内容，
+最近更新的 MiniMax Agent 和 阶跃 AI 桌面助手，都开始支持直接处理电脑文件
+不需要买服务器，也不用本地搭建，Claude Code 就是官方提供的一个「轻量级 Cowork」，一条命令就能安装。Skills 系统由 Anthropic 官方维护，现成的技能库也更丰富。
+这篇文章，APPSO 就手把手教你如何用 Claude Code + Skills + 国产模型，构建你自己的本地 Agent。
+什么是 Skills
+2026 年，要混在 AI 圈里装 X，不能谈论几句 Skills，还是停留在提示词，已经算是 OUT 了。这些工具能火起来，Skills 这个概念功不可没。
+Anthropic 在去年十月就推出了这项功能，但是直到今年年初，Skills 的各类教程才真正像病毒一样传播开来。不得不说，Anthropic 是有点技术傍身的，不是那种纯靠营销的吹吹捧捧，之前被广泛采用的 MCP 协议，也是由 Anthropic 提出的。
+部分 Skills 聚合网站，整理的 Skill 提交数量趋势，在今年猛增｜来源：https://skillsmp.com/
+和 MCP 作为一个 USB 协议，接入不同的数据来源不同；Skills 更多的是像一个应用市场，和中文翻译为「技能」一样，它能把不同需求的应用都整理为一个单独的技能。我们可以简单的把 Agent 理解成一个游戏角色，它有自己专门的游戏定位，同时他自身也会有很多技能点，这些就是 Skills。
+以前我们没办法给这个角色总结出一套按 E 出战技，按 R 开大招，要做什么都得一遍遍和 Agent 沟通；现在这些技能都封装成了一个快捷键，下次再遇到一样的怪，Skills 会直接按照之前设计的流程来操作。
+根据 Anthropic 官方的介绍，它们把 Skills 定义为，能够将通用 Agent 转成专用 Agent 的文件目录。
+Skills 是一个目录，其中包含一个 SKILL.md 文件，该文件组织了指令、脚本和资源的文件夹，为 Agent 提供额外的功能。
+由于只是一个文件目录，Skills 也有了可移植的特点，能在 Claude 网页和应用程序（仅限会员用户）、以及 Claude Code、Cowork、API、第三方平台等直接使用。
+还是有点懵，看几个 Skills 的热门玩法，我们能更直观感受到它的能力。
+这个官方的演示视频，介绍了在 Claude 中，如何将
+PowerPoint 技能
+，与
+自定义品牌指南技能
+结合使用，即视频中拖拽压缩包到 Skills 界面，然后再运用海报设计技能来创作概念图。
+Claude 会根据我们的需要，来自动加载这些包含指令、脚本和资源的文件夹（Skill）；这些 Skills 会像一个定制化的入职培训材料，让 AI 一来就能上手，更高效的实现我们的需求。
+还有一个是最近非常火的，让 Claude 生成视频，通过在 Claude Code 中使用 remotion-best-practices 这个技能，我们可以直接一句话让它生成一个视频。
+此外，在这个 Anthropic 官方的 Skills 库里面，还有大量针对网页设计、前端设计、PDF 剪裁和分页等处理、文件压缩、图片格式转换、图片剪裁和拼接等处理，只要你想得到的，现在都可以透过 Skills 来直接完成。
+官方 Skills 库 https://skills.sh/
+甚至还有给编辑们用的去 AI 味的 Skill，在 GitHub 上收获了一千个赞。我们在 Claude Code 里面输入「/humanizer-zh」，直接运行该 Skill，然后输入需要修改的问题，这个 Skill 会直接生成改写的文本，和更改的细节。
+问题来了，能直接给我们干活的 Skills，到底怎么用？
+安装 Claude Code 到你的电脑
+Claude 的订阅用户可以直接在 Claude 网页和 App 里面直接开启，免费用户的使用方式，目前最火的就是 Claude Code，这也是 Claude Cowork 的「脚手架」版本。
+有了 Claude Code，等于有了一个 200 美元订阅才能用的 Cowork，和 20 美元订阅才能用的 Skills。
+在 Claude 设置界面，「Capability 能力」选项下，订阅用户能看到 Skills 功能｜图片来源：https://departmentofproduct.substack.com/p/what-are-claude-skills-and-how-can
+APPSO 这次手把手教大家怎么把 Claude Code 在自己的电脑上配置好，然后当成 Cowork 来使用，让 AI 操作自己的电脑本地文件，还有叠加使用不同的 Skills 来完成更专门的任务，甚至是用 Skill 创建自己的 Skills。
+温馨提示：预计用时，视不同用户的网络环境，大约在一小时左右。60 分钟后，你就能拥有一个真的能解决 50% 人类工作的 AI。此外，不要害怕黑乎乎的终端。
+总结一下大致的步骤是：
+1.
+使用合适的网络，下载和安装 Node.js，Windows 用户需要额外安装 Git 应用。
+2.
+在终端里输入 Claude Code 的安装命令，Windows 用户可能需要额外配置环境变量。
+3.
+购买 API，智谱、Kimi、MiniMax、千问，等几大国产 AI 都支持连接到 Claude Code。
+4.
+修改 Claude Code 的 settings.json 文件，根据不同模型 API 开放平台的教程，替换对应的 JSON 文件内容。
+5.
+开始使用 Claude Code，一直按 Enter 等待它解决问题，同时直接复制命令安装对应的 Skills，让 Skills 来处理我们的请求。
+第一步：检查网络环境
+由于涉及到下载不同的软件安装包，最好是切换到使用 ChatGPT、Gemini 这些 AI 工具的网络。
+第二步：认识终端
+找到电脑上的终端（Terminal），打开之后不要被它黑乎乎的界面给吓到了，把它当成一个聊天简陋的对话窗口就可以，只不过在这个黑框里面，对话的语言都是各种晦涩难懂的命令。
+macOS 和 Windows 上的终端应用截图
+第三步：软件下载
+下载和安装 Node.js，下载地址：https://nodejs.org/en/download/。
+https://nodejs.org/en/download/
+打开网页之后，网站会自动识别到设备信息，我们直接往下滚动，macOS 下载 PKG 安装包，Windows 下载MSI 安装包即可。
+Nodejs 网页截图，使用默认下载即可，下载第一个（.pkg 文件/.msi 文件）
+和正常的软件安装一样，我们全部使用默认的安装设置即可。当然，如果你的电脑上本来就有安装 Node.js，那可以直接跳过这一步，检查是否有安装 Node.js 的方法是在终端里面输入命令「node --version」，这也是检查是否安装成功的命令。
+node --version
+安装成功，终端应该会显示版本号「v24.13.0」，具体版本可能会有所不同。
+接着是 Windows 用户的额外操作，除了安装 Node.js，
+Windows 用户还需要安装 Git
+，我们把它叫做版本控制工具。
+和安装 Node.js 一样，首先复制该网址到浏览器打开，https://git-scm.com/install/windows，然后现在 ARM64 的 Windows 电脑应该比较少，我们一般下载第一个「Git for Windows/x64 Setup」就可以。
+https://git-scm.com/install/windows
+如果你想检查一下自己的 Windows 电脑是什么架构，也可以在设置-系统-系统信息-设备规格里面找到，一般会写「64 位操作系统，基于 x64 的处理器」。
+安装 Git 的步骤，
+也是只需要按照默认的安装设置即可，如果不明白什么意思，每一步都点下一步（Next）也没问题。
+安装完成后，会提示我们「View Release Notes（查看发布日志）」，取消勾选，然后结束。忘记取消勾选，也只会打开一个网页，所以问题不大。
+第四步：开始安装 Claude Code
+如果你的电脑操作系统是 macOS、Linux 可以直接复制下面这条命令到终端里，这里复制可以直接用快捷键 CTRL+V，然后 ENTER 运行（发送命令到终端）。
+curl -fsSL https://claude.ai/install.sh | bash
+没有遇到网络问题的话，我们就可以直接看到安装完成的提示信息。
+macOS 安装完成截图
+而对于 Windows 用户
+，则是复制下面这条命令到终端，即打开名为 Windows PowerShell 的窗口，然后复制运行。复制时，遇到 CTRL+V 失效，反而把 CTRL+V 当作命令输入，可以使用鼠标右键，然后选择粘贴。
+irm https://claude.ai/install.ps1 | iex
+Claude code 安装完成页面
+如果你也跟我一样，在 Windows 安装过程中，
+提示遇到环境变量的问题
+，按照终端里面的提示信息，添加对应环境变量即可。
+Windows 用户的小插曲
+首先在 Windows 搜索里面，输入环境变量，会匹配到编辑系统环境变量的结果。
+点击下方环境变量
+按照终端提示的信息，USER PATH，我们只需要修改上方的用户变量，先点选中变量中的 Path，然后点击编辑
+点击新建，
+然后复制你的终端里面，提示的路径信息
+，我这里是 C:\Users\ifanr\.local\bin
+C:\Users\ifanr\.local\bin
+编辑完成后，点击确定，再点确定，关闭环境变量的窗口即可。然后关掉之前的终端，重新打开一个新的，输入 claude --version，看到有版本号出现，一切就大功告成了。
+claude --version
+第五步：开始使用 Claude Code
+在终端里输入 claude，就正式进入了 Claude Code 的大门。
+向左滑动查看更多内容
+第一次点开，你一定会有诸多不习惯，明明是有很多选项可以选择，但是我不能用鼠标点击。
+就像这里的主题选择，
+我们只能使用键盘，上下选择，然后 Enter/Space 空格表示选中。
+一般来说，默认第一个 dark mode 暗黑模式即可。
+向左滑动查看更多内容
+第六步：设置 API
+选择完主题，就会进入 API 的设置，这里提供了 Claude 账户登录，以及 API 和第三方 API 的选项，
+但无论选择哪个，它都会要求我们登录，
+登录 Claude 账号，或者 Anthropic 的 API 账户。
+所以这个时候，我们要先退出终端，把 API 先设置好。
+国产大模型支持 Claude Code 的非常多，无论是像千问这样的大模型家族，还是 AI 六小虎，MiniMax、Kimi、智谱 GLM 这些，都有专门的接入 Claude Code 的文档，方法基本上都一样，就是对参数进行修改。
+向左滑动查看更多内容，
+cc-switch 页面，图片来源：
+https://platform.minimaxi.com/docs/guides/text-ai-coding-tools
+最近甚至还有专门的工具，叫做 cc-switch 来直接对 Claude Code 的 API 信息进行修改。这里我们还是演示一下如何对文件直接进行修改，cc-switch 工具的 GitHub 项目地址是 https://github.com/farion1231/cc-switch。
+https://github.com/farion1231/cc-switch
+拿智谱来举个例子，我们首先要获取 API，不同模型厂商的 API 获取方式不同，基本上都在对应的开放平台能找到。一般来说，API 只会出现一次，所以创建后复制，最好先放到其他地方，不过也可以重新再创建。
+Windows 用户
+：打开终端，输入命令
+notepad $HOME\.claude\settings.json
+；然后就会弹出记事本，在记事本里面，添加或者替换对应的 “env” 信息即可，同时也需要把 TOKEN 替换为自己真实的 API-KEY。
+notepad $HOME\.claude\settings.json
+{   "env": {
+"ANTHROPIC_AUTH_TOKEN": "your_zhipu_api_key",
+"ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic",
+"API_TIMEOUT_MS": "3000000",
+"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+}   }
+获取 API 也很方便，前往他们官网 https://bigmodel.cn/usercenter/proj-mgmt/apikeys，创建一个新的 API KEY。
+https://bigmodel.cn/usercenter/proj-mgmt/apikeys
+现在智谱还有活动，能直接送 200 万 Token，推荐小白可以直接去智谱官网，免费就能体验。
+macOS 用户
+，在终端里面输入
+open -e ~/.claude/settings.json
+，就会用系统自带的文本编辑器，打开编辑窗口。
+open -e ~/.claude/settings.json
+如果提示文件不存在，就输入这行命令
+，
+mkdir -p ~/.claude && echo "{}" > ~/.claude/settings.json && open -e ~/.claude/settings.json
+然后同样的，
+直接替换 settings.json 里面的内容即可
+，CTRL+S 对文件进行保存。
+关闭终端，然后在自己的工作文件夹里面，以终端打开，输入 claude，我们就能直接进去，来到对话的页面了。
+Windows 用户这里可能还会遇到一个小问题
+，就是对明明已经对 settings.json 文件进行修改了，重新输入 claude，还是提示我要去登录 Claude 账户或者 Anthropic API 账户。
+又一个小插曲
+我们需要在终端输入 notepad $HOME\.claude.json，然后在打开的记事本文件里面，添加或修改下面这一行： "hasCompletedOnboarding": "true",
+notepad $HOME\.claude.json
+"hasCompletedOnboarding": "true",
+到这里，如果你的 API 是可以使用的，我们就能直接在 Claude Code 里面进行对话了。
+一般来说，我们会在一个专门的工作文件夹里面，来启用 Claude Code。
+这一点在 macOS 上更加明显，我们必须不断赋予 Claude Code 访问文件夹的权限，如果是在默认的文件夹里，Claude Code 生成的和处理的内容，相对来说会杂乱一点。
+macOS 同样可以右键在终端里面打开，或者直接把文件夹，拖拽到在 dock 栏的终端应用 Logo 上。
+到这里，Claude Code 基本上就配置完成了，现在我们可以让它来真的做点其他 AI 做不到的工作。
+如果你想使用其他的 API，例如 MiniMax 2.1，在他们的 https://platform.minimaxi.com/docs/guides/text-ai-coding-tools 开放平台文档中心， 也有具体的指引，同样是获取 API 之后，
+修改 settings.json 文件即可
+。
+https://platform.minimaxi.com/docs/guides/text-ai-coding-tools
+{   "env": {
+"ANTHROPIC_BASE_URL": "https://api.minimaxi.com/anthropic",   "ANTHROPIC_AUTH_TOKEN": "",
+"API_TIMEOUT_MS": "3000000",
+"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
+"ANTHROPIC_MODEL": "MiniMax-M2.1",
+"ANTHROPIC_SMALL_FAST_MODEL": "MiniMax-M2.1",
+"ANTHROPIC_DEFAULT_SONNET_MODEL": "MiniMax-M2.1",
+"ANTHROPIC_DEFAULT_OPUS_MODEL": "MiniMax-M2.1",
+"ANTHROPIC_DEFAULT_HAIKU_MODEL": "MiniMax-M2.1"
+}   }
+把这些文件，替换掉之前的 settings.json 文件，就可以切换到 MiniMax 的模型。
+让 AI 真的干点活
+首先是聊天，我们现在可以在 Claude Code 里面，要求它帮助我们对文件进行处理，或者下载等。
+例如，我们从 YouTube 上随便找了一个视频，然后复制视频链接，直接丢给 Claude Code，要求他下载下来。
+上下滑动查看更多内容
+其实可以看到，一开始 Claude Code 会一直报错，「command not found」，一直在提示没有对应的命令，但是 Claude Code 会自动进行处理，帮助我们下载并且安装好这些对应的库。
+其中视频下载 yt-dlp 这个库，以及多媒体处理的 ffmpeg 库，我们之前没有安装，Claude Code 都会安装好，然后来下载和处理视频文件。
+但是这里 ffmpeg 使用的是 AV1 编码，有些设备可能会解码不了，这个时候，我们可以直接要求 Claude Code 重新对视频进行编码，以符合更多设备的播放适配。
+对其他文件的处理也是这样，例如我这里有一个 PDF，我需要它帮我分页，每一页都保存为一个单独的 PDF 文件和一个 PNG 图片格式的文件，Claude Code 会自动调用对应的 PDF 库来帮我们处理。
+上下滑动查看更多内容
+除了这些在本地进行的操作，
+Claude Code 也可以通过编辑 CLAUDE.MD 来修改我们的记忆
+，这些功能和前几天推出的 Cowork 是一样，所以，你现在已经有了一个免费的 Cowork 了。
+接下来是重头戏，Skills 来了。
+安装 SKill 特别容易，也是一句命令就能解决。就拿 Claude 官方的 Skills 库来进行说明，它对每个库的介绍，首先都是一句安装命令，我们复制这行命令到终端，
+npx skills add https://github.com/remotion-dev/skills --skill remotion-best-practices
+Windows 可能会提示不允许运行任何脚本
+，我们可以使用管理员模式打开终端，输入命令 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser，表示允许运行自己编写的脚本，
+或者直接使用 CMD，而不是 PowerShell 来运行。
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+搜索 CMD，打开，输入 y 表示 yes 确定，然后可以选择要安装到哪些应用，选择是否全局安装或只是某个项目，一般我会选择全局安装，如果这个 Skills 不是针对某个特定项目，此外的设置，如安装位置等按照推荐来，直接 Enter，等待安装完成就行。
+使用 CMD 和 PowerShell 终端来进行安装
+安装完成后，输入 claude，进入 Claude Code，然后斜杠 /，我们就能看到已经安装的两个 Skills，一个是 remotion-best-practices，一个是 web-design-guidelines。
+除了通过斜杠 / 来启用对应的 Skills，在 Claude Code 里，它也能自动调用对应的 Skills 来完成我们下达的任务。
+和那些 Claude Code 自动安装的库不同，Skills 更像是一个工作流，例如 Claude 官方也给出了一些针对 PDF 文件处理的 Skill。在这个 Skill 里面，不仅仅包含此前提到的 PDF 处理工具，还有更具体的工作流，来应对各种关于 PDF 的任务。
+那么，什么时候需要用到 Skills，还是直接通过提示词，让 Claude Code 自己去找对应的库就好；怎么用好 Skills 又是一门新的功课。
+任何可以被总结出一套工作流的任务，我们都可以让 Skills 来处理。尤其是那些 AI 还没有办法，凭借自己的知识，自动总结出工作流的任务。
+像那些句子翻译之类的工作，AI 早已掌握了不同语言翻译的流程，不需要我们再赋予它什么角色，只是用简单的一两句提示词，大部分的 AI 都能翻译得很好，
+这个时候再用一个 Skills 来做翻译，就有点画蛇添足。
+但是翻译可以被包装到一个更大的 Skill 里面，例如需要翻译为特定的格式、排版、以及文风要求；还有对不能直接复制、包含各种图表论文的 PDF 做翻译……
+这些每一次都需要我们跟 AI 说好该如何处理的任务，现在就能用 Skills 来解决。
+最近做视频的 Skill 非常火，我们也直接让它来做一个 Claude Code 安装教程视频。
+这效果我觉得是有点吹捧 Remotion 的能力了，很明显就是先做了一个网页，然后再把这个网页渲染成视频。不过这个概念倒是挺新鲜的，如果能对提示词再调整一下，或许会有一些不一样的成品。
+生视频没问题，生图就更不在话下。我们还可以让它生成一张 Canva 的设计图，不需要先输入斜杠 / 唤起 Skills，我们输入的提示词，就能自动触发到相关的 Skills 的使用，Claude Code 会询问我们是否要使用 canva-design 这个 skill。
+在 skill.md 的文档里面，也会有描述，用来告诉 Agent 什么时候可以唤起该 Skill。
+这个 2.35:1 的封面，设计感是在线的，就是有点太简洁风格了。
+直接处理电脑文件，有优点，也有很明显的缺点，有时候无预警的删除那些本来就有用的文件，是社交媒体上，对 Claude Code 这类产品，最常见的控诉。
+开启 Plan mode 后会有提示显示「plan mode on」
+有一个小 Tips，就是我们在使用 Claude Code 时，
+可以按 shift+tab 切换到 Plan Mode，计划模式。
+在计划模式下，Claude Code 不仅会保持为「只读模式」，对电脑文件不做任何操作，只是先给出执行的计划；此外，它也会比普通模式有更多的思考。
+虽然 Claude 官方是推荐我们在多步骤实现、代码探索和交互式开发等项目上使用 Plan Mode，但我们的使用体验是，一般任务开着，也不会有额外的影响。
+和这个缺点一样，Claude Code 并不是面向一般用户的产品，就连 Skills 也是。
+我们在安装 Skills 时，如果你的电脑上，本来就已经安装了这些编程工具，就看到它能选择不同的 Agents，
+有 OpenCode、Cursor、字节的 Trae、腾讯的 CodeBuddy、Gemini CLI 等等工具
+。
+这些工具都是面向开发者设计的，现在能从代码圈里走出来，或许一方面也是证实了 AI 时代，这种工具带来的差异，会越来越小。
+每个人都可以拿起一个称手的工具，造出轮子，组装成汽车，然后开着这辆车，带我们去一些未曾抵达的地方。
+未来 APPSO 会带来更多的 AI 时代的工具指南，我们的线下活动 AIDONE 也在持续更新，和我们一起去发现和体验，更好用的明日产品。
+欢迎加入 APPSO AI 社群，一起畅聊 AI 产品，获取
+#AI有用功
+，解锁更多 AI 新知
+👇
+我们正在招募伙伴
+📮 简历投递邮箱
+hr@ifanr.com
+✉️ 邮件标题
+「姓名+岗位名称」（请随简历附上项目/作品或相关链接）
+更多岗位信息请点击这里🔗

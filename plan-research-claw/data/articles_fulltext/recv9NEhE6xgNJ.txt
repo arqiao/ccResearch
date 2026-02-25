@@ -1,0 +1,402 @@
+# 【Clawdbot 部署指南】从 0 开始打造你的超级 AI 助手
+# URL: https://mp.weixin.qq.com/s/GZ4ZcSLpzZFO98D45UOU2w
+# 日期: 2026-01-30
+# 来源: 微信-小野AI探索之旅
+# 分类: 安装部署 / 通用部署
+# 字数: 6289
+
+一只龙虾的逆袭史 🦞
+前言：为什么是 Clawdbot？
+想象一下：你有自己的 JARVIS，不是在钢铁侠的电影里，而是在你的手机、电脑、甚至企业群里。它能帮你写代码、查资料、管理股票、处理日常任务，而且——最重要的一点——
+它完全属于你
+。
+这就是 Clawdbot 的使命。
+第一章：前世今生 —— Clawdbot 的起源故事
+诞生背景
+Clawdbot 诞生于一个简单的需求：
+把 AI 助手从云端拉回到本地
+。
+市面上的 AI 助手（ChatGPT、Claude 等）虽然强大，但有几个痛点：
+❌ 数据必须上传到云端
+❌ 无法深度集成到你已有的工作流
+❌ 订阅费用随时间累积
+❌ 无法访问本地资源（文件、数据库、内网服务）
+Clawdbot 的设计哲学是：
+你拥有硬件，就应该拥有智能
+。
+核心理念
+本地优先
+：Gateway 跑在你的服务器上，数据不出境
+渠道无关
+：无论 WhatsApp、Telegram、飞书、钉钉，统一接入
+可扩展
+：插件化架构，想加什么功能就写个插件
+单用户视角
+：这是
+你的
+助手，不是 SaaS 服务
+技术演进
+v1.0 时代：WhatsApp 桥接
+最初只是一个 WhatsApp 到 Claude API 的简单转发器
+支持基本的问答功能
+v2.0 时代：多渠道爆发
+新增 Telegram、Discord、Slack 等支持
+引入 Gateway 架构（WebSocket 长连接）
+会话管理系统
+v3.0 时代：生态成熟
+Node 系统支持（iOS/Android 设备作为计算节点）
+Canvas 可视化界面
+技能系统（Skills）
+企业级渠道（飞书、钉钉、企业微信）
+为什么叫 Clawdbot？
+看那只龙虾 🦞 —— 螃蟹的爪子（Claw）象征着
+抓取能力
+：抓取信息、抓取任务、抓取一切。而 "bot" 是机器人的后缀。
+Logo 是一只红色的龙虾，代表
+力量、适应性和硬壳保护（安全）
+。
+第二章：架构解密 —— Clawdbot 如何工作
+整体架构图
+┌─────────────────────────────────────────────────────────────┐
+│                    你的消息渠道                              │
+│  WhatsApp │ Telegram │ 飞书 │ 钉钉 │ Discord │ Slack │ ...  │
+└────────────┬────────────────────────────────────────────────┘
+│
+▼
+┌────────────────────────────────────────────────────────────┐
+│                    Gateway（网关）                          │
+│  - 长连接管理（WebSocket）                                   │
+│  - 消息路由                                                 │
+│  - 会话管理                                                 │
+│  - 插件加载                                                 │
+└────────────┬────────────────────────────────────────────────┘
+│
+├─► AI 模型（Claude、GPT-4、GLM 等）
+├─► 技能系统（Skills）
+├─► 工具调用（Tools）
+└─► 节点系统（Nodes）
+核心组件
+1. Gateway（网关）
+心脏
+，长运行进程，负责：
+管理所有消息渠道的连接
+WebSocket 控制平面（端口 18789）
+消息去重、会话隔离
+插件加载和生命周期管理
+2. Agent（智能体）
+大脑
+，负责：
+理解用户意图
+调用工具和技能
+生成回复
+管理记忆（MEMORY.md、daily notes）
+3. Plugins（插件）
+扩展能力
+，包括：
+渠道插件
+：飞书、钉钉、企业微信等
+技能插件
+：股票分析、天气、Notion 集成等
+工具插件
+：浏览器控制、节点管理等
+4. Nodes（节点）
+分布式能力
+，让手机、平板成为计算节点：
+iOS 节点：Canvas 展示 + 相机/定位
+Android 节点：聊天界面 + 传感器
+未来支持更多平台
+第三章：部署实战 —— 从零开始（云端部署）--强烈推荐
+腾讯云云服务器免费领
+01.玩转Lighthouse｜云上Moltbot（原Clawdbot）一键秒级部署指南
+02.云上Moltbot（原Clawdbot）接入飞书完全指南
+03.云上Moltbot（原Clawdbot）接入钉钉完全指南
+第四章：部署实战 —— 从零开始（本地部署）
+前置要求
+操作系统
+：macOS、Linux、Windows（WSL2）
+Node.js
+：≥ 22.0.0
+网络
+：能访问 GitHub 和 AI 模型 API
+飞书/钉钉
+：需要有开放平台账号（可选）
+安装步骤
+步骤 1：安装 Clawdbot
+# 使用 npm 安装（推荐）
+npminstall-g clawdbot@latest
+# 或使用 pnpm
+pnpmadd-g clawdbot@latest
+步骤 2：运行配置向导
+clawdbot onboard --install-daemon
+这个向导会引导你：
+✅ 配置 Gateway（端口、认证）
+✅ 创建工作区（workspace）
+✅ 配置 AI 模型（Claude、GPT-4 等）
+✅ 设置消息渠道（WhatsApp、Telegram 等）
+✅ 安装系统服务（开机自启）
+步骤 3：启动 Gateway
+# 前台运行（调试用）
+clawdbot gateway --verbose
+# 或使用系统服务（后台运行）
+systemctl --user start clawdbot-gateway.service  # Linux/macOS
+brew services start clawdbot-gateway               # macOS (Homebrew)
+步骤 4：验证安装
+# 检查状态
+clawdbot status
+# 测试连接
+curl http://127.0.0.1:18789/health
+访问控制面板：http://127.0.0.1:18789/
+第五章：飞书对接 —— 企业级 AI 助手
+为什么选择飞书？
+✅
+企业级应用
+：大多数公司都在用
+✅
+丰富的 API
+：机器人能力强大
+✅
+多维表格
+：适合数据持久化
+✅
+群聊 @机器人
+：自然的交互方式
+配置步骤
+步骤 1：创建飞书应用
+登录 飞书开放平台
+点击"创建企业自建应用"
+填写应用信息：
+应用名称：例如"贾维斯"
+应用描述：个人 AI 助手
+应用图标：上传龙虾图标 🦞
+步骤 2：配置应用权限
+进入"权限管理"，开启以下权限：
+权限名称
+权限 ID
+用途
+获取与发送消息
+im:message
+接收和发送消息
+群聊中 @ 机器人
+im:message:group_at_msg
+群聊交互
+以机器人身份发送
+im:message:send_as_bot
+主动发消息
+获取群组信息
+im:chat
+读取群信息
+步骤 3：配置事件订阅
+进入"事件订阅"，配置：
+订阅事件
+：
+im.message.receive_v1
+- 接收消息事件
+选择接收方式
+：
+✅
+使用长连接接收消息
+（推荐，无需公网服务器）
+加密 Key
+：
+记录下"Encrypt Key"（如果启用）
+步骤 4：获取凭证
+进入"凭证与基础信息"，记录：
+App ID
+：类似
+cli_xxxxxxxxxxxxx
+App Secret
+：点击"查看"复制
+步骤 5：配置 Clawdbot
+# 方式 1：使用向导（推荐）
+clawdbot onboard
+# 选择飞书通道，输入 App ID 和 App Secret
+或手动编辑配置：
+# 编辑配置文件
+vi ~/.clawdbot/config.yaml
+添加飞书配置：
+channels:
+feishu:
+enabled:true
+appId:"cli_xxxxxxxxxxxxx"
+appSecret:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+步骤 6：重启 Gateway
+# 重启服务
+systemctl restart clawdbot-gateway.service
+# 或如果前台运行，按 Ctrl+C 停止后重新启动
+clawdbot gateway
+步骤 7：添加到飞书群聊
+打开飞书客户端
+进入目标群聊
+点击群设置 → "添加机器人" / "添加应用"
+搜索你的应用名称（例如"贾维斯"）
+添加到群聊
+步骤 8：测试交互
+在群里 @机器人，例如：
+@贾维斯 你好
+@贾维斯 帮我分析一下 AAPL 股票
+@贾维斯 今天天气怎么样
+飞书高级配置
+自定义回复前缀
+channels:
+feishu:
+enabled:true
+appId:"cli_xxxxxxxxxxxxx"
+appSecret:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+activation:"always"# 始终响应，不需要 @
+第六章：钉钉对接 —— 阿里生态集成
+为什么选择钉钉？
+✅
+阿里系企业首选
+✅
+强大的机器人能力
+✅
+与钉钉文档集成
+配置步骤
+步骤 1：创建钉钉应用
+登录 钉钉开放平台
+进入"应用开发" → "企业内部开发"
+点击"创建应用"
+选择"机器人"类型
+步骤 2：配置应用信息
+应用名称
+：例如"贾维斯"
+应用描述
+：个人 AI 助手
+应用图标
+：上传龙虾图标
+步骤 3：获取凭证
+在"应用信息"中记录：
+AppKey
+（Client ID）
+AppSecret
+（Client Secret）
+步骤 4：配置机器人权限
+在"权限管理"中开启：
+权限名称
+权限 Code
+读取群聊消息
+im:chat:readMsg
+发送群聊消息
+im:chat:sendMsg
+读取用户信息
+contact:user.base:readonly
+步骤 5：配置消息接收
+钉钉有两种方式：
+方式 1：Webhook（需要公网服务器）
+在"消息接收"中配置：
+推送 URL
+：
+https://your-domain.com/dingtalk/webhook
+Token
+：自动生成
+AES Key
+：自动生成
+方式 2：轮询模式（Clawdbot 推荐）
+Clawdbot 的钉钉插件支持主动拉取消息，无需公网服务器。
+步骤 6：配置 Clawdbot
+clawdbot onboard
+# 选择钉钉通道
+# 输入 AppKey 和 AppSecret
+或手动配置：
+channels:
+dingtalk:
+enabled:true
+appKey:"dingxxxxxxxxxxxx"
+appSecret:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+步骤 7：添加到钉钉群聊
+打开钉钉客户端
+进入群聊 → 群设置
+点击"群机器人" → "添加机器人"
+选择"自定义机器人"
+搜索你的应用名称并添加
+步骤 8：测试
+在群里 @机器人：
+@贾维斯 帮我查一下今天的日程
+@贾维斯 分析一下 TSLA 股票
+第七章：实战案例 —— 股票分析助手
+需求
+老板想要一个能实时分析股票的助手，支持：
+技术指标分析（RSI、MACD、KDJ）
+买卖建议评分
+持仓管理（Excel + 飞书多维表格）
+解决方案
+1. 安装 stock-master 技能
+cd ~/.clawdbot/skills
+git clone https://github.com/EagleF6432614/stock-master.git
+2. 安装依赖
+cd ~/.clawdbot/skills/stock-master
+pip install-r requirements.txt
+3. 配置文件
+cp config.example.json config.json
+cp feishu_config.example.json feishu_config.json
+编辑
+config.json
+：
+{
+"portfolio_path":"./my_portfolio.xlsx",
+"feishu_config_path":"./feishu_config.json"
+}
+4. 飞书多维表格集成
+编辑
+feishu_config.json
+：
+{
+"APP_ID":"cli_xxx",
+"APP_SECRET":"xxx",
+"APP_TOKEN":"xxx",
+"TABLE_ID":"tblxxx"
+}
+5. 使用示例
+在飞书群聊中：
+@贾维斯 分析 AAPL 股票
+# 输出示例：
+📊 AAPL (Apple Inc.)
+当前价格: $178.32 (+1.2%)
+评分: 6/10 ✅ 强烈买入
+技术指标:
+- RSI(14): 32.5 ⚠️ 超卖
+- MACD: 金叉，看涨
+- KDJ: K线(45) > D线(38)，买入信号
+建议:
+建议仓位: 30%
+止损价: $172.50
+目标价: $185.00
+风险提示:
+技术分析仅供参考，不构成投资建议。
+第八章：故障排查
+问题 1：Gateway 无法启动
+# 检查端口占用
+lsof-i :18789
+# 检查日志
+journalctl -u clawdbot-gateway.service -f
+# 重试
+clawdbot gateway --force
+问题 2：飞书收不到消息
+检查清单：
+✅ App ID 和 App Secret 是否正确
+✅ 权限是否全部开启
+✅ 事件订阅是否配置
+✅ 机器人是否添加到群聊
+✅ Gateway 日志是否有错误
+问题 3：AI 模型调用失败
+# 检查模型配置
+clawdbot status --verbose
+# 测试模型连接
+clawdbot agent --message"Hello"--thinking high
+结语：AI 助手的未来
+Clawdbot 不只是一个工具，它是一种
+范式转移
+：
+从"使用 AI 服务"到"拥有 AI 能力"
+以前，你需要订阅 ChatGPT、使用各种 SaaS 产品。现在，你可以在自己的服务器上运行一个同样强大的助手，它：
+📱 在任何渠道响应你
+🔒 保护你的数据隐私
+🧠 学习你的偏好和习惯
+🚀 随时扩展新能力
+这就是 Clawdbot 的愿景：
+AI 能力民主化
+。
+现在就开始吧！
+npminstall-g clawdbot@latest
+clawdbot onboard
+欢迎来到 AI 助手的新纪元。🦞

@@ -1,0 +1,102 @@
+# GitHub 狂揽 12K Star！把 OpenClaw 以及所有 Code Agent 工具装进一个界面！
+# URL: https://mp.weixin.qq.com/s/36apLqWZagO1Q9OR2MpU4g
+# 日期: 2026-02-08
+# 来源: 微信-开源星探
+# 分类: 配置与技巧 / 
+# 字数: 2564
+
+最近 Claude Code、Gemini CLI、Kimi CLI 等等，这些命令行工具确实强，但对于习惯了图形界面的用户来说，要在黑乎乎的终端里来回切换，体验确实是割裂的。
+如果你开了多个终端去用不同的 Code CLI 去执行不同的业务需求，那就需要不断地切换，不断地复制粘贴，稍微一走神，就忘了刚才那个命令是在哪个窗口执行的。
+而且，一旦关掉终端，所有的上下文记忆瞬间灰飞烟灭。
+直到我昨天在 GitHub 上发现了这个 1.2 万人收藏的 Cowork 项目——
+AionUi
+。
+GitHub 上那个飙升的 Star 数（12K+）证明了一件事：
+天下苦 CLI 久矣
+。
+AionUi 不仅仅是一个 UI 壳，它实际上是一个多 Agent 编排系统。它让不同的大模型在同一个工作台上“开会”，这就非常有意思了。
+兼容万物，它天生适配 Claude Code、Gemini CLI、OpenCode、Qwen Code、Kimi CLI 等主流工具，可搭配实现各种
+“模型组合拳“
+。
+最新版本直接集成
+OpenClaw
+，可以通过 AionUI 启用 OpenClaw 来执行任务。提供更强大的任务处理和自动化功能。
+项目介绍
+AionUi
+是一个本地优先、开源免费的
+AI Cowork（协作）
+平台。
+它不是又一个套壳的 Chat 网页，而是一个系统级的 GUI 容器。
+它的核心使命，是把那些散落在终端里、难以管理的命令行 AI 工具（CLI Agents），统一收纳到一个现代化的图形界面中。
+如果说 Claude Cowork 让 Claude Code 更易用，那么
+AionUi
+则是你所有命令行 AI 工具的 Cowork 平台。
+Gemini CLI、Claude Code、Codex、Qwen Code 等命令行工具虽然强大，但存在通用痛点：对话无法保存、单会话限制、文件操作繁琐、只能使用单一模型。
+AionUi 为这些命令行工具提供统一的 Cowork 能力：
+•
+统一平台
+：一个界面管理所有命令行 AI 工具，无需切换；内置 Gemini CLI，下载即用且完全免费
+•
+多工具支持
+：不仅支持 Claude Code，还支持 Gemini CLI、Codex、Qwen Code 等
+•
+跨平台
+：macOS、Windows、Linux 全平台支持
+•
+远程访问
+：你的 24/7 AI 助手，随时随地访问，完全免费
+•
+多模型切换
+：在同一个界面中灵活切换不同模型，满足不同任务需求
+•
+实时预览
+：9+ 种格式可视化预览，AI 生成的文件立即查看效果
+•
+本地数据安全
+：所有对话和文件保存在本地，数据不离开你的设备
+核心能力展示
+1、统一图形界面（多代理模式）
+这是 AionUi 最直观、也是最炸裂的能力。
+内置 Gemini CLI，下载即用，无需额外安装；如果你已经安装了 Gemini CLI、Claude Code、CodeX、Qwen Code 等命令行工具，AionUi 会自动检测并为它们提供统一的图形界面。
+对话保存在本地，支持多会话并行，每个会话独立上下文。
+2、7×24 小时 AI 助理
+这个有点像 OpenClaw（Clawdbot）一样，是一个有执行力的 Agent，而不仅仅是一个问答机。
+支持从任何设备、任何地方访问 AionUi！随时随地通过 WebUI 或 Telegram 使用你的 AI 工具。
+这一点还是和 OpenClaw 的广度集成还是有差异的，不过还在新版本已经集成了，这就不是问题了。
+同时它内置了定时任务系统，设置好定时任务后，AI 助手会按照你设定的时间自动执行，真正实现 7×24 小时无人值守。
+3、智能文件管理 (AI Cowork)
+这跟目前的 Claude Cowork 以及最新的天工首个 Windows Cowork 工具作用一样。
+都可以进行批量重命名、自动整理、智能分类、文件合并等桌面任务。
+4、预览面板（AI 生成效果快速查看）
+对 PDF、Word、Excel、PPT、代码、Markdown、图片、HTML、Diff 等格式可直接在对话中可视化预览。
+且实时追踪、可编辑。
+5、AI 图像生成与编辑
+智能图像生成、编辑和识别它也支持，由 Gemini 驱动。
+6、个性化界面定制
+自己写 CSS 代码给 AionUi 设计界面，让你的交互界面独一无二。
+7、多任务并行处理
+开多个对话、任务不混乱、记忆独立、效率翻倍。
+快速入手
+AionUi 支持跨平台，Windows、Macos、Linux 三大主流 PC 端都可使用。
+MacOS 支持一键命令安装：
+brew install aionui
+当然也可以更其他平台一样，下载指定版本的离线安装包，一键安装即可使用。
+安装完成后，启动默认界面就是 Gemini CLI 模式，这是 AionUi 的内置 Agent。
+AionUi 还支持多 Agent 模式，它会自动识别到你本地安装了哪些 Code CLI 工具，然后配置好 AI 模型就能直接使用了。
+如果你是下面这些人之一，AionUi 非常值得你花时间试试：
+• 重度使用 Claude Code/Gemini CLI 等多个 Code Agent 用户
+• 想让多个 AI 协作而不是轮流问
+• 需要本地、私有、可控的 AI 工具
+• 想把 AI 变成长期生产力，而不是偶尔用用
+尤其适合：已经进入 Agent 阶段，但还缺一个稳定工作台的人。
+写在最后
+AionUi 并没有发明新的模型，也没有造轮子。可以说是目前开源“人机协作”的最佳形态之一。
+它只是非常清醒地做了一件事：
+把“零散的 AI 能力”，组织成“可以长期协作的系统”。
+填补了“硬核命令行工具”和“普通用户”之间的鸿沟。如果你手头有 Claude Code 或 Kimi CLI、Codex 的权限，但苦于在终端里操作太麻烦，AionUi 是必装的。
+GitHub：
+https://github.com/iOfficeAI/AionUi
+如果本文对您有帮助，也请帮忙点个
+赞👍 + 在看
+哈！❤️
+在看你就赞赞我！

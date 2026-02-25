@@ -1,0 +1,27 @@
+# ClawdBot不支持微信怎么办？曲线救国的方式来了
+# URL: https://mp.weixin.qq.com/s/F4vcD6n34FCDmYIZiX6Rqw
+# 日期: 2026-01-27
+# 来源: 微信-AGI Sir
+# 分类: 生态集成 / 
+# 字数: 473
+
+ClawdBot这么多通讯方式，不支持微信怎么办？曲线救国的方式来了
+1. 为什么在微信里拥有 ClawdBot？
+虽然 Telegram 体验极佳，但微信才是我们的“生活基地”。通过
+WeChat2TG
+桥接，你不需要翻墙切 App，就能在日常聊天中：
+让 AI 帮你总结长达 100+ 条的群聊精华。
+语音回复微信，AI 自动整理成待办并同步日历。
+通过微信文件传输助手，直接给 AI 下达复杂任务。
+2. 核心原理：完美的“曲线救国”
+简单来说，我们建立了一个双向传送门：
+微信端：
+负责用户消息接收和发送。
+WeChat2TG：
+那个辛勤的搬运工，让两端实时互通。
+Telegram 端：
+负责ClawdBot消息接收转发。
+3. 保姆级搭建步骤（在此处插入信息图）
+- 先参照官方教材安装配置好clawdbot并接入telegram
+把以下项目链接发送给clawdbot，让其指导安装，有什么不清楚的深度沟通
+https://github.com/finalpi/wechat2tg/blob/wx2tg-v3/README_zh.md

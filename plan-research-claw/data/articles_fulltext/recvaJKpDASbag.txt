@@ -1,0 +1,85 @@
+# Clawdbot 教程 01：模型的配置和切换
+# URL: https://mp.weixin.qq.com/s/qlbCkX2P_efd2WK32BlC3Q
+# 日期: 2026-02-01
+# 来源: 微信-歸藏的AI工具箱
+# 分类: 安装部署 / 通用部署
+# 字数: 1686
+
+今天终于有时间配置一下我专门为 Clawdbot 买的 Macmini，刚好
+MoltBook 火了玩一下。
+没想到被模型配置整整卡了一下午，都给我整麻了。
+这里做个笔记，你如果也被这个事情困扰可以参考一下我的做法。
+配置模型时到处报错的核心就两个问题：
+命令行配置和 URL 修正
+。
+配置模型优先用 openclaw configure 命令
+这是最省事的方法，能解决大部分配置问题。
+直接在终端输入：
+openclaw configure
+它会问你几个问题：
+▸ 本地还是远程？选本地
+▸ 要配置什么？选模型
+▸ 模型选择完了之后输入你的 API Key
+模型选择这里有个坑
+如果你要配置 Minimax M2.1，就选 Minimax。
+如果你要配置 Kimi K2.5，就选 moonshot AI。
+但是注意：
+▸ Kimi 有 coding plan 选项，可以直接选
+▸ Minimax 没有 coding plan 选项，即使你买的是 coding plan 会员，也要选 Minimax 本身
+选完模型后，会弹出一堆选项，亚马逊、谷歌什么的一大堆。
+不用慌，直接按方向键往下拉，找到左侧已经高亮的那个选项（比如 Minimax 或 Kimi coding），回车就行。
+国内外版本的区别，这是最大的坑。
+Minimax 有两个选项：
+▸ minimax-cn（国内版）
+▸ minimax（海外版）
+如果你买的是国内的 coding plan 会员，选 cn。如果是海外的，选不带 cn 的。
+选错了怎么办？往下看。
+改配置文件的方法
+如果 openclaw configure 还是不行，或者选错了国内外版本，就得手动改配置文件。
+配置文件位置：/Users/你的用户名/.openclaw/openclaw.json
+打开这个文件，找到 baseURL 这一行。
+URL 修正
+国内和海外的模型用的是两个不同的 URL，这是大部分人配置失败的原因。
+比如 Minimax：
+▸ 国内版：
+api.minimaxi.com
+▸ 海外版：api.minimax.io
+如果你配置完了不能用，大概率是 URL 错了。去对应模型的官方文档里找正确的 URL，改掉就行。
+openclaw.json 还有个参数要注意：
+agents 里面的 fallbacks，这里的模型切换了才会生效。
+如果你都做完了还是有问题的话，看一下你切换的模型这里有没有写。
+没有的话可以加一下。
+模型切换
+配置好以后，切换模型很简单。
+在 TUI 界面里输入：
+/model
+对了 TUI 的启动命令是：
+openclaw tui
+然后搜索你要切的模型名字，比如搜 "Kimi"，第一个结果就是 Kimi for coding，回车就切换了。
+切换模型的建议
+切换模型前，建议先用 /new 命令开个新窗口，再切换。这样不容易出问题。
+no output 问题，这是我下午折腾最久的问题。
+切换模型后，你打个"你好"，它返回 no output。我
+以为是配置失败了，其实不是
+。
+no output 的意思是：输出在其他环境里了。
+可能是：
+▸ Web 环境（claude.ai）
+▸ Telegram bot
+▸ 其他你配置过的环境
+所以看到 no output 不要慌，去其他环境试一下。如果其他环境能用，说明配置是成功的，只是输出位置不对。
+三个主流的国产模型 openclaw 目前都支持。
+我三个都配置了，都能正常工作：
+▸ Kimi 用的国内版
+▸ Minimax 用的海外版
+▸ GLM 用的海外版
+总结一下
+配置 Clawdbot 国产模型的核心就三步：
+1.
+优先用 openclaw configure 命令配置
+2.
+如果不行，手动改配置文件里的 baseURL
+3.
+切换模型用 /model 命令
+看到 no output 不要慌，去其他环境试试，可能只是输出位置不对。
+今天的内容就到这里，如果觉得有帮助的话可以给我点个赞👍，或者转发给需要的朋友。

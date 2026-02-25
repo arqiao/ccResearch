@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -NoProfile -Command \"$folders = @\\(''Users'',''Program Files'',''Program Files \\(x86\\)'',''ProgramData'',''Windows'',''NVIDIA'',''AppData'',''360Rec'',''360SANDBOX'',''inetpub'',''HnAppDownload'',''Drivers''\\); foreach\\($f in $folders\\){ $p = ''C:\\\\'' + $f; $s = 0; Get-ChildItem $p -Recurse -Force -EA SilentlyContinue | ForEach-Object { $s += $_Length }; $g = [math]::Round\\($s/1GB,2\\); Write-Output \\(''{0,8} GB  {1}'' -f $g, $f\\) }\")",
+      "Bash(powershell.exe:*)",
+      "Bash(cmd /c \"D:\\\\workspace\\\\cc-work\\\\run_scan.bat\")",
+      "Bash(where du:*)",
+      "Bash(du:*)",
+      "WebFetch(domain:claude.whaty.org)",
+      "Bash(curl:*)",
+      "Bash(python -c:*)",
+      "Bash(python -u -c:*)",
+      "Bash(python -X utf8 -c:*)",
+      "Bash(python main.py:*)",
+      "Bash(python _check_fails.py:*)",
+      "Bash(python _debug_html.py:*)",
+      "Bash(dir:*)",
+      "Bash(gh auth status:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(more:*)",
+      "Bash(python3:*)",
+      "Bash(where:*)",
+      "Bash(D:/Python/Python313/python.exe -c:*)",
+      "Bash(python:*)",
+      "Bash(git -C \"D:/workspace/cc-work/plan-research-claw/site\" diff --stat)",
+      "Bash(git -C \"D:/workspace/cc-work/plan-research-claw/site\" add assets/i18n.js articles/articles_data.js articles/categories.js articles/index.html assets/nav.js assets/style.css config/index.html deploy/index.html index.html integration/index.html practice/index.html product/index.html trends/index.html)",
+      "Bash(git -C \"D:/workspace/cc-work/plan-research-claw/site\" commit -m \"$\\(cat <<''EOF''\nfeat: 添加国际化支持与响应式优化\n\n- 新增 i18n.js 支持中英文切换\n- 语言切换改为下拉菜单样式\n- 移动端导航改为汉堡菜单\n- 精选文章入口移至页面内容区右上角\n- 所有页面适配响应式布局\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"D:/workspace/cc-work/plan-research-claw/site\" push origin main)"
+    ]
+  }
+}

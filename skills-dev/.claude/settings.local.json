@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh:*)",
+      "Bash(powershell.exe -Command \"ssh openclaw-cloud ''ls /usr/lib/node_modules/openclaw/skills/''\")",
+      "Bash(npx clawhub:*)",
+      "Bash(git pull:*)",
+      "Bash(curl -s \"https://mp.weixin.qq.com/s/7cM-vjKkIjPUcq5OF4sb1A\" -o \"D:/workspace/ccResearch/skills-dev/tmp/article_60.html\")",
+      "Bash(curl -s \"https://mp.weixin.qq.com/s/wCoo-h4dEkxLjZo-lOsVmQ\" -o \"D:/workspace/ccResearch/skills-dev/tmp/article_84.html\")",
+      "Bash(curl -s \"https://mp.weixin.qq.com/s/e3tAMsLlV8tQiU7YxkvaFA\" -o \"D:/workspace/ccResearch/skills-dev/tmp/article_80.html\")",
+      "Bash(curl -s \"https://mp.weixin.qq.com/s/Cv2OtWDqnQg2thh4BqAIPw\" -o \"D:/workspace/ccResearch/skills-dev/tmp/article_56.html\")",
+      "Bash(curl -s \"https://mp.weixin.qq.com/s/SvrURky7qos6eAEUSNzZDA\" -o \"D:/workspace/ccResearch/skills-dev/tmp/article_63.html\")",
+      "Bash(curl:*)",
+      "WebFetch(domain:mp.weixin.qq.com)",
+      "Bash(scp:*)",
+      "Bash(# 看看 HTML 中的 script 标签，找 JS 文件 curl -s \"\"https://yitang.top/fs-doc/3a9343610a6d0d5ca4f3b518dbe1de9f/YYhOdq5RfoBxUKxvS3QcGoNDn2e\"\" \\\\ -H \"\"Cookie: utm_content=mhs4ja0iqyf6yhpw3gf; yt_request_id=1762717581106200003501363690; _vway_sessid=1; advanced-frontend=mt66oc6738tj7r36drrhhafmnn; _csrf=d075d8f2f557df671f27e26c5ec4ef6ce6ca057ee9d274bc5620f98e214786e1a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22Hz7ko_JKQwdJLLq0BhitAz0_UqcA98w3%22%3B%7D\"\" \\\\)",
+      "Bash(# 搜索 API 路径模式 curl -s \"\"https://cdn.yitang.top/yitang/prod/main-5826aa5b00.js\"\")",
+      "Bash(tee:*)",
+      "Bash(echo:*)",
+      "Bash(unzip:*)",
+      "Bash(python tmp/fetch_articles.py:*)",
+      "Bash(python3 -c:*)",
+      "Bash(python3:*)",
+      "Bash(wait:*)",
+      "Bash(bash -c 'which curl && curl --version | head -1')",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "WebSearch",
+      "Bash(pip install:*)",
+      "Bash(playwright install:*)",
+      "Bash(python -c \"from playwright.sync_api import sync_playwright; p = sync_playwright\\(\\).start\\(\\); b = p.chromium.launch\\(headless=True\\); page = b.new_page\\(\\); page.goto\\(''https://www.baidu.com''\\); print\\(''Title:'', page.title\\(\\)\\); b.close\\(\\); p.stop\\(\\)\")",
+      "Bash(python:*)",
+      "Bash(export BAIDU_API_KEY=\"REDACTED\")"
+    ]
+  }
+}

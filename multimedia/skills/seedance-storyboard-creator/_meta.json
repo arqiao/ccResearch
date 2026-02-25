@@ -1,0 +1,8 @@
+{
+  "name": "seedance-storyboard-creator",
+  "version": "1.0.0",
+  "description": "电影级分镜提示词创作助手 - 通过引导式问答，将简单想法转化为 Seedance 2.0 专业分镜提示词",
+  "author": "arqiao",
+  "tags": ["seedance", "video", "storyboard", "prompt", "chinese"],
+  "dependencies": []
+}

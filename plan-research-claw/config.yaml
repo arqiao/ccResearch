@@ -1,0 +1,20 @@
+# OpenClaw 知识库配置
+# 路径均相对于项目根目录 (plan-research-claw/)
+
+feishu:
+  auth_config_path: "D:\\workspace\\dev-cc\\1_clawbots\\feishuMSG-xls\\config.yaml"
+  app_token: "FaDrs37IehDTBGtYOmscaco7nQf"
+  table_id: "tbl_openclaw"
+
+scraper:
+  delay: 1.5
+  max_summary_chars: 800
+  save_interval: 10
+
+paths:
+  raw_data: "data/feishu_raw_data.json"
+  enriched_json: "data/articles_enriched.json"
+  cache_dir: "data/articles_cache"
+  excel_path: "output/openclaw_kb.xlsx"
+  fulltext_dir: "data/articles_fulltext"
+  site_articles: "site/articles"

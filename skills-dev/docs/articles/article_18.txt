@@ -1,0 +1,5 @@
+标题: 直接抄！41,454+ 案例的SkillsLM 上线
+日期: 20251115
+原文: https://mp.weixin.qq.com/s/QpUF0gfvGoDuS1_qkVSTXw
+
+ id="js_content" style="visibility: hidden; opacity: 0; "> 最近新上线了一个关于Skills的网站SkillsLM（灵感来自NoteBookLM），汇总Github和社区开源的优秀Skill，总共41,454+ ，很多案例拿过来就可以直接抄，SkillsLM还包含了如下的功能： 增强型的搜索功能 良好的中文简介 支持Skill的一键下载 Skill知识点学习和案例演示，目前仍在更新中 线上地址： https://skillslm.com 非常适合于非程序员小白入门的Claude Code官方教程 我为什么不去使用OpenCode？ 一图胜千言！Obsidian 搭配 Excalidraw Skill的全自动图表生成 Notion也坐不住了! 奔现Claude Agent Skills 

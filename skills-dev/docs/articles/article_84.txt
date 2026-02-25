@@ -1,0 +1,254 @@
+标题: 2026年OpenClaw Skills排行榜：Top 20必装清单（附安装顺序）
+
+正文:
+
+装 Clawdbot（现在叫 OpenClaw）不难。难的是装完之后打开一看——1700 多个 Skill，不知道先装哪个。
+我帮你筛了一遍。下面 20 个 Skill 按
+「先打地基 → 再接入口 → 最后扩场景」
+的顺序排好了，跟着装就行。每个都写清楚：
+干嘛用的、适合谁、一句话安装
+。
+开始之前：4 条命令走天下
+OpenClaw 的 Skill 统一通过
+ClawHub
+（官方技能市场）来装。你只需要记住下面这 4 条命令，后面所有 Skill 都是同一个套路：
+安装 ClawHub CLI（只需要装一次）
+npm i -g clawhub
+装完后你的终端就多了一个
+clawhub
+命令，后面装 Skill、搜 Skill、更新 Skill 全靠它。
+搜索 Skill
+clawhub search "日历"
+不确定 Skill 叫什么名字？搜一下就行，支持关键词和自然语言。
+安装 Skill
+clawhub install <skill-slug>
+把
+<skill-slug>
+换成具体的 Skill 名称就行，比如
+clawhub install gmail
+。装完重启一下 OpenClaw 会话，新 Skill 就生效了。
+批量更新已装的 Skill
+clawhub update --all
+一条命令把所有已安装的 Skill 更新到最新版本，省得一个个查。
+懒人方式：直接跟 OpenClaw 说就行。
+比如在对话里说「帮我安装 Gmail skill」，它会自己跑命令完成安装。不想敲命令的，全程用聊天也能搞定。
+记住这 4 条就够了（或者记住「让它自己装」也行）。下面正式开始——
+安全提醒：装 Skill 前请注意
+Skill 本质上是
+让 AI 在你电脑上获得新能力
+，能力越强意味着风险越大。装之前花 30 秒看一眼这几条：
+1. 只装你信任的来源。
+ClawHub 上的 Skill 是开放上传的，任何人都可以发布。优先选择下载量高、维护活跃、有 GitHub 仓库可查的 Skill。不认识的 Skill 先看一眼它的
+SKILL.md
+，确认没有要求执行高风险命令。
+2. 注意权限范围。
+像 Agent Browser（浏览器操作）、Shell（终端命令）这类 Skill 能力很强，意味着它能读写你电脑上的文件、访问你的浏览器会话。建议开启 OpenClaw 的
+确认模式
+，敏感操作（删除文件、发送消息、执行脚本等）会先问你再执行。
+3. 涉及账号授权要谨慎。
+Gmail、GitHub、Notion 等 Skill 需要 OAuth 授权或 API Key。确认你了解授予了哪些权限，不用的 Skill 及时撤销授权。
+4. 定期更新。
+跑一下
+clawhub update --all
+，及时拿到安全补丁和 bug 修复。
+安全意识到位了，下面放心装——
+第一梯队：地基能力（先装这 5 个，不装后面白搭）
+这一批是 OpenClaw 的「底座」，装了它才像个能干活的助理，不装就只是个聊天机器人。
+1、 ClawHub —— 技能市场本身
+技能市场本体，上面已经装过了（
+npm i -g clawhub
+）。后面所有 Skill 的搜索、安装、更新都通过它完成。
+适合：所有人（必装，前置条件）
+2、 Agent Browser —— 网页自动化
+让 OpenClaw 能打开浏览器、登录后台、抓网页信息、填表单、截图、导 PDF。几乎所有「真实任务」最终都要落到浏览器里，这个不装等于断了它的手。
+适合：所有人（必装）
+安装：
+clawhub install browser
+3、 Brave Search —— 联网搜索
+默认的搜索引擎 Skill。装了之后 OpenClaw 能上网查资料、搜新闻、找答案，不再只靠自己脑子里的存货。需要申请一个免费的 Brave Search API key。
+适合：所有人（必装）
+安装：
+clawhub install brave-search
+配置：去 brave.com/search/api 申请 key，选「Data for Search」计划
+4、 Shell —— 终端命令执行
+让 OpenClaw 能在你电脑上跑命令行。文件操作、脚本执行、系统管理全靠它。
+适合：所有人（必装，但注意权限）
+安装：
+clawhub install shell
+5、 Cron / Wake —— 定时任务和提醒
+把 OpenClaw 从「你问它才答」升级成「它主动帮你办事」。每天早上推天气、每周五下午提醒你写周报、每隔 30 分钟检查一次邮件——全靠这个。
+适合：所有人（强烈推荐）
+安装：
+clawhub install cron
+第二梯队：接个入口（选一个你最常用的聊天工具）
+地基打好了，下一步是给 OpenClaw 一个你随时能找到它的「入口」。选你日常最常用的那个就行，不用全装。
+6、 Telegram —— 最推荐的个人助理入口
+轻量、稳定、跨平台，机器人生态成熟。随时给它发消息布置任务，群里 @ 它让它只在被点名时回应。国内外都能用，是社区里用得最多的入口。
+适合：个人用户（首选）
+安装：
+clawhub install telegram
+7、 飞书（Feishu）—— 国内团队首选
+文档、表格、知识库协作一条龙。自动生成周报到飞书文档、更新 wiki、管理云盘文件。国内团队用飞书的直接装这个。
+适合：国内职场用户、团队协作
+安装：
+clawhub install feishu
+或
+npm install @m1heng-clawd/feishu
+8、 Slack —— 企业办公场景
+在特定频道里做「信息汇总助手」，自动生成会议纪要，对接内部流程。外企和海外团队的标配。
+适合：企业用户、外企
+安装：
+clawhub install slack
+9、 Discord —— 团队和社区
+在项目频道里做「值班助理」，自动回答常见问题，帮忙分拣 issue。适合开源社区和项目团队。
+适合：社区运营、开源项目
+安装：
+clawhub install discord
+10、 WhatsApp —— 海外日常高频入口
+把 OpenClaw 塞进你最常用的聊天工具，随手语音或文字提问。如果你日常用 WhatsApp 比微信多，装这个。
+适合：海外用户
+安装：
+clawhub install whatsapp
+第三梯队：生产力场景（按你的工作需求挑）
+前两步搞定，OpenClaw 已经是一个「能上网、能操作电脑、能定时、随时喊得到」的助理了。接下来按你自己的工作场景挑着装。
+11、 Gmail —— 邮件自动化
+自动处理邮件：读、回、归档、搜索，还能帮你起草。五星热度。装了之后每天早上让它扫一遍收件箱，告诉你哪几封需要回，省不少时间。
+适合：邮件重度用户
+安装：
+clawhub install gmail
+配置：需要 OAuth 授权
+12、 Google Calendar —— 日程管理
+管日程、设提醒、智能排会议、下一场会前推送通知。搭配 Cron 用效果更好，相当于你有了一个随时盯着你日历的秘书。
+适合：会议多的职场人
+安装：
+clawhub install google-calendar
+13、 GitHub —— 开发者必备
+创建 Issue、查看 PR、管理仓库。开发者装这个，配合 Agent Browser 可以直接让 OpenClaw 帮你巡检项目。
+适合：开发者
+安装：
+clawhub install github
+配置：需要 Personal Access Token
+14、 Notion —— 知识库和项目管理
+双向同步 Notion 页面，自动整理笔记、更新数据库。创作者和项目经理的好搭档。
+适合：Notion 用户、创作者
+安装：
+clawhub install notion
+15、 Obsidian —— 本地笔记管理
+读写你的 Obsidian vault，帮你整理笔记、打标签、做知识关联。和 OpenClaw 的本地优先理念很搭。
+适合：Obsidian 用户、知识管理爱好者
+安装：
+clawhub install obsidian
+第四梯队：进阶玩法（锦上添花，按兴趣选装）
+到这一步你已经是熟练用户了。下面这几个是让 OpenClaw 从「好用」变「离不开」的扩展。
+16、 Nodes —— 手机设备能力
+截图、录屏、定位、摄像头、推送通知——把 OpenClaw 的触角从电脑延伸到手机。解决「我不在电脑前」的断点。
+适合：需要移动端联动的用户
+安装：
+clawhub install nodes
+17、 Skill Creator —— 自己造技能
+当现成的 Skill 不够用时，你可以把自己的常用流程（比如：日报生成 → 发群 → 归档）封装成一个新 Skill。一次沉淀，反复使用。
+适合：想把重复工作彻底自动化的人
+安装：
+clawhub install skill-creator
+18、 Spotify —— 音乐控制
+语音或文字控制播放、切歌、查歌词。工作时让 OpenClaw 当 DJ，说一句「来点轻松的」就行。
+适合：Spotify 用户
+安装：
+clawhub install spotify
+19、 Home Assistant —— 智能家居中枢
+对接你家里的智能设备：灯、空调、窗帘、摄像头。让 OpenClaw 变成语音管家，一句话控场。
+适合：智能家居玩家
+安装：
+clawhub install home-assistant
+20、 Twitter/X —— 社媒监控和发布
+监控热门话题、自动生成摘要、辅助发帖。自媒体创作者用来追热点、攒素材很方便。
+适合：自媒体运营、社交媒体重度用户
+安装：
+clawhub install twitter
+安装顺序速查表
+怕记不住？照这张表从上往下装就行：
+顺序
+梯队
+Skill
+一句话
+必装？
+1
+地基
+ClawHub
+技能市场，装其他 Skill 的前提
+✅
+2
+地基
+Agent Browser
+网页自动化，断了它等于没手
+✅
+3
+地基
+Brave Search
+联网搜索，不装只能靠记忆
+✅
+4
+地基
+Shell
+终端命令，文件和脚本全靠它
+✅
+5
+地基
+Cron/Wake
+定时任务，从被动变主动
+✅
+6-10
+入口
+Telegram / 飞书 / Slack / Discord / WhatsApp
+选你最常用的那一个
+选一个
+11-15
+生产力
+Gmail / Calendar / GitHub / Notion / Obsidian
+按工作需求挑
+按需
+16-20
+进阶
+Nodes / Skill Creator / Spotify / Home Assistant / Twitter
+锦上添花
+按兴趣
+三条实用建议
+不要一口气全装。 先把第一梯队 5 个 + 一个入口搞定，用两三天跑顺了再加。装太多反而乱。
+注意权限。 Agent Browser 和 Shell 能力很强，也意味着它能在你电脑上做很多事。装之前确认你了解它会获取什么权限，敏感操作建议开确认模式。
+用 Skill Creator 沉淀你自己的流程。 用了一段时间之后，你会发现有些操作每天都在重复。这时候让 OpenClaw 把这套流程封装成 Skill，以后一句话就能触发，这才是最大的效率提升。
+Skill信息整理自 OpenClaw 官方文档、ClawHub、openclawskills.co 及社区推荐，截至 2026 年 2 月。技能持续更新中，安装命令以官方最新文档为准。
+-
+END
+-
+更多关于
+AI工具、Cursor、Skills、MCP相关
+的教程和资讯请持续关注后续分享！
+本文完整版详见公众号：
+未来的回响
+文章精校版参见知识星球：
+AI工具实战派
+【限时开放】
+欢迎加入
+AI工具实战派
+交流群一起学习进步～
+AI编程、AI运营、工具资料分享
+请加入知识星球
+-
+推荐阅读
+-
+【AI编程】
+Cursor+Gitlens再也不用担心频繁重建项目了
+使用Cursor时如何规避AI改坏代码——终极指南
+Cursor编程bug反复改不好⁉️让AI用思维链整理思路
+怎么从Cursor转到Claude Code？配合GLM-4.5的性价比AI编程指南
+【AI设计】
+AI设计对话指南（第一期）：一文掌握20个主流UI组件库，让AI秒懂你的设计意图！
+AI设计对话指南（第二期）：19种UI设计风格速查手册
+AI设计对话指南（第三期）：UI设计提示词指南，减少与AI掰扯
+如何使用Magic MCP生成好看的UI
+如何使用Magic MCP生成好看的UI（第二期）
+如何在Cursor中使用Figma MCP自动进行产品原型设计
+【AI工具
+】
+【2025最全】12个顶级MCP服务器资源汇总，Cursor/Claude/AI开发者必备
+简单介绍一些常用的MCP服务器，快用来提高Cursor干活效率吧

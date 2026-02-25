@@ -1,0 +1,343 @@
+# 需要 Windows 端 OpenClaw?在火山引擎几步搞定
+# URL: https://mp.weixin.qq.com/s/HRoEEEcar0nfkaNA4j5-1g
+# 日期: 2026-02-11
+# 来源: 微信-火山引擎开发者社区
+# 分类: 安装部署 / Windows本地
+# 字数: 3795
+
+点击上方👆
+蓝字
+关注我们！
+随着 OpenClaw 热度持续攀升，如何在 Windows 原生系统下快速、稳定地完成 OpenClaw 部署，也成为众多开发者关注的焦点。通过这种方式的部署，可以让 OpenClaw 和 Windows 的生态以及软件进行结合。
+本文将通过清晰详尽的图文步骤，演示如何在 Windows 上完成 OpenClaw 的环境准备、安装与基础配置，帮助你零门槛上手，让生产力直接拉满。
+针对需要 OpenClaw 的 Windows 版本的客户，火山引擎也上线了相关镜像到
+镜像市场（
+https://market.volcengine.com/goods/detail?goodsId=wysf9000065&detailFrom=2
+）
+，欢迎使用。
+1.安装
+nodejs
+https://nodejs.org/zh-cn/download
+建议勾选下图的选项，安装必要的工具，确保 OpenClaw 的快速成功部署：
+2.安装 git，重启
+Windows
+服务器
+https://demo-bj.tos-cn-beijing.volces.com/Git-2.53.0-64-bit.exe
+3.
+以管理员权限打开 PowerShell,
+验证相关工具已经配置正确
+在
+重启 Windows 服务器
+后，通过管理员权限打开 PowerShell，输入命令后出现以下界面即验证相关工具已经配置正确：
+4. 利用官方命令行安装 OpenClaw
+1. 利用官方一键安装命令进行安装
+iwr -useb https://OpenClaw.ai/install.ps1 | iex
+一键安装命令没有进度展示，建议使用 npm 进行安装
+上图错误代表 Windows 一些必要工具没有安装，可以重新安装 nodejs 并利用安装程序安装工具。
+2. 利用 npm 进行安装
+npm install -g OpenClaw@latest
+OpenClaw onboard --install-daemon
+提示下述文字，安装成功。可以看是进行 OpenClaw 的配置。
+打开配置文件，默认路径如下：
+C:\Users\Administrator.OpenClaw\OpenClaw.json
+拷贝配置并将中文提示的 apiKey，appcli，appSecret 更换为个人相关密钥。
+{
+"meta"
+: {
+"lastTouchedVersion"
+:
+"2026.2.6-3"
+,
+"lastTouchedAt"
+:
+"2026-02-08T13:54:28.361Z"
+},
+"wizard"
+: {
+"lastRunAt"
+:
+"2026-02-08T13:21:11.450Z"
+,
+"lastRunVersion"
+:
+"2026.2.6-3"
+,
+"lastRunCommand"
+:
+"onboard"
+,
+"lastRunMode"
+:
+"local"
+},
+"agents"
+: {
+"defaults"
+: {
+"model"
+: {
+"primary"
+:
+"ark/doubao-seed-1-8-251228"
+},
+"models"
+: {
+"ark/doubao-seed-1-8-251228"
+: {}
+},
+"workspace"
+:
+"/root/.OpenClaw/workspace"
+,
+"compaction"
+: {
+"mode"
+:
+"safeguard"
+},
+"maxConcurrent"
+: 4,
+"subagents"
+: {
+"maxConcurrent"
+: 8
+}
+}
+},
+"models"
+: {
+"mode"
+:
+"merge"
+,
+"providers"
+: {
+"ark"
+: {
+"baseUrl"
+:
+"https://ark.cn-beijing.volces.com/api/v3"
+,
+"apiKey"
+:
+"你的方舟apiKEY"
+,
+"api"
+:
+"openai-completions"
+,
+"models"
+: [
+{
+"id"
+:
+"doubao-seed-1-8-251228"
+,
+"name"
+:
+"doubao-seed-1-8-251228"
+,
+"reasoning"
+:
+false
+,
+"input"
+: [
+"text"
+],
+"cost"
+: {
+"input"
+: 0,
+"output"
+: 0,
+"cacheRead"
+: 0,
+"cacheWrite"
+: 0
+},
+"contextWindow"
+: 200000,
+"maxTokens"
+: 8192,
+"headers"
+: {
+"X-Client-Request-Id"
+:
+"ecs-OpenClaw/0203.1/i-yefbhyvb40ajrd7hxx24"
+},
+"compat"
+: {
+"supportsDeveloperRole"
+:
+false
+}
+}
+]
+}
+}
+},
+"messages"
+: {
+"ackReactionScope"
+:
+"group-mentions"
+},
+"commands"
+: {
+"native"
+:
+"auto"
+,
+"nativeSkills"
+:
+"auto"
+},
+"channels"
+: {
+"feishu"
+: {
+"appId"
+:
+"你的飞书appID"
+,
+"appSecret"
+:
+"你的飞书app密钥"
+,
+"enabled"
+:
+true
+}
+},
+"gateway"
+: {
+"port"
+: 18789,
+"mode"
+:
+"local"
+,
+"bind"
+:
+"loopback"
+,
+"auth"
+: {
+"mode"
+:
+"token"
+,
+"token"
+:
+"6d092a5ebe3d558a0e00186a37934966a10ee248b6fd379c"
+},
+"tailscale"
+: {
+"mode"
+:
+"off"
+,
+"resetOnExit"
+:
+false
+}
+},
+"skills"
+: {
+"install"
+: {
+"nodeManager"
+:
+"npm"
+}
+},
+"plugins"
+: {
+"entries"
+: {
+"feishu"
+: {
+"enabled"
+:
+true
+}
+}
+}
+}
+配置后，如果安装过程中没有开启 gateway，可以通过下述命令安装：
+OpenClaw gateway install
+OpenClaw gateway start
+通过命令行或者浏览器观察服务运行情况：
+5. 飞书机器人的配置
+参考
+https://www.volcengine.com/docs/6396/2189942?lang=zh
+#UYMAmabS
+注意添加权限时需要相对文档额外增加
+contact：contact.base：readonly
+权限。
+{
+"scopes"
+: {
+"tenant"
+: [
+"contact:contact.base:readonly"
+,
+"im:chat:read"
+,
+"im:chat:update"
+,
+"im:message.group_at_msg:readonly"
+,
+"im:message.p2p_msg:readonly"
+,
+"im:message.pins:read"
+,
+"im:message.pins:write_only"
+,
+"im:message.reactions:read"
+,
+"im:message.reactions:write_only"
+,
+"im:message:readonly"
+,
+"im:message:recall"
+,
+"im:message:send_as_bot"
+,
+"im:message:send_multi_users"
+,
+"im:message:send_sys_msg"
+,
+"im:message:update"
+,
+"im:resource"
+],
+"user"
+: [
+"contact:user.employee_id:readonly"
+]
+}
+}
+6. 中继浏览器的配置
+测试成功后，可以通过 OpenClaw 浏览器中继能力进行浏览器能力的使用，具体操作如下：
+开启插件，当插件可以显示为 OK 时，表示中继成功。
+7.
+任务创
+建
+接下来可以通过飞书进行一些定时任务的设置，通过 OpenClaw 的浏览器能力进行微博，Gmail 等控制。
+7.1 微博热点追踪
+微博，当进行设置时，还是需要用户首先协助登陆到微博，后续 OpenClaw 可以进行定时热门微博的推送。
+7.2 新邮件检测
+针对上述监控任务，也可以在 Dashboard 中查看。
+也可以通过登陆 Windows 服务器
+通过
+http://127.0.0.1:18789/cron
+查
+看 cronjob 的
+情况确定是否成功设置。
+点击下方
+阅读原文
+，查看更多操作指南，快速在 Windows
+操作系统
+中部署 OpenClaw。

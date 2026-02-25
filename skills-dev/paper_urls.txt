@@ -1,0 +1,94 @@
+20251018	周六	https://mp.weixin.qq.com/s/n9Q5GuKIUQYS21_wF6YUKQ	Claude Skills 发布：提示词、素材按需加载 
+20251018	周六	https://mp.weixin.qq.com/s/Wtv0sfIf8_ewN2bRwrDmjQ	你好，数字同事！详解Claude Skills：从聊天机器人到专业数字员工 
+20251021	周二	https://mp.weixin.qq.com/s/epIu5Rj643EiAjvORDd97g	不想给 Claude 付费，但想玩 Skills？我用国产模型搞定了 
+20251026	周日	https://mp.weixin.qq.com/s/fgsfa1sHFGAiZGYexYJhkg	瞎咧咧Claude skills，很好用
+20251118	周二	https://mp.weixin.qq.com/s/F9BtGpZNQxLkalg62ayBXw	从《塞尔达传说》到AI Agent：Claude Skills背后的信息分层设计哲学 
+20251223	周二	https://mp.weixin.qq.com/s/84joN_p7LSfC8htu1tKjbQ	GLM-4.7发布后，n8n就不用学了！搭个AI Skills一键生成工作流 
+20260103	周六	https://mp.weixin.qq.com/s/kS2fJo962Aj7pjOAgA0FRQ	Qwen Code新版本支持skill ！生态站队！ 
+20260106	周二	https://mp.weixin.qq.com/s/0WV89hNCPgsa9lZwTLYABg	太狠了！把 Manus 核心秘诀做成 Skills 开源，Claude 瞬间进化！
+20260106	周二	https://mp.weixin.qq.com/s/W_3usxjaRXAWMjQn242cIg	n8n完成率惨淡，Skills翻了10倍 
+20260107	周三	https://mp.weixin.qq.com/s/jUylk813LYbKw0sLiIttTQ	Agent Skills 终极指南：入门、精通、预测 
+20260121	__	https://mp.weixin.qq.com/s/dsEBykjvYsRWLcMEDqVJEw	从入门到用好 Agent Skills，看这一篇就足够了 
+20260109	周五	https://x.com/thedankoe/status/2009320195848872014 	The most important skill to learn in the next 10 years
+20260109	周五	https://mp.weixin.qq.com/s/GS3aFsSKajo_Uk3LAkC_Yw	Claude Skills 入门：一篇文章搞懂 AI 怎么从「嘴替」升级成「打工人」 
+20260109	周五	https://mp.weixin.qq.com/s/FhupomsMZh1TYEX87jkIaQ	Obsidian CEO 亲自下场！3 分钟用 Claudecode skill教你用 AI 画出甄嬛传关系图 
+20260110	周六	https://mp.weixin.qq.com/s/T1id50BmoD6wYx9Q-r1gBw	Claude Skill 快照：给你的 AI 技能迭代加个「后悔药」 
+20260111	周日	https://mp.weixin.qq.com/s/hn4mgJlfxs-9rNpdkm-yGQ	周末两天我用Claude Skills制作了两档 AI 播客 
+20260111	周日	https://mp.weixin.qq.com/s/oq10G4GNDph3bN6tf9qMEA	328个Claude Skills技能，我整理了107页白皮书指南（附获取方式） 
+20260112	周一	https://mp.weixin.qq.com/s/QpUF0gfvGoDuS1_qkVSTXw	直接抄！41,454+ 案例的SkillsLM 上线 
+20260113	周二	http://xhslink.com/o/8HPNquTRTTk	Claude Skills 玩家的超级外挂分享来了
+20260113	周二	https://mp.weixin.qq.com/s/WJjieivijcLedHTR84zk3g	2026 最新 Claude Skills 保姆级教程及实践！ 
+20260113	周二	https://mp.weixin.qq.com/s/nRVVqPaGxWdNqNrUcurSXg	一文带你看懂，火爆全网的Skills到底是个啥 
+20260114	周三	https://mp.weixin.qq.com/s/MnnX4IT1LT4VGohVVxFnRA	牛皮，Antigravity 现在已经支持完整的 Skills 规范！教一下怎么用 
+20260115	周四	https://mp.weixin.qq.com/s/69EJIJtPICDTmbm3PlA9bQ	TRAE SOLO 已支持 Skills！ 
+20260116	周五	https://mp.weixin.qq.com/s/at_IXnZZsa7d0AL_ZPmonA	教你用Agent Skills复现N8N自动生成+发布公众号的流程 
+20260116	周五	https://mp.weixin.qq.com/s/U-8GZ5aqRO51ZDhnNn8BaQ	我至今用到最好的Claude Code Skills，让Agent把重复动作都做成工作流 
+20260118	周日	https://mp.weixin.qq.com/s/Bpi21PryH01qDY1gUO-v1g	这套X+Claude Skill+Obsidian工作流，干掉了我90%的选题焦虑 
+20260118	周日	https://mp.weixin.qq.com/s/M_xFuEOyMIp9TR0afW-CTg	Skills 是短期红利还是长期壁垒？ 
+20260118	周日	https://mp.weixin.qq.com/s/rzdL0XMa9ck_dkBWlfZFNQ	如何用 Claude Skill 做一套会自己干活的知识库？
+20260118	周日	https://mp.weixin.qq.com/s/gEcKenbZef-amiSBYGyLtA	学会了PPTSkills，豆包Kimi都感觉不香了。但90%的人卡在第一步：Gemini NanoBananaPro API国内用不了。这篇帮你全解决（8个坑+国内可用）
+20260119	周一	https://mp.weixin.qq.com/s/mTiWgW3htpV3-yuDstHA1w	为什么 Claude Skills 的爆发点在 2026 年 1 月？ 
+20260119	周一	https://mp.weixin.qq.com/s/6MjzDcMmdLB0719V2-rUNw	手把手教你用Coze Skills，附赠自己的私藏Skills和AI信息源
+20260119	周一	https://mp.weixin.qq.com/s/Fun2jQilHKOSi2isvqXvAw	靠1亿阅读赢马斯克百萬奖金，我把DanKoe人生指南做成了免费Skills 
+20260119	周一	https://mp.weixin.qq.com/s/aNMlgnJUqFFuq6bHa3Vksg	字节全球首发AI技能商店：一句话生成Coze Skills，你的经验直接卖钱 
+20260120	周二	https://mp.weixin.qq.com/s/x9UpqjuYzLb7I2ZZ932bNg	【万字长文】Claude Skills完全指南：从概念到实战 
+20260120	周二	https://mp.weixin.qq.com/s/D1dYt1l5LdHGDZ3UI1HPKQ	论 Skills 的哲学含义 
+20260120	周二	https://mp.weixin.qq.com/s/XvYSV5bquRIufL99RTSXVg	全自动写公众号？我用 Claude Skill 试了一下，这才是 AI 的终极形态 
+20260120	周二	https://mp.weixin.qq.com/s/BqdmL-O-ffzdhXpS-nkS2A	火爆全网的Skills，终于有了最简单的打开方式 
+20260120	周二	https://mp.weixin.qq.com/s/wysLGKUC6kAk3v45yzP50w	都 2026 年了，你还在给每个Coding Agent 单独装Skills么？
+20260121	周三	https://mp.weixin.qq.com/s/1drpuO8sd8Wr8Oaz_1bbbw	【AI辅助设计】Skills系列：一键搞定公众号排版！我用AI写稿+配图+发布的完整魔法 
+20260121	周三	https://mp.weixin.qq.com/s/4pHv1eF7hl1TrRHlDlXreg	我把爆款文章写作方法转入最近发布的 Coze Skill 中了
+20260121	周三	https://mp.weixin.qq.com/s/WNDRJ4s-xSWpT3RtD8IUgA	n8n已死？教你把工作流无损“内化”为 Claude 原生Skills
+20260121	周三	https://mp.weixin.qq.com/s/JER462B3dVYlwVYl6rTmzw	Skills的最正确用法，是将整个Github压缩成你自己的超级技能库。
+20260122	周四	https://mp.weixin.qq.com/s/4nE--b9VeSBZFCri0yE4iQ	教程丨5 步搭建 Claude Skills 内容创作系统（附 Skills 文件包） 
+20260122	周四	https://mp.weixin.qq.com/s/7oOetcKUl5EGK126tf6Jbw	专业团队带你吃透 Skills 核心玩法！Skills 爆改训练营 Day1 回顾 
+20260122	周四	https://b23.tv/GedOB4q	Skills爆改训练营（1）-哔哩哔哩
+20260122	周四	https://b23.tv/8N6tZlq	Skills爆改训练营（2）-哔哩哔哩
+20260122	周四	https://mp.weixin.qq.com/s/3GFqFtQHMzUAJGwaeHEuTA	一文说透 Skills，它与 MCP、GPTs 究竟有何不同？｜附 3 个实用 skills 
+20260122	周四	https://mp.weixin.qq.com/s/HwhdBzD2Sh30U-tTVXeL_A	最近一边学skills一边把童年动漫搓了一遍 
+20260123	周五	https://mp.weixin.qq.com/s/a0JtHZuxLHISdot5Jv6NzA	Obsidian+Claude+Skills 写作思考太爽了，可以一键出图并编辑！（附安装教程）
+20260123	周五	https://mp.weixin.qq.com/s/RpVU-mU8fuSXqjt8WW3S-w	我至今用到最好的Claude Code Skills第二篇，让Agent全学会你看过的工作流 
+20260123	周五	https://mp.weixin.qq.com/s/ZuwblydyOUo_utUUlqQC7w	2026 年的「创业」，就从一个 Skill 开始吧 
+20260123	周五	https://mp.weixin.qq.com/s/TseD-8FS4L7f9kkGRBuXgQ	还在为新年送礼发愁？Coze Skills，定制礼物新玩法！
+20260123	周五	https://mp.weixin.qq.com/s/hCN9UV_R4YVIz9AI6gyOrQ	我们花了两天时间，终于造出了能自我进化的Skills管理器 
+20260123	周五	https://mp.weixin.qq.com/s/0Y6f0wWIIadbRlF3N4sWyw	我做了个Claude Skill：一键复刻任意公众号的排版 
+20260124	周六	https://mp.weixin.qq.com/s/jlogMEUStBbCZEXMeu2VrQ	GLM Coding Plan 太抠了！重写了一个联网搜索Skill 
+20260124	周六	https://mp.weixin.qq.com/s/Cv2OtWDqnQg2thh4BqAIPw	Skills商店来了：5万人在用的Top 10热门Skills，我帮你试了一遍 
+20260124	周六	https://mp.weixin.qq.com/s/2fnnTsbGSrdM_7U3D57BvA	Skills是很火的预制菜，但未来属于专属主厨 
+20260125	周日	https://mp.weixin.qq.com/s/gPh6jEcDsi-mU3olakoXXw	半天上线 agentskill.work：老登程序员的含金量还在上升 
+20260125	周日	https://mp.weixin.qq.com/s/AbpnAJp5agL3W7e_6Ak5vA	无限进化的剧本和分镜？我用skills帮你做到了！！
+20260126	周一	https://mp.weixin.qq.com/s/7cM-vjKkIjPUcq5OF4sb1A	【万字长文】Agent Skills黄金应用原则，都在Anthropic这篇技能创作最佳实践里 
+20260126	周一	https://mp.weixin.qq.com/s/qQk6SxzeKDNZe7br_cSoyw	Skill 创作手记： 我把微信聊天记录通过skill转化成【可搜索的知识库】 
+20260128	周三	https://mp.weixin.qq.com/s/sw-Gr4dfFZPVX_vr271N7w	我做出了给长视频AI配乐的Claude Code Skills，Mureka V8新模型上大分 
+20260129	周四	https://mp.weixin.qq.com/s/SvrURky7qos6eAEUSNzZDA	花一天研究了 565 个 Skills，我的 Clawdbot 比 ChatGPT 更懂我！
+20260129	周四	https://mp.weixin.qq.com/s/FzYISkLYbpv6gVjDlxXWUA	Skill创作手记：3小时将微信聊天记录用Claude提取成【有价值的案例库】-Plus版 
+20260131	周六	https://mp.weixin.qq.com/s/8DwabUPPdOyOCAc_f8pKQw	OpenClaw（Clawdbot） + Kimi 2.5 最新手把手教程，附飞书接入指南和 700+ Skill资源 
+20260131	周六	https://mp.weixin.qq.com/s/5xQ_Ny7kxi9nSo8skVtxng	Macbook+OpenClaw+MiniMax+飞书搭建24小时“数字员工”，3W个技能Skills随你调
+20260202	周一	https://mp.weixin.qq.com/s/qqGIZtKfzFolkB7vqqt_Fg	5.3K Star！OpenClaw 最强“军火库”，700+ Skills，一条命令全能“武装”！
+20260202	周一	https://mp.weixin.qq.com/s/ImoU5KU1MeqjeMgrAqJpEg	Refly V1.1 版本上线，推出首个开源 Agent Skills Builder
+20260203	周二	https://mp.weixin.qq.com/s/bBjFk3t53WPGu6YII6ViGA	普通人能用OpenClaw最快的2种变现方式！（附带教程和专用skills大全）
+20260203	周二	https://mp.weixin.qq.com/s/PLlI-qjbXqEmeJyLAcCKEw	教程丨Codex app不会写代码也能用：把你的工作 SOP 打包成 Codex Skill（附 3 个可直接套用模板）
+20260203	周二	https://mp.weixin.qq.com/s/N2b0AB4kEBg5xdLw8WcbTA	如何打造10000+人爱用的 Skills ？官方分享来了
+20260203	周二	https://mp.weixin.qq.com/s/r3ryXnz8YRncCULcJDNbiQ	书→app的魔法，pdf2skills让书活起来了
+20260205	周四	https://mp.weixin.qq.com/s/8SSXE7SUgm4JJLs0Fg5NSw	40多个Skills，没一个是程序员做的
+20260205	周四	https://mp.weixin.qq.com/s/0sRqZhVACfgqRYgKiJ5msA	实测Lovart新上的设计Skills，我第一次见Agent那么主动的
+20260205	周四	https://mp.weixin.qq.com/s/G8xZBGooZhHSdMTF_dA32A	我靠Lovart Skill实现顶级设计工作流，是时候让AI当设计合伙人了
+20260206	周五	https://mp.weixin.qq.com/s/A5mzSsBgAiVdt3vLtSNZ9A	我把设计公司装AI里了，我用Lovart Skill颠覆你的工作流
+20260207	周六	https://mp.weixin.qq.com/s/S4ScaaFIKMoRT9PA_6wdXw	Claude Agent Team发布第一天，我用它做了个自进化的Skills
+20260207	周六	https://mp.weixin.qq.com/s/6GatyCYacb2NpOdyx_T_qA	一人公司内容创业神器：baoyu-skills 实战指南
+20260207	周六	https://mp.weixin.qq.com/s/JSHFRlzDsplX9z3Bl8MgcQ	Skill创作手记：我把东野圭吾的小说变成了无限流【侦探游戏】
+20260208	周日	https://mp.weixin.qq.com/s/e3tAMsLlV8tQiU7YxkvaFA	OpenClaw 必装的 7 个 Skill，两周后我彻底离不开它了
+20260208	周日	https://mp.weixin.qq.com/s/xt5lDeTHF52yN1zJVVL-pA	SuperAI 编程团队参赛手记 | 全球首场 Claude Agent Skills 黑客松
+20260209	周一	https://mp.weixin.qq.com/s/Do77XbArglvEZyVAw51r5A	Skill 创作手记：Remotion如何把文章一键变成视频
+20260211	周三	https://mp.weixin.qq.com/s/NVJsbclLDuSbF2LtX3Q4dA	9.3k星Skill Seekers：一键把文档变成Claude技能，文档党狂喜
+20260211	周三	https://mp.weixin.qq.com/s/wCoo-h4dEkxLjZo-lOsVmQ	2026年OpenClaw Skills排行榜：Top 20必装清单（附安装顺序）
+20260212	周四	https://mp.weixin.qq.com/s/Mhdh3u_eqYSb77pk-T9bSw	生成超级棒MV的Skills，有点Seedance2.0的味道
+20260212	周四	https://mp.weixin.qq.com/s/hP4BjLtYAkFfhYm_IZ0gzA	我手搓了一个 Seedance2.0 分镜 Skill，效果太顶了，一键生成电影级 Prompt
+20260212	周四	https://mp.weixin.qq.com/s/IkJFZFrbFN4jb1yxEEvS6g	Skill就是新的APP：与一个真正AI Native团队的2小时对话
+20260212	周四	https://mp.weixin.qq.com/s/dsZyciCgFx-UDBYI10y63Q	Claude Agent Skills 万字详解：从零开始，手把手教你给 AI 装上"超能力"
+20260213	周五	https://mp.weixin.qq.com/s/Mkbbqdvxh-95pVlnLv9Wig	飞书聊天直接生视频！OpenClaw × Seedance Skill王炸组合
+20260213	周五	https://mp.weixin.qq.com/s/FbrgkYRqjk8TinloxAsIxw	Skill 创作手记：我花24小时解构聊天记录，让8个Agent告诉我"我是谁"
+20260214	周六	https://mp.weixin.qq.com/s/BWxWSuprbkwoKTZ62EIiOg	一切皆可Agent Skills，无处不在的AI Agent会替代业务流程吗？
+20260214	周六	https://mp.weixin.qq.com/s/4L8rZJVIhnq8rSIym9eY6w	阿里云OpenClaw（Clawdbot）保姆级教程：3步部署+3个必装Skill+5个实战案例，从新手到高手
+20260214	周六	https://mp.weixin.qq.com/s/VjtLUWo32Huh7Zaa8EIgrA	安装了72个Skills后，我的OpenClaw无所不能！
+20260215	周日	https://mp.weixin.qq.com/s/8pVFZQ-NOJKkYtPx7j3IiA	豆包大模型2.0+Claude Skills，3步装好，终于有AI能帮我"看视频做笔记"了！火山引擎全系列可用！

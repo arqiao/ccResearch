@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(curl:*)",
+      "WebFetch(domain:platform.minimaxi.com)",
+      "WebSearch",
+      "WebFetch(domain:www.aliyun.com)",
+      "WebFetch(domain:docs.openclaw.ai)",
+      "WebFetch(domain:dash.nextbitz.net)",
+      "Bash(ssh openclaw-cloud:*)",
+      "Bash(ssh root@39.107.54.166 \"grep -B 5 -A 30 ''function loadAuthProfileStoreForAgent'' /usr/lib/node_modules/openclaw/dist/auth-profiles-BWqNRMgG.js\")",
+      "Bash(ssh root@39.107.54.166 \"grep -B 5 -A 30 ''function coerceAuthStore'' /usr/lib/node_modules/openclaw/dist/auth-profiles-BWqNRMgG.js\")",
+      "Bash(ssh root@39.107.54.166:*)",
+      "Bash(node:*)",
+      "Bash(schtasks:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(scp:*)",
+      "Bash(ls:*)",
+      "Bash(cd:*)"
+    ]
+  }
+}

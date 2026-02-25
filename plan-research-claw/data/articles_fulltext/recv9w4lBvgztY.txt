@@ -1,0 +1,50 @@
+# Clawdbot快速入门部署教程，搭建7x24小时个人AI助手
+# URL: https://mp.weixin.qq.com/s/todjN0Vw_9e5nlcO8moG7g
+# 日期: 2026-01-27
+# 来源: 微信-AI编程实验室
+# 分类: 产品认知 / 
+# 字数: 1609
+
+大家好，我是鲁工。
+最近Clawdbot这个项目在技术圈彻底火了，GitHub上两周狂揽49k+ stars，甚至还带火了Mac Mini的销量。作为一名AI编程技术博主，我第一时间部署体验了一番。
+今天这篇文章，带大家快速上手Clawdbot，搭建一个真正7x24小时运行的个人AI助手。
+Clawdbot是什么
+一句话介绍：Clawdbot是一个开源的、自托管的个人AI助手，可以通过WhatsApp、Telegram、Discord、Slack等你常用的消息软件与它对话。
+和ChatGPT、Claude网页版不同，Clawdbot跑在你自己的电脑上，24小时在线，随时通过手机消息找它干活。
+项目地址：
+https://github.com/clawdbot/clawdbot
+官方文档：
+https://docs.clawd.bot/
+Clawdbot核心功能
+多平台消息接入。支持的平台相当全：WhatsApp、Telegram、Discord、Slack、Signal、iMessage、Microsoft Teams、Google Chat等10+种。
+你可以用最习惯的聊天软件和AI对话，不用专门打开一个网页或App。
+7x24小时运行。部署在你的电脑或服务器上后，Clawdbot持续运行。半夜想让它帮你查点东西、发个提醒，直接发消息就行。
+持久化记忆。跨会话保持上下文，它能记住之前聊过的内容，真正像一个贴身助手。
+Skills扩展系统。通过Skills技能系统可以扩展功能，比如接入日历、Todoist、GitHub、Claude Code等服务。社区已经有不少现成的技能可以直接安装。
+完整计算机权限。Clawdbot可以执行Shell命令、控制浏览器、管理文件。能力边界比普通的聊天机器人大很多。
+ClawdBot快速部署
+建议找一台旧电脑、或者买个云主机，当然如果不差钱的话立马下单一台Mac Mini也未尝不可。意思就是尽量不要用工作电脑来部署ClawdBot，将其与日常工作环境隔离开。
+我下面以Windows环境部署作为示例。
+确认本机安装Node.js，当然这个玩AI编程的肯定都熟悉。
+直接一行命令安装ClawdBot：
+npm
+i
+-
+g
+clawdbot
+然后直接启动ClawdBot进行配置：
+clawdbot
+onboard
+选择QuickStart模式开始配置，可以根据引导一路进行设置。模型建议选择Qwen或者MiniMax，Qwen基于Qwen Code有够用的免费额度，MiniMax的话效果非常好，价格也不贵。
+Channel可以选择自己有账号的App，比如Telegram、WhatsApp、Discord等。
+然后进入到Skills安装环节，可以选择性的安装自己需要使用的Skills，大部分需要提供API，如果是AI编程用户，首选安装Coding Agent，它能自主调用本地的Claude Code、Codex以及OpenCode干活。
+配置完成后，可以选择TUI模式或者Web UI模式进入ClawdBot：
+我接入的是WhatsApp，这个扫码就可以进行连接，非常方便。比如通过WhatsApp给出Claude Code任务执行指令，这样就可以随时随地让Claude Code干活了。
+这一篇文章只是ClawdBot的初步部署和上手教程，后续我也将基于Vibe Coding视角，探索ClawdBot更多玩法。
+写在最后
+Clawdbot的核心价值在于：把AI助手从浏览器标签页里解放出来，变成一个真正7x24小时待命、通过熟悉的聊天软件就能触达的个人助手。
+感兴趣的朋友可以自己尝试部署玩一下。
+我是鲁工，九年AI算法老兵，AI全栈开发者，深耕AI编程赛道。欢迎关注，感兴趣的朋友也可以加我微信（
+louwill_
+）交个朋友。
+>/ 作者：鲁工
