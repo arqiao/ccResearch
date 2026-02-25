@@ -122,7 +122,7 @@
 |---|------|------|-------|------|---------|------|
 | 33 | 研究 OpenClaw API 文档 | ✅ | 🤖 | #9 | - | 两个接口：POST /tools/invoke（始终启用）、POST /v1/chat/completions（需开启）；token: root/.openclaw/openclaw.json |
 | 34 | 开发 OpenClaw MCP Server | ✅ | 🤖 | #33 | - | openclaw-gateway Skill 已创建（kbs/skills/openclaw-gateway/SKILL.md）；/tools/invoke 和 /v1/chat/completions 均已验证可用；chatCompletions 已在 openclaw.json 中启用 |
-| 35 | 测试 CC 触发 OpenClaw 功能 | ⬜ | 👥 | #34 | - | 一起验证 |
+| 35 | 测试 CC 触发 OpenClaw 功能 | ✅ | 👥 | #34 | - | /tools/invoke（sessions_list 等）和 /v1/chat/completions（agent 搜索任务）均验证通过；关键修复：models.providers.anthropic 需设 api: anthropic-messages |
 
 ### 2.4 GitHub 仓库直接访问（低优先级）
 
@@ -256,6 +256,7 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-02-25 | #35 完成：两个接口本地→服务器验证通过；关键修复 models.providers.anthropic.api 需设为 anthropic-messages（中转服务用 Anthropic 原生格式） |
 | 2026-02-25 | #34 完成：openclaw-gateway Skill 创建，/tools/invoke 和 /v1/chat/completions 均验证可用，chatCompletions 已在 openclaw.json 启用 |
 | 2026-02-25 | #33 完成：OpenClaw Gateway API 研究，/tools/invoke 已验证可用，token 在 /root/.openclaw/openclaw.json |
 | 2026-02-25 | 树莓派第三阶段改为低优先级；#36 标记为已完成（token 已配置，gh CLI 已装） |
