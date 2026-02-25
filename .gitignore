@@ -5,9 +5,19 @@ nul
 **/ssh_output.txt
 **/drafts/
 
-# 依赖
+# 依赖和缓存
 **/node_modules/
+**/__pycache__/
+**/*.pyc
+**/data/articles_cache/
+**/data/articles_fulltext/
 
-# 系统文件
+# 大型数据文件
+**/data/feishu_raw_data.json
+**/output/*.xlsx
+
+# IDE
 .DS_Store
 Thumbs.db
+**/.specstory/
+**/.cursorindexingignore

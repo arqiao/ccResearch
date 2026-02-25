@@ -1,5 +1,0 @@
-标题: OpenClaw（Clawdbot） + Kimi 2.5 最新手把手教程，附飞书接入指南和 700+ Skill资源 
-日期: 20260131
-原文: https://mp.weixin.qq.com/s/8DwabUPPdOyOCAc_f8pKQw
-
- id="js_content" style="visibility: hidden; opacity: 0; "> 最近刷 X 帖子，看到很多海外博主推荐 Kimi 2.5 接入Clawdbot。 追求物美价廉，果然全世界人民都一样。 前段时间，身边不少朋友测 Kimi 2.5 ，都夸前端审美优秀。 直到刷到下面帖子，震惊了！ Kimi 2.5 在 Design Arena 设计榜，竟然打败了 Gemini 3 Pro和Claude，这可是开源模型啊。 看来前段时间研究 Clawbot，错过的东西有点多。 研究后，迅速把 Kimi 2.5 接入了 Clawdbot。 下面是一句话测试 写一个精美的Todolist网页 出来效果如下： 一句话直出，确实有点顶啊。 前端任务简单，又测了一个自己写的视频生成复杂 Skill。 流程很长，必须先调用Listenhub生成音频和字幕时间轴。 基于字幕生成图片提示词，调用即梦生图，再调用Manim生成透明文本动效，根据我的 IP 头像，生成片头和片尾。 最后用 ffmpeg 拼接，生成完整视频。 之前我只用 Claude Opus 4.5 ，别的模型经常出问题。 没想到Kimi 2.5 也能搞定，出乎意料，视频如下： <hr style="border-style: solid;border-width: 2px 0 0;border-color: rgba(0, 0, 0, 0.1);-webkit-transform-origin: 0 0;-webkit-transform: scale(1, 0.5);transform-origin: 0 0;transform: scale(1, 0.5);height: 1px;border: none;background: linear-gradient(

@@ -1,5 +1,0 @@
-标题: 我至今用到最好的Claude Code Skills第二篇，让Agent全学会你看过的工作流 
-日期: 20260123
-原文: https://mp.weixin.qq.com/s/RpVU-mU8fuSXqjt8WW3S-w
-
- 卡尔的AI沃茨 , , window.__QMTPL_SSR_DATA__={tempkey__p__:'',hasBottomContent:'',only_comment__p__:'',is_cooling_appmsg:'0',not_show_banner:'',showProfile:'',round_head_img:'http://mmbiz.qpic.cn/mmbiz_png/YEhakvKZjXk0PhOajb4Pz91bjicLphzr0cl9libv3mfPaPjuTKBHHcv9hQm8bEJqkOXxApmz0W2E9RlpyylStnew/0?wx_fmt=png',nick_name:'卡尔的AI沃茨',needAlignLeft:'',needNoMinHeight:'',text_page_info:{is_user_title:'1'},formattedTitle:'',contentNoEncode:'',location:{poiid:'',districtid:'',name:'',address:'',latitude:'',longitude:'',content:''},shoptagInnerHtml:'',shopprofileInnerHtml:'',footer_gift_activity:{activity_id:''},lotteryInnerHtml:'',redpacket_cover_list:[],window_product_list:[],appmsg_link:{},articleInnerHtml:'',weapp_link:{},weappInnerHtml:'',single_video_snap_card:{},liveInnerHtml:'',super_vote_id:'',voteInnerHtml:'',canShowCard:'',claim_source:{claim_source:''},showBottomBorder:'',copyright_info:{copyright_stat:'0'},formatReadNum:'',ipWrpDisplay:'',ipWording:'',publishTime:'',uninteractive__p__:'',hasExtraCnt:'',hasBottomAd:''}; 

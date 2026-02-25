@@ -1,5 +1,0 @@
-标题: TRAE SOLO 已支持 Skills！ 
-日期: 20260115
-原文: https://mp.weixin.qq.com/s/69EJIJtPICDTmbm3PlA9bQ
-
- id="js_content" style="visibility: hidden; opacity: 0; "> TRAE 已上线 Skills（Beta） ，目前在中国版、国际版 SOLO 模式中均已支持。 TRAE Skills 基于开放的 Agent Skills 标准构建，可以把指令、脚本和资源打包到独立的“文件夹”（ SKILL.md ）里，从而封装定制专业能力给 Agent。 你可以将 Skills 理解为给 Agent 的一个“专业技能包”，比 Rules 更丰富、专业性更强，比 MCP 更结构化、更灵活，可以让 Agent 稳定持续且有更优效果地完成特定领域的任务。 Skills 使用场景 当你需要 可复用、按需调用 的能力时，Skills 是最佳选择——智能体会在需要时自动加载并执行。 领域专业知识： 将专业知识打包成可重用的指令，涵盖从法律审查流程到数据分析流程等各个方面。 新功能： 赋予 Agent 新功能（例如创建演示文稿、构建 MCP 服务务器、分析数据集）。 可重复的工作流程： 将多步骤任务转化为一致且可复用的工作流程。 互操作性： 在不同的、技能兼容的 Agent 中重复使用相同的技能，比如规范 UI 设计、品牌视觉、技术架构最佳实践等。 创建 Skills TRAE Skills 支持模型生成 SKILL.md ，也支持用户直接自己上传已有的 SKILL.md 。 通过 对话 让 AI 创建 Skill： 从 设置—规则和技能—技能 模块点击 创建 ，导入 Skill 文件或手动编写 Skill： 创建好 Skills 后，AI 会根据你写的 Skill 的描述和指令，自动判断在合适的时机调用对应的 Skill；你也可以在 Prompt 中直接告诉 AI 使用某个 Skill，保持复杂任务中的稳定输出。 将你的 TRAE 中国版 / 国际版升级到最新版本，即刻为你的 TRAE 加上“技能”，体验效果更好的稳定输出和更高效、自动化的工作流！ 

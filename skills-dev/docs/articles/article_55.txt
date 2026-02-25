@@ -1,5 +1,0 @@
-标题: GLM Coding Plan 太抠了！重写了一个联网搜索Skill 
-日期: 20260124
-原文: https://mp.weixin.qq.com/s/jlogMEUStBbCZEXMeu2VrQ
-
- id="js_content" style="visibility: hidden; opacity: 0; "> GLM Coding Plan Lite 套餐提供了联网搜索功能，但是每个月才一百次，合计每天就3次，完全不够用！ 而且只能是以MCP的方式使用，本着 能用Skills来写的，最后都会用Skills来写！ 的思路单独写一个更多使用量更快的基于DuckDuckGo的联网搜索Skill。 在用量比GLM一个月一百次的搜索慷慨多了，最高德速率可达20 次请求/分钟，每次可以过去最多25条结果。 搜索速度和结果比GLM提供的更好。 也可以完全取代国际版Bing的API搜索。 使用很简单，无需安装单独使用 # 搜索
