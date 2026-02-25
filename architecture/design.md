@@ -131,13 +131,17 @@ python3 /root/proxy-switch.py          # 检测当前节点，不通则自动切
 python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
 ```
 
+### 流量监控
+
+每次节点切换时顺带检查剩余流量（从订阅响应的 `subscription-userinfo` header 解析）。低于 100 MB 时通过飞书 bot 发消息到群（chat_id: oc_42e15484900d10f7f30bcd18d72d1397，群名可能变更但 chat_id 不变）。
+
 ### 自动检测 cron
 
 ```
-*/10 * * * * python3 /root/proxy-switch.py >> /var/log/proxy-switch.log 2>&1
+0 * * * * python3 /root/proxy-switch.py >> /var/log/proxy-switch.log 2>&1
 ```
 
-每 10 分钟检测一次，节点失效时自动切换，无需人工干预。OpenClaw 也可通过飞书群触发手动切换（见 TOOLS.md）。
+每小时检测一次，节点失效时自动切换，无需人工干预。OpenClaw 也可通过飞书群触发手动切换（见 TOOLS.md）。
 
 ---
 

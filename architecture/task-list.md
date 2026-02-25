@@ -207,7 +207,7 @@
 | I10 | 账户切换脚本 | ✅ | 🤖 | - | /root/.openclaw/switch-account.js，支持4个账户 |
 | I11 | 账户切换网页 | ✅ | 🤖 | - | http://39.107.54.166:19528/，欠费时手动切换 |
 | I12 | 配置 TOOLS.md / USER.md | ✅ | 🤖 | - | 机器人知道同步知识库和切换账户的操作方法 |
-| I17 | 代理节点自动切换脚本 | ✅ | 🤖 | I2 | /root/proxy-switch.py，解析订阅 Clash YAML，测速选最优节点，cron 每 10 分钟检测，日志 /var/log/proxy-switch.log |
+| I17 | 代理节点自动切换脚本 | ✅ | 🤖 | I2 | /root/proxy-switch.py，解析订阅 Clash YAML，测速选最优节点，cron 每小时检测，流量低于 100 MB 发飞书通知 |
 
 ### 第三方服务集成
 
@@ -256,6 +256,7 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-02-25 | proxy-switch.py 新增流量监控（低于 100 MB 发飞书通知），cron 检测间隔改为 60 分钟 |
 | 2026-02-25 | I17：代理节点自动切换脚本，解析订阅 Clash YAML，cron 每 10 分钟自动检测切换，TOOLS.md 已更新 |
 | 2026-02-25 | 新建 design.md，记录架构设计决策（key 管理、git 同步、systemd 注入、目录规范） |
 | 2026-02-25 | API Key 安全整改：git filter-branch 清除历史明文 key，服务器 key 迁移到 /root/.secrets，本地 key 迁移到 noshare/env.md，git credential store 替代 remote URL 嵌 token |
