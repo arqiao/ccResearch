@@ -120,21 +120,21 @@
 
 | # | 任务 | 状态 | 执行者 | 依赖 | 参考文档 | 说明 |
 |---|------|------|-------|------|---------|------|
-| 33 | 研究 OpenClaw API 文档 | ⬜ | 🤖 | #9 | - | 我来研究 |
-| 34 | 开发 OpenClaw MCP Server | ⬜ | 🤖 | #33 | - | 我来写代码 |
+| 33 | 研究 OpenClaw API 文档 | ✅ | 🤖 | #9 | - | 两个接口：POST /tools/invoke（始终启用）、POST /v1/chat/completions（需开启）；token: root/.openclaw/openclaw.json |
+| 34 | 开发 OpenClaw MCP Server | ⬜ | 🤖 | #33 | - | 封装两个接口，让 CC 本地可直接调用 OpenClaw |
 | 35 | 测试 CC 触发 OpenClaw 功能 | ⬜ | 👥 | #34 | - | 一起验证 |
 
 ### 2.4 GitHub 仓库直接访问（低优先级）
 
 | # | 任务 | 状态 | 执行者 | 依赖 | 参考文档 | 说明 |
 |---|------|------|-------|------|---------|------|
-| 36 | 配置 GitHub Personal Access Token | ⬜ | 👤 | #10 | - | 需要你的 GitHub 账号 |
+| 36 | 配置 GitHub Personal Access Token | ✅ | 👤 | #10 | - | token 已配置（见 design.md），服务器 gh CLI v2.45.0 已安装 |
 | 37 | 部署/配置 GitHub MCP Server | ⬜ | 🤖 | #36 | - | 我来配置 |
 | 38 | 测试 CC 直接读取远程仓库 | ⬜ | 👥 | #37 | - | 一起验证 |
 
 ---
 
-## 第三阶段：树莓派部署（迁移回家）
+## 第三阶段：树莓派部署（迁移回家）⏸️ 低优先级
 
 ### 3.1 硬件准备
 
@@ -256,6 +256,8 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-02-25 | #33 完成：OpenClaw Gateway API 研究，/tools/invoke 已验证可用，token 在 /root/.openclaw/openclaw.json |
+| 2026-02-25 | 树莓派第三阶段改为低优先级；#36 标记为已完成（token 已配置，gh CLI 已装） |
 | 2026-02-25 | proxy-switch.py 新增流量监控（低于 100 MB 发飞书通知），cron 检测间隔改为 60 分钟 |
 | 2026-02-25 | I17：代理节点自动切换脚本，解析订阅 Clash YAML，cron 每 10 分钟自动检测切换，TOOLS.md 已更新 |
 | 2026-02-25 | 新建 design.md，记录架构设计决策（key 管理、git 同步、systemd 注入、目录规范） |
