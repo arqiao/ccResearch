@@ -33,6 +33,17 @@
 | 本地（Windows） | `D:\workspace\noshare\env.md` | 不在任何 git 仓库目录下 |
 | 服务器（Linux） | `/root/.secrets` | chmod 600 |
 
+### 当前管理的 Key 清单
+
+| Key | 用途 | 管理地址 |
+|-----|------|---------|
+| BAIDU_API_KEY | baidu-search skill，中文搜索 | cloud.baidu.com |
+| ARK_API_KEY | 火山引擎，Seedance 视频生成 | volcengine.com |
+| NOTION_API_KEY | notion skill，读写 Notion | notion.so/my-integrations |
+| FEISHU_APP_ID/SECRET | 飞书文档、群消息读取 | open.feishu.cn |
+| ANTHROPIC_AUTH_TOKEN | Claude API 中转（zjz-ai） | 中转服务商 |
+| GITHUB_TOKEN | 仓库 push/pull | github.com/settings/tokens |
+
 ### 服务器 key 注入方式
 
 服务器有两种进程需要 key，注入方式不同：
