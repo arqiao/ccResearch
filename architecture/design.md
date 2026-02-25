@@ -41,7 +41,56 @@ git fetch origin && git reset --hard origin/main
 
 ---
 
-## 二、API Key 管理
+## 二、本地工作目录规范
+
+| 目录 | 用途 |
+|-----|------|
+| `D:\workspace\devCC` | 产品化项目 |
+| `D:\workspace\ccResearch` | 研究性项目、任务清单 |
+| `D:\workspace\mytools` | 个人小工具 |
+| `D:\workspace\kbs` | 知识库仓库（arqiao-shared-knowledge） |
+| `D:\workspace\noshare` | 本地敏感信息，不进任何 git 仓库 |
+
+### ccResearch .gitignore 排除策略
+
+```
+plan-research-claw/   # 旧项目
+kbs-dev/              # 不同步
+**/tmp/               # 临时文件
+**/drafts/            # 草稿
+**/node_modules/
+**/data/articles_cache/
+**/data/articles_fulltext/
+```
+
+---
+
+## 三、OpenClaw 服务器配置
+
+### TOOLS.md
+
+路径：`/home/openclaw/.openclaw/workspace/TOOLS.md`
+
+作用：告知 OpenClaw 机器人操作规范，关键规则：
+- **查询项目进度时直接读本地文件，禁止去 Notion 搜索**
+- 知识库写入后直接 commit push，无需等待人工确认
+
+原因：模型默认倾向于调用工具（Notion search），需要明确规则才会优先读本地文件。
+
+### Notion 集成
+
+Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 openclaw.json 中不够。
+原因：systemd 服务启动时不读取 `~/.bashrc`，skill 运行时读取的是进程环境变量。
+
+### 账户切换
+
+脚本：`/root/.openclaw/switch-account.js`
+网页：`http://39.107.54.166:19528/`（欠费时手动切换）
+可用账户：arqiao-tsinghua、arqiao-sina、arqiao-test、arqiao-minimax
+
+---
+
+## 四、API Key 管理
 
 ### 设计原则
 
@@ -82,52 +131,3 @@ systemd drop-in 路径：
 - `skills-dev/.claude/settings.local.json` 曾有明文 BAIDU_API_KEY 上传到 GitHub
 - 已用 `git filter-branch` 重写历史清除，强制推送覆盖
 - git remote URL 曾嵌入 token，已改为 credential store
-
----
-
-## 三、OpenClaw 服务器配置
-
-### TOOLS.md
-
-路径：`/home/openclaw/.openclaw/workspace/TOOLS.md`
-
-作用：告知 OpenClaw 机器人操作规范，关键规则：
-- **查询项目进度时直接读本地文件，禁止去 Notion 搜索**
-- 知识库写入后直接 commit push，无需等待人工确认
-
-原因：模型默认倾向于调用工具（Notion search），需要明确规则才会优先读本地文件。
-
-### Notion 集成
-
-Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 openclaw.json 中不够。
-原因：systemd 服务启动时不读取 `~/.bashrc`，skill 运行时读取的是进程环境变量。
-
-### 账户切换
-
-脚本：`/root/.openclaw/switch-account.js`
-网页：`http://39.107.54.166:19528/`（欠费时手动切换）
-可用账户：arqiao-tsinghua、arqiao-sina、arqiao-test、arqiao-minimax
-
----
-
-## 四、本地工作目录规范
-
-| 目录 | 用途 |
-|-----|------|
-| `D:\workspace\devCC` | 产品化项目 |
-| `D:\workspace\ccResearch` | 研究性项目、任务清单 |
-| `D:\workspace\mytools` | 个人小工具 |
-| `D:\workspace\kbs` | 知识库仓库（arqiao-shared-knowledge） |
-| `D:\workspace\noshare` | 本地敏感信息，不进任何 git 仓库 |
-
-### ccResearch .gitignore 排除策略
-
-```
-plan-research-claw/   # 旧项目
-kbs-dev/              # 不同步
-**/tmp/               # 临时文件
-**/drafts/            # 草稿
-**/node_modules/
-**/data/articles_cache/
-**/data/articles_fulltext/
-```
