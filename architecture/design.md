@@ -94,7 +94,10 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 ### 方案选型
 
-服务器（阿里云）无法直接访问 GitHub，需要代理。选用 sing-box（系统已内置 1.12.22），vmess+ws 协议。
+服务器（阿里云）无法直接访问 GitHub，需要代理。
+采购的订阅服务为：
+    https://msub.xn--m7r52rosihxm.com/api/v1/client/subscribe?token=5a88ba3ed39a1b5dd1c72756f1446e34
+选用 sing-box（系统已内置 1.12.22），vmess+ws 协议。
 
 | 端口 | 协议 | 用途 |
 |------|------|------|
