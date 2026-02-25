@@ -255,6 +255,8 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-02-25 | 新建 design.md，记录架构设计决策（key 管理、git 同步、systemd 注入、目录规范） |
+| 2026-02-25 | API Key 安全整改：git filter-branch 清除历史明文 key，服务器 key 迁移到 /root/.secrets，本地 key 迁移到 noshare/env.md，git credential store 替代 remote URL 嵌 token |
 | 2026-02-25 | I13-I16：Notion 集成完成，systemd drop-in 注入 NOTION_API_KEY，飞书群验证通过 |
 | 2026-02-24 | 新增第三方服务集成章节（I13-I16）：Notion 集成，从 skills-dev #9/#10 迁移过来 |
 | 2026-02-24 | I6-I12：linger配置、无需@机器人、本地webhook、反向隧道、账户切换脚本+网页、TOOLS.md配置 |
