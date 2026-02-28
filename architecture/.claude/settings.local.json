@@ -35,7 +35,10 @@
       "Bash(pnpm help:*)",
       "Bash(powershell:*)",
       "WebFetch(domain:open.feishu.cn)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git:*)"
     ]
   }
 }
