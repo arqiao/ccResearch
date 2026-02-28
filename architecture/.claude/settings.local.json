@@ -19,7 +19,23 @@
       "Bash(ls:*)",
       "Bash(cd:*)",
       "Bash(tail:*)",
-      "Bash(head:*)"
+      "Bash(head:*)",
+      "Bash(grep:*)",
+      "Bash(netstat:*)",
+      "Bash(ssh:*)",
+      "WebFetch(domain:mp.weixin.qq.com)",
+      "Bash(cat:*)",
+      "Bash(claude:*)",
+      "Bash(npm view:*)",
+      "Bash(ping:*)",
+      "Bash(python:*)",
+      "Bash(curl -sL --max-time 20 \"https://docs.openclaw.ai/changelog\" 2>&1 | python3 -c \"\nimport sys, re\nhtml = sys.stdin.read\\(\\)\n# Remove script tags\nhtml = re.sub\\(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL\\)\n# Remove style tags\nhtml = re.sub\\(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL\\)\n# Remove HTML tags but keep text\ntext = re.sub\\(r'<[^>]+>', ' ', html\\)\n# Clean up whitespace\ntext = re.sub\\(r'\\\\s+', ' ', text\\)\n# Print relevant sections\nprint\\(text[:15000]\\)\n\" 2>&1)",
+      "Bash(curl -sL --max-time 20 \"https://docs.openclaw.ai/changelog\" -o /tmp/openclaw_changelog.html 2>&1 && python3 -c \"\nimport re\nwith open\\('/tmp/openclaw_changelog.html', 'r', encoding='utf-8'\\) as f:\n    html = f.read\\(\\)\nhtml = re.sub\\(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL\\)\nhtml = re.sub\\(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL\\)\ntext = re.sub\\(r'<[^>]+>', ' ', html\\)\ntext = re.sub\\(r'\\\\s+', ' ', text\\)\nprint\\(text[:15000]\\)\n\" 2>&1)",
+      "Bash(python3:*)",
+      "Bash(pnpm help:*)",
+      "Bash(powershell:*)",
+      "WebFetch(domain:open.feishu.cn)",
+      "Bash(git add:*)"
     ]
   }
 }

@@ -186,3 +186,94 @@ systemd drop-in 路径：
 - `skills-dev/.claude/settings.local.json` 曾有明文 BAIDU_API_KEY 上传到 GitHub
 - 已用 `git filter-branch` 重写历史清除，强制推送覆盖
 - git remote URL 曾嵌入 token，已改为 credential store
+- `/etc/environment` 曾有明文 BAIDU_API_KEY，已移除（key 已在 `/root/.secrets` 中）
+
+---
+
+## 六、包管理器选择
+
+### npm vs pnpm
+
+2G 内存服务器上 npm install 多次 OOM 失败（即使限制 maxsockets=3），改用 pnpm 后 51 秒完成安装。
+
+| 项目 | npm | pnpm |
+|-----|-----|------|
+| 安装 OpenClaw | 多次 OOM 失败 | 51 秒成功 |
+| 内存占用 | 高（全量解压到 node_modules） | 低（硬链接 + 内容寻址） |
+| 并发控制 | `npm config set maxsockets 2` | `pnpm config set concurrency 1` |
+| 全局安装路径 | `/usr/lib/node_modules/` | `~/.local/share/pnpm/global/5/node_modules/` |
+
+**结论：小内存服务器（≤4G）必须用 pnpm，且 concurrency 设为 1。**
+
+### pnpm 全局路径注意事项
+
+pnpm 全局安装路径与 npm 不同，需要：
+1. `PNPM_HOME` 加入 PATH（`~/.bashrc` 和 `/etc/environment`）
+2. systemd 服务的 ExecStart 路径需指向 pnpm 全局目录
+
+---
+
+## 七、Swap 配置经验
+
+### 配置原则
+
+| 物理内存 | 推荐 Swap | swappiness |
+|---------|----------|------------|
+| ≤2G | 物理内存 × 2（4G） | 10 |
+| 2-8G | 物理内存 × 2 | 10 |
+| >8G | 物理内存 × 1 | 10 |
+
+### 关键教训
+
+- swappiness 默认 60 对小内存偏高，设为 10 即可
+- **切勿设为 100**：会导致系统疯狂换页（thrashing），磁盘 I/O 打满，系统假死
+- 2G 物理内存 + 2G swap = 4G 总量不够 npm install 峰值（3-4G），需要 4G swap
+- 阿里云 2 核 2G 实际可用内存约 1.6G（内核和 GPU 预留约 400MB）
+
+---
+
+## 八、模型切换方案
+
+### 架构
+
+```
+用户（飞书/网页/命令行）
+  ↓
+switch-llm.py（核心脚本）
+  ├── 读取 models-config.json（模型-账户映射）
+  ├── 过滤当天不可用账户
+  ├── 修改 openclaw.json（全局 + per-channel model）
+  ├── 修改 auth-profiles.json（API Key）
+  ├── 等待 openclaw-gateway 自动热重载（不重启进程）
+  └── 发飞书通知
+```
+
+### 配置文件
+
+| 文件 | 路径 | 说明 |
+|-----|------|------|
+| models-config.json | `/root/.openclaw/` | 模型-账户映射、当前状态、不可用标记 |
+| accounts.json | `/root/.openclaw/` | 账户详情（baseUrl、apiKey） |
+| switch-llm.py | `/root/scripts/` | 核心切换脚本 |
+| account-switcher.js | `/root/.openclaw/` | 网页 UI（端口 19528，含模型切换标签页） |
+
+### per-channel model
+
+openclaw.json 中 `channels.feishu.agents.defaults.model.primary` 可独立于全局模型设置。
+switch-llm.py 切换时会同步更新此字段。
+
+### 热重载机制
+
+switch-llm.py 修改配置文件后，不主动重启 openclaw-gateway。OpenClaw 会自动检测配置文件变更并执行热重载（`config hot reload applied`），进程 PID 不变。
+
+仅当 openclaw-gateway 进程不存在时（MainPID=0），才执行 `systemctl --user restart`。
+
+> 早期版本使用 `systemctl restart`，会导致飞书 WebSocket 断连、消息丢失。详见 `known-limitations.md`。
+
+### 网页 UI 交互
+
+网页（account-switcher.js，端口 19528）的模型切换标签页采用两步选择：
+1. 点击模型按钮 → 下方动态显示该模型的可用账户列表
+2. 点击账户按钮 → 提交切换（model + account）
+
+不可用账户显示为灰色禁用状态。当前账户默认高亮。

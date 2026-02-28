@@ -85,15 +85,19 @@ tmpfs /var/log tmpfs defaults,noatime,nosuid,mode=0755,size=100m 0 0
 ### 3.2 配置 Swap（如果使用 SSD）
 
 ```bash
-# 如果使用 SD 卡，建议禁用 swap
+# 如果使用 SD 卡，建议禁用 swap（频繁写入损耗 SD 卡）
 sudo dphys-swapfile swapoff
 sudo systemctl disable dphys-swapfile
 
-# 如果使用 SSD，可以保留或增加 swap
+# 如果使用 SSD，建议设为物理内存的 2 倍
 sudo nano /etc/dphys-swapfile
-# 设置 CONF_SWAPSIZE=2048
+# 设置 CONF_SWAPSIZE=4096（4G RAM 的树莓派设 8192）
 sudo dphys-swapfile setup
 sudo dphys-swapfile swapon
+
+# 设置 swappiness=10（避免过度使用 swap 导致 I/O 瓶颈）
+sudo sysctl vm.swappiness=10
+echo "vm.swappiness=10" | sudo tee -a /etc/sysctl.conf
 ```
 
 ### 3.3 设置静态 IP（推荐）
@@ -133,12 +137,22 @@ npm -v
 ### 4.2 安装 OpenClaw
 
 ```bash
-# 全局安装
-sudo npm install -g openclaw@latest
+# 安装 pnpm（推荐，内存占用更低）
+sudo npm install -g pnpm
+pnpm config set concurrency 1
+
+# 用 pnpm 全局安装
+pnpm install -g openclaw@latest
+
+# 批准必要的构建脚本
+pnpm approve-builds -g
 
 # 运行引导向导
 openclaw onboard --install-daemon
 ```
+
+> **注意：** 树莓派内存有限，务必用 pnpm 且 concurrency=1。
+> npm install 在小内存设备上容易 OOM。
 
 ### 4.3 从云服务器迁移配置
 
@@ -398,18 +412,18 @@ openclaw --version
 tar -czvf ~/openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw
 
 # 3. 查看 changelog 确认无破坏性变更后更新
-npm update -g openclaw@latest
+pnpm update -g openclaw@latest
 
 # 4. 重启并验证
-sudo systemctl restart openclaw-gateway
+systemctl --user restart openclaw-gateway
 openclaw health && openclaw doctor
 ```
 
 **回滚：**
 
 ```bash
-npm install -g openclaw@<previous-version>
-sudo systemctl restart openclaw-gateway
+pnpm install -g openclaw@<previous-version>
+systemctl --user restart openclaw-gateway
 ```
 
 ### 8.4 自动更新知识仓库

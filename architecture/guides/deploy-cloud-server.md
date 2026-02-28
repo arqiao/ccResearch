@@ -105,19 +105,76 @@ ssh openclaw@YOUR_SERVER_IP
 docker --version
 ```
 
+### 2.5 配置 Swap（小内存服务器必做）
+
+> 2G 内存的服务器跑 npm install 等操作时容易内存耗尽导致系统无响应。
+> Swap 大小建议：物理内存 2-8G 时，swap 设为物理内存的 2 倍。
+
+```bash
+# 创建 4G swap 文件（2G 物理内存 × 2）
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+
+# 写入 fstab，重启后自动挂载
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+
+# 设置 swappiness=10（避免过度使用 swap 导致 I/O 瓶颈）
+sysctl vm.swappiness=10
+echo "vm.swappiness=10" >> /etc/sysctl.conf
+
+# 验证
+free -h          # 应看到 Swap 行显示 4.0G
+cat /proc/sys/vm/swappiness  # 应显示 10
+```
+
+> **swappiness 说明：** 默认值 60 对小内存服务器偏高，会频繁换页导致 I/O 瓶颈。
+> 设为 10 表示尽量用物理内存，只在内存确实不足时才使用 swap。
+> 切勿设为 100，那会导致系统疯狂换页（thrashing），磁盘 I/O 打满，系统假死。
+
+> **经验教训：** 2G swap 不够用——npm install 峰值内存可达 3-4G，2G 物理 + 2G swap = 4G 仍然不够。
+> 扩到 4G swap 后（总计 6G 虚拟内存），安装顺利完成。
+
 ---
 
 ## 三、安装 OpenClaw
 
-### 3.1 安装 OpenClaw CLI
+### 3.1 安装 pnpm（推荐替代 npm）
+
+> **为什么用 pnpm？** npm install 在小内存服务器上容易 OOM（多次尝试均失败）。
+> pnpm 使用硬链接和内容寻址存储，内存占用更低，安装速度更快。
 
 ```bash
-# 全局安装
-npm install -g openclaw@latest
+# 安装 pnpm
+npm install -g pnpm
+
+# 配置并发为 1（小内存服务器必须限制）
+pnpm config set concurrency 1
+
+# 验证 pnpm 全局 bin 在 PATH 中
+pnpm setup
+source ~/.bashrc
+```
+
+### 3.2 安装 OpenClaw CLI
+
+```bash
+# 用 pnpm 全局安装
+pnpm install -g openclaw@latest
+
+# 批准必要的构建脚本（选 sharp、protobufjs、koffi）
+pnpm approve-builds -g
 
 # 验证安装
 openclaw --version
 ```
+
+> **npm 方式（不推荐，大内存服务器可用）：**
+> ```bash
+> npm config set maxsockets 2
+> npm install -g openclaw@latest
+> ```
 
 ### 3.2 运行引导向导
 
@@ -339,11 +396,14 @@ openclaw health
 openclaw status --deep
 
 # 查看日志
-journalctl -u openclaw-gateway -f
+journalctl --user -u openclaw-gateway -f
 
-# 重启服务
-sudo systemctl restart openclaw-gateway
+# 重启服务（一般不需要手动重启，配置变更会自动热重载）
+systemctl --user restart openclaw-gateway
 ```
+
+> **注意**：模型切换等配置变更后，OpenClaw 会自动检测并热重载，无需手动重启。
+> 手动重启会导致飞书 WebSocket 断连，可能丢失消息。详见 `known-limitations.md`。
 
 ### 7.2 OpenClaw 更新策略
 
@@ -361,10 +421,10 @@ npm view openclaw version
 tar -czvf openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw
 
 # 4. 更新（确认 changelog 无破坏性变更后）
-npm update -g openclaw@latest
+pnpm update -g openclaw@latest
 
 # 5. 重启服务
-sudo systemctl restart openclaw-gateway
+systemctl --user restart openclaw-gateway
 
 # 6. 验证
 openclaw health
@@ -375,13 +435,13 @@ openclaw doctor
 
 ```bash
 # 1. 安装指定版本
-npm install -g openclaw@<previous-version>
+pnpm install -g openclaw@<previous-version>
 
 # 2. 恢复配置（如果需要）
 tar -xzvf openclaw-backup-YYYYMMDD.tar.gz -C ~/
 
 # 3. 重启
-sudo systemctl restart openclaw-gateway
+systemctl --user restart openclaw-gateway
 ```
 
 **更新检查频率：每周一次**

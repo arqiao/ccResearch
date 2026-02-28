@@ -163,3 +163,7 @@ CC 本地完成开发，push ccResearch → GitHub
 | `guides/deploy-raspberry-pi.md` | 树莓派部署指南 |
 | `guides/client-setup.md` | 客户端配置指南 |
 | `guides/feishu-integration.md` | 飞书集成指南 |
+| `guides/openclaw-tools-reference.md` | OpenClaw Gateway HTTP API 参考 |
+| `guides/mobile-remote-control.md` | 手机远程控制方案（待定） |
+| `known-limitations.md` | 已知限制与注意事项 |
+| `references/multi-model-switching.md` | 多模型切换方案（早期设计参考） |
