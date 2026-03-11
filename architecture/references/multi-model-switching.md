@@ -147,11 +147,11 @@ openclaw models fallbacks add moonshot/kimi-k2.5
 
 可以创建一个 Skill，根据问题类型自动推荐或切换模型：
 
-### 4.1 skills/model-switcher/SKILL.md
+### 4.1 skills/switch-my-llm/SKILL.md
 
 ```markdown
 ---
-name: model-switcher
+name: switch-my-llm
 description: 根据问题类型智能推荐或切换模型
 user-invocable: true
 ---

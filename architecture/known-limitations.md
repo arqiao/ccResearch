@@ -13,7 +13,7 @@
 
 热重载期间（约 2-3 秒），飞书 WebSocket 连接可能短暂断开，此窗口内到达的消息会丢失（`No reply from agent`）。
 
-**已优化**：switch-llm.py 不再主动 `systemctl restart`，改为依赖 OpenClaw 的 config change 自动热重载，大幅缩短中断窗口。
+**已优化**：switch-my-llm.py 不再主动 `systemctl restart`，改为依赖 OpenClaw 的 config change 自动热重载，大幅缩短中断窗口。
 
 **残留风险**：热重载仍有短暂中断，无法完全消除。
 
@@ -73,11 +73,11 @@ OpenClaw 会自动监测配置文件变更（openclaw.json、auth-profiles.json 
 ### 4.1 账户余额
 
 中转账户余额不足时，API 调用会失败。
-switch-llm.py 支持标记账户当天不可用（`--mark-unavailable`），次日自动恢复。
+switch-my-llm.py 支持标记账户当天不可用（`--mark-unavailable`），次日自动恢复。
 
 但目前没有自动检测余额不足的机制，需要人工发现后手动标记。
 
 ### 4.2 per-channel model 同步
 
-switch-llm.py 切换时会同步更新 `channels.feishu.agents.defaults.model.primary`。
+switch-my-llm.py 切换时会同步更新 `channels.feishu.agents.defaults.model.primary`。
 如果 openclaw.json 中新增了其他 channel，需要手动在脚本中添加同步逻辑。

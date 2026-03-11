@@ -239,7 +239,7 @@ pnpm 全局安装路径与 npm 不同，需要：
 ```
 用户（飞书/网页/命令行）
   ↓
-switch-llm.py（核心脚本）
+switch-my-llm.py（核心脚本）
   ├── 读取 models-config.json（模型-账户映射）
   ├── 过滤当天不可用账户
   ├── 修改 openclaw.json（全局 + per-channel model）
@@ -254,17 +254,17 @@ switch-llm.py（核心脚本）
 |-----|------|------|
 | models-config.json | `/root/.openclaw/` | 模型-账户映射、当前状态、不可用标记 |
 | accounts.json | `/root/.openclaw/` | 账户详情（baseUrl、apiKey） |
-| switch-llm.py | `/root/scripts/` | 核心切换脚本 |
+| switch-my-llm.py | `/root/scripts/` | 核心切换脚本 |
 | account-switcher.js | `/root/.openclaw/` | 网页 UI（端口 19528，含模型切换标签页） |
 
 ### per-channel model
 
 openclaw.json 中 `channels.feishu.agents.defaults.model.primary` 可独立于全局模型设置。
-switch-llm.py 切换时会同步更新此字段。
+switch-my-llm.py 切换时会同步更新此字段。
 
 ### 热重载机制
 
-switch-llm.py 修改配置文件后，不主动重启 openclaw-gateway。OpenClaw 会自动检测配置文件变更并执行热重载（`config hot reload applied`），进程 PID 不变。
+switch-my-llm.py 修改配置文件后，不主动重启 openclaw-gateway。OpenClaw 会自动检测配置文件变更并执行热重载（`config hot reload applied`），进程 PID 不变。
 
 仅当 openclaw-gateway 进程不存在时（MainPID=0），才执行 `systemctl --user restart`。
 
