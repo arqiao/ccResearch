@@ -1,7 +1,8 @@
-# 方案 A：云服务器部署指南
+# 方案 A：阿里云服务器部署指南（澳龙）
 
-> 适用阶段：第一阶段（过年期间远程使用）
-> 预计使用时长：1-2 个月
+> 适用服务器：澳龙（阿里云轻量服务器，39.107.54.166）
+> 当前角色：frp 中继 + 代理出口（主 OpenClaw 服务已迁移到云船）
+> 运行用户：openclaw（OpenClaw 服务）、root（frps + sing-box + switch-proxy）
 
 ---
 
@@ -391,15 +392,15 @@ your-domain.com {
 ### 7.1 常用命令
 
 ```bash
-# 查看 Gateway 状态
-openclaw health
-openclaw status --deep
+# 查看 Gateway 状态（以 openclaw 用户）
+su - openclaw -c 'openclaw health'
+su - openclaw -c 'openclaw status --deep'
 
 # 查看日志
-journalctl --user -u openclaw-gateway -f
+sudo -u openclaw XDG_RUNTIME_DIR=/run/user/$(id -u openclaw) journalctl --user -u openclaw-gateway -f
 
-# 重启服务（一般不需要手动重启，配置变更会自动热重载）
-systemctl --user restart openclaw-gateway
+# 重启服务
+sudo -u openclaw XDG_RUNTIME_DIR=/run/user/$(id -u openclaw) systemctl --user restart openclaw-gateway
 ```
 
 > **注意**：模型切换等配置变更后，OpenClaw 会自动检测并热重载，无需手动重启。

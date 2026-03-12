@@ -84,8 +84,8 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 ### 账户切换
 
-脚本：`/root/.openclaw/switch-account.js`
-网页：`http://39.107.54.166:19528/`（欠费时手动切换）
+脚本：`~/workspace/arqiao-shared-knowledge/server-scripts/switch-my-account.js`
+网页：`account-manager.js`（端口 19528，含模型切换标签页）
 可用账户：arqiao-tsinghua、arqiao-sina、arqiao-test、arqiao-minimax
 
 ---
@@ -94,7 +94,7 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 ### 方案选型
 
-服务器（阿里云）无法直接访问 GitHub，需要代理。
+澳龙（阿里云）无法直接访问 GitHub，需要代理。
 采购的订阅服务为：
     https://msub.xn--m7r52rosihxm.com/api/v1/client/subscribe?token=5a88ba3ed39a1b5dd1c72756f1446e34
 选用 sing-box（系统已内置 1.12.22），vmess+ws 协议。
@@ -110,7 +110,7 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 订阅格式：Clash YAML，包含 27 个可用节点（日本、新加坡、香港、台湾、美国等）。
 
-脚本：`/root/proxy-switch.py`
+脚本：`~/local/scripts/switch-proxy.py`（澳龙，需 root 权限重启 sing-box）
 
 工作流程：
 ```
@@ -127,8 +127,8 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 用法：
 ```bash
-python3 /root/proxy-switch.py          # 检测当前节点，不通则自动切换
-python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
+python3 ~/local/scripts/switch-proxy.py          # 检测当前节点，不通则自动切换
+python3 ~/local/scripts/switch-proxy.py --force  # 强制重新测速选最优节点
 ```
 
 ### 流量监控
@@ -138,7 +138,7 @@ python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
 ### 自动检测 cron
 
 ```
-0 * * * * python3 /root/proxy-switch.py >> /var/log/proxy-switch.log 2>&1
+0 * * * * python3 ~/local/scripts/switch-proxy.py >> /var/log/switch-proxy.log 2>&1
 ```
 
 每小时检测一次，节点失效时自动切换，无需人工干预。OpenClaw 也可通过飞书群触发手动切换（见 TOOLS.md）。
@@ -154,7 +154,7 @@ python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
 | 环境 | 存放位置 | 权限 |
 |-----|---------|------|
 | 本地（Windows） | `D:\workspace\noshare\env.md` | 不在任何 git 仓库目录下 |
-| 服务器（Linux） | `/root/.secrets` | chmod 600 |
+| 服务器（Linux） | `~/local/.secrets` | chmod 600 |
 
 ### 当前 Key 清单
 
@@ -173,20 +173,21 @@ python3 /root/proxy-switch.py --force  # 强制重新测速选最优节点
 
 | 进程类型 | 注入方式 | 原因 |
 |---------|---------|------|
-| 交互式 shell | `~/.bashrc` source `/root/.secrets` | bashrc 在登录时执行 |
-| systemd 服务（OpenClaw） | systemd drop-in `Environment=` | systemd 不读 bashrc |
+| 交互式 shell | `~/.bashrc` source `~/local/.secrets` | bashrc 在登录时执行 |
+| systemd 服务（OpenClaw） | systemd drop-in `Environment=` 或 `.profile` | systemd 不读 bashrc |
 
-systemd drop-in 路径：
+systemd drop-in 路径（澳龙）：
 ```
-/root/.config/systemd/user/openclaw-gateway.service.d/notion.conf
+/home/openclaw/.config/systemd/user/openclaw-gateway.service.d/notion.conf
 ```
+
+> 云船（WSL1）不支持 systemd，通过 nohup 启动，环境变量在 `.profile` 中设置。
 
 ### 历史教训
 
 - `skills-dev/.claude/settings.local.json` 曾有明文 BAIDU_API_KEY 上传到 GitHub
 - 已用 `git filter-branch` 重写历史清除，强制推送覆盖
 - git remote URL 曾嵌入 token，已改为 credential store
-- `/etc/environment` 曾有明文 BAIDU_API_KEY，已移除（key 已在 `/root/.secrets` 中）
 
 ---
 
@@ -208,8 +209,9 @@ systemd drop-in 路径：
 ### pnpm 全局路径注意事项
 
 pnpm 全局安装路径与 npm 不同，需要：
-1. `PNPM_HOME` 加入 PATH（`~/.bashrc` 和 `/etc/environment`）
+1. `PNPM_HOME` 加入 PATH（`~/.bashrc` 或 `~/.profile`）
 2. systemd 服务的 ExecStart 路径需指向 pnpm 全局目录
+3. pnpm 全局安装的 shell wrapper 脚本中 NODE_PATH 是硬编码的，跨用户迁移时需 sed 替换
 
 ---
 
@@ -252,10 +254,10 @@ switch-my-llm.py（核心脚本）
 
 | 文件 | 路径 | 说明 |
 |-----|------|------|
-| models-config.json | `/root/.openclaw/` | 模型-账户映射、当前状态、不可用标记 |
-| accounts.json | `/root/.openclaw/` | 账户详情（baseUrl、apiKey） |
-| switch-my-llm.py | `/root/scripts/` | 核心切换脚本 |
-| account-switcher.js | `/root/.openclaw/` | 网页 UI（端口 19528，含模型切换标签页） |
+| models-config.json | `~/.openclaw/` | 模型-账户映射、当前状态、不可用标记 |
+| accounts.json | `~/.openclaw/` | 账户详情（baseUrl、apiKey） |
+| switch-my-llm.py | `~/workspace/arqiao-shared-knowledge/server-scripts/` | 核心切换脚本 |
+| account-manager.js | `~/.openclaw/` | 网页 UI（端口 19528，含模型切换标签页） |
 
 ### per-channel model
 
@@ -272,7 +274,7 @@ switch-my-llm.py 修改配置文件后，不主动重启 openclaw-gateway。Open
 
 ### 网页 UI 交互
 
-网页（account-switcher.js，端口 19528）的模型切换标签页采用两步选择：
+网页（account-manager.js，端口 19528）的模型切换标签页采用两步选择：
 1. 点击模型按钮 → 下方动态显示该模型的可用账户列表
 2. 点击账户按钮 → 提交切换（model + account）
 

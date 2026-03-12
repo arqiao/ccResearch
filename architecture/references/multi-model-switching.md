@@ -210,7 +210,7 @@ Claude Code 本身也支持模型切换：
 
 ### 6.2 中期方案（第二阶段）
 
-1. 创建 `model-switcher` Skill
+1. 创建 `switch-my-llm` Skill
 2. 支持语义化切换（"用强模型"、"用便宜的"）
 3. 根据问题类型自动推荐
 

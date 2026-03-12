@@ -141,14 +141,16 @@ CC 本地完成开发，push ccResearch → GitHub
 | 组件 | 选择 | 原因 |
 |-----|------|------|
 | 自动化引擎 | OpenClaw | 开源自托管，支持飞书，Skills 生态丰富 |
-| 服务器 | 阿里云轻量服务器 | 国内访问快，过渡期使用；后续迁移树莓派 |
+| 主服务器 | 联通云智电脑（WSL1） | 8核16G，替代阿里云；WSL1 翻译层运行 Ubuntu 24.04 |
+| 中继服务器 | 阿里云轻量服务器 | frp 中继 + 代理出口，2核2G |
 | 消息入口 | 飞书 | 官方 API 支持好，移动端体验佳 |
 | 知识存储 | GitHub（私有仓库） | 版本控制，多端同步，免费 |
 | Claude API | zjz-ai 中转 | 国内访问，替代官方 api.anthropic.com |
+| 内网穿透 | Tailscale + frp | Tailscale 日常使用，frp 备用 SSH |
 
 ### 后续演进
 
-当前云服务器为过渡方案，计划迁移到树莓派（家庭自托管，零成本长期运行），通过 Tailscale 实现内网穿透。
+当前双服务器架构：云船（联通云 WSL1）为主服务器，澳龙（阿里云）为 frp 中继和代理出口。长期计划迁移到树莓派（家庭自托管，零成本长期运行），通过 Tailscale 实现内网穿透。
 
 ---
 
@@ -159,11 +161,14 @@ CC 本地完成开发，push ccResearch → GitHub
 | `architecture.md` | 本文档，顶层架构设计 |
 | `design.md` | 实施细节：仓库设计、Key 管理、服务器配置 |
 | `task-list.md` | 任务清单，跟踪所有待办事项 |
-| `guides/deploy-cloud-server.md` | 云服务器部署指南 |
-| `guides/deploy-raspberry-pi.md` | 树莓派部署指南 |
+| `known-limitations.md` | 已知限制与注意事项 |
+| `guides/deploy-cloud-server.md` | 阿里云（澳龙）部署指南 |
+| `guides/deploy-cloud-wsl1-frp.md` | 联通云（云船）WSL1 + frp 部署指南 |
+| `guides/deploy-raspberry-pi.md` | 树莓派部署指南（待实施） |
+| `guides/server-config.md` | 服务器配置：目录规范、密钥、服务管理 |
+| `guides/shared-info-design.md` | 服务器目录规范与共享机制设计 |
 | `guides/client-setup.md` | 客户端配置指南 |
 | `guides/feishu-integration.md` | 飞书集成指南 |
 | `guides/openclaw-tools-reference.md` | OpenClaw Gateway HTTP API 参考 |
 | `guides/mobile-remote-control.md` | 手机远程控制方案（待定） |
-| `known-limitations.md` | 已知限制与注意事项 |
 | `references/multi-model-switching.md` | 多模型切换方案（早期设计参考） |

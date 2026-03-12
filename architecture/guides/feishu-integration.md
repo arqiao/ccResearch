@@ -45,7 +45,7 @@ openclaw plugins enable feishu
 
 ### 2.2 配置文件
 
-路径：`/root/.openclaw/openclaw.json`
+路径：`~/.openclaw/openclaw.json`
 
 ```json
 {
@@ -80,7 +80,7 @@ openclaw channels status
 
 ### 3.1 auth-profiles.json 格式
 
-路径：`/root/.openclaw/agents/main/agent/auth-profiles.json`
+路径：`~/.openclaw/agents/main/agent/auth-profiles.json`
 
 ```json
 {

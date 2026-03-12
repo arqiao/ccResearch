@@ -2,7 +2,7 @@
 
 > 更新时间：2026-02-24
 > 服务器：39.107.54.166:18789
-> Token 位置：`/root/.openclaw/openclaw.json` → `gateway.auth.token`
+> Token 位置：`~/.openclaw/openclaw.json` → `gateway.auth.token`
 
 ---
 
@@ -97,7 +97,7 @@ curl -s http://127.0.0.1:18789/tools/invoke \
 
 ### 启用方式
 
-在 `/root/.openclaw/openclaw.json` 中添加：
+在 `~/.openclaw/openclaw.json` 中添加：
 ```json5
 {
   "gateway": {

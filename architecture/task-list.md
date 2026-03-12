@@ -1,6 +1,6 @@
 # 任务清单
 
-> 最后更新：2026-03-01
+> 最后更新：2026-03-12
 > 状态说明：⬜ 待办 | 🔄 进行中 | ✅ 已完成 | ⏸️ 暂缓
 > 执行者说明：👤 你独立完成 | 🤖 我来协助 | 👥 一起完成
 
@@ -92,6 +92,50 @@
 | 21 | 设置 SHARED_KNOWLEDGE_PATH 环境变量 | ✅ | 🤖 | #11 | [client-setup.md](./guides/client-setup.md) | 已设置 |
 | 22 | 更新 ~/.claude/CLAUDE.md | ✅ | 🤖 | #21 | [client-setup.md](./guides/client-setup.md) | 已添加知识库路径和使用指引 |
 | 23 | 测试 Claude Code 读取阿乔的共享知识库 | ✅ | 👥 | #22 | [client-setup.md](./guides/client-setup.md) | 验证通过 |
+
+---
+
+## 新阶段：联通云智电脑部署（替代阿里云）
+
+> 主机：8核/16GB/200GB，公网 IP 195.64.7.45（固定）
+> 参考文档：[deploy-cloud-wsl1-frp.md](./guides/deploy-cloud-wsl1-frp.md)
+
+### V.1 WSL1 + Ubuntu 安装
+
+> 注：联通云智电脑不支持嵌套虚拟化，Hyper-V / WSL2 均不可用，改用 WSL1
+
+| # | 任务 | 状态 | 执行者 | 依赖 | 说明 |
+|---|------|------|-------|------|------|
+| V1 | 启用 WSL 功能并重启 | ✅ | 👤 | - | dism 启用 Microsoft-Windows-Subsystem-Linux，已重启 |
+| V2 | 设置默认版本为 WSL1 | ✅ | 👤 | V1 | `wsl --set-default-version 1` |
+| V3 | 安装 Ubuntu 24.04 | ✅ | 👤 | V2 | Ubuntu 24.04.4 LTS，用户名 arqiaoclaw |
+| V4 | 迁移 WSL1 数据到 D 盘 | ✅ | 🤖 | V3 | WSL1 数据已在 D:\wsl\ |
+| V5 | 开放 Windows 防火墙 18789 端口 | ✅ | 🤖 | V3 | WSL1 共享网络栈，不需要端口转发 |
+
+### V.2 OpenClaw 安装与配置
+
+| # | 任务 | 状态 | 执行者 | 依赖 | 说明 |
+|---|------|------|-------|------|------|
+| V9 | 安装 Node.js 22 + pnpm | ✅ | 🤖 | V3 | Node.js v22.22.1，pnpm 已安装 |
+| V10 | 安装 OpenClaw | ✅ | 🤖 | V9 | openclaw@2026.3.8 已安装 |
+| V11 | 运行引导向导 | ✅ | 🤖 | V10 | minimax/MiniMax-M2.5 已配置 |
+| V12 | 配置 Gateway 监听 loopback + token | ✅ | 🤖 | V11 | bind: loopback（WSL1网络限制），token 已配置 |
+| V13 | 迁移阿里云知识库和配置 | ✅ | 🤖 | V12 | 知识库已克隆（arqiao-shared-knowledge + ccResearch），脚本/账户切换/cron 全部迁移完成 |
+| V14 | 验证外网访问（手机/笔记本） | ✅ | 👥 | V5, V12 | 通过 SSH 隧道访问 localhost:18789，飞书群正常响应 |
+
+### V.3 收尾
+
+| # | 任务 | 状态 | 执行者 | 依赖 | 说明 |
+|---|------|------|-------|------|------|
+| V15 | 联通云开机自启：frpc + openclaw gateway | ✅ | 🤖 | V14 | 启动文件夹方式，WSL等待+SSH服务+frpc+OpenClaw |
+| V16 | 笔记本一键连接（MobaXterm） | ✅ | 🤖 | V15 | 会话配置端口转发，双击快捷方式连接 |
+| V17 | 更新客户端 SSH config | ✅ | 🤖 | V14 | MobaXterm会话已包含LocalForward |
+| V18 | 更新 CLAUDE.md 服务器地址 | ✅ | 🤖 | V14 | 无需更新，CLAUDE.md 中无硬编码 IP，通过 SSH 隧道访问 |
+| V19 | 停用/释放阿里云服务器 | ⬜ | 👤 | V14 | 确认新服务器稳定后操作 |
+| V20 | 配置 Tailscale 内网访问 | ✅ | 🤖 | V3 | 云船、笔记本、手机已加入 Tailscale 网络（100.115.214.108） |
+| V21 | 关闭公网 18789 端口暴露 | ✅ | 🤖 | V20 | frpc 配置已移除 openclaw 代理，仅保留 SSH 隧道 |
+| V22 | 配置控制界面访问 | ✅ | 🤖 | V20 | SSH 隧道方式（yunchuan-tunnel），allowedOrigins 已添加 Tailscale IP |
+| V23 | 迁移澳龙功能到云船 | ✅ | 🤖 | V13 | 脚本(feishu/notify/backup/update检查)、账户切换(account-manager+switch-my-llm+switch-my-account)、知识库(两个仓库)、cron任务、extraDirs 全部完成；account-manager 已加入开机自启 |
 
 ---
 
@@ -206,12 +250,12 @@
 | I7 | 配置 requireMention:false，群消息无需 @ 机器人 | ✅ | 🤖 | - | openclaw.json channels.feishu.requireMention=false |
 | I8 | 本地 webhook server | ✅ | 🤖 | - | 127.0.0.1:19527，开机自启，支持 sync-kbs 指令 |
 | I9 | 反向 SSH 隧道 | ✅ | 🤖 | - | 服务器通过隧道访问本地 19527，开机自启 |
-| I10 | 账户切换脚本 | ✅ | 🤖 | - | /root/.openclaw/switch-account.js，支持4个账户 |
+| I10 | 账户切换脚本 | ✅ | 🤖 | - | server-scripts/switch-my-account.js，支持4个账户 |
 | I11 | 账户切换网页 | ✅ | 🤖 | - | http://39.107.54.166:19528/，欠费时手动切换 |
 | I12 | 配置 TOOLS.md / USER.md | ✅ | 🤖 | - | 机器人知道同步知识库和切换账户的操作方法 |
-| I17 | 代理节点自动切换脚本 | ✅ | 🤖 | I2 | /root/scripts/switch-proxy.py，解析订阅 Clash YAML，测速选最优节点，cron 每小时检测，流量低于 100 MB 发飞书通知 |
-| I18 | 多 LLM 模型切换方案 | ✅ | 🤖 | I10, I11 | models-config.json + switch-llm.py + account-switcher.js 改造 + model-switcher Skill；支持 Opus/Sonnet/Haiku/Thinking/MiniMax 切换，自动选可用账户，余额不足自动跳过 |
-| I19 | 模型切换页面：选模型后可选账户 | ✅ | 🤖 | I18 | 模型标签页改为两步选择（选模型→显示账户列表→选账户提交），switch-llm.py 增加 --account 参数 |
+| I17 | 代理节点自动切换脚本 | ✅ | 🤖 | I2 | ~/local/scripts/switch-proxy.py（澳龙 root cron），解析订阅 Clash YAML，测速选最优节点，cron 每小时检测，流量低于 100 MB 发飞书通知 |
+| I18 | 多 LLM 模型切换方案 | ✅ | 🤖 | I10, I11 | models-config.json + switch-my-llm.py + account-manager.js 改造 + switch-my-llm Skill；支持 Opus/Sonnet/Haiku/Thinking/MiniMax 切换，自动选可用账户，余额不足自动跳过 |
+| I19 | 模型切换页面：选模型后可选账户 | ✅ | 🤖 | I18 | 模型标签页改为两步选择（选模型→显示账户列表→选账户提交），switch-my-llm.py 增加 --account 参数 |
 
 ### 第三方服务集成
 
@@ -230,9 +274,9 @@
 |---|------|------|-------|------|------|
 | C1 | 同步阿乔的共享知识库（本地） | 🔄 | 👤 | 每次工作前 | `git pull`（服务器端已 cron 自动同步） |
 | C2 | 更新阿乔的共享知识库内容 | 🔄 | 👥 | 解决问题后 | 记录方案和踩坑，推送后服务器次日自动同步 |
-| C3 | 备份 OpenClaw 配置 | ✅ | 🤖 | 每周日 2:00 | cron 已部署，/root/scripts/backup_openclaw.sh，备份到 /root/backups/openclaw，保留 30 天，飞书通知 |
-| C4 | 检查系统更新 | ✅ | 🤖 | 每月 1 号 4:00 | cron 已部署，/root/scripts/check_system_update.sh，检查 apt 可更新包，飞书通知 |
-| C5 | 检查 OpenClaw 更新 | ✅ | 🤖 | 每周一 3:00 | cron 已部署，/root/scripts/check_openclaw_update.sh，比较 npm 版本，飞书通知 |
+| C3 | 备份 OpenClaw 配置 | ✅ | 🤖 | 每周日 2:00 | cron 已部署，~/local/scripts/backup_openclaw.sh，备份到 ~/backups/openclaw，保留 30 天，飞书通知 |
+| C4 | 检查系统更新 | ✅ | 🤖 | 每月 1 号 4:00 | cron 已部署，server-scripts/check_system_update.sh，检查 apt 可更新包，飞书通知 |
+| C5 | 检查 OpenClaw 更新 | ✅ | 🤖 | 每周一 3:00 | cron 已部署，server-scripts/check_openclaw_update.sh，比较 npm 版本，飞书通知 |
 | C6 | Skill 学习与扩展 | ➡️ | 👥 | 持续 | 已转移到 skills-dev 项目管理 |
 | C7 | 同步 Skill 到服务器 | ➡️ | 👤 | 开发完成后 | 已转移到 skills-dev 项目管理 |
 
@@ -254,6 +298,10 @@
 | D9 | 配置 OpenAI API | ⬜ | 低 | 用于 openai-image-gen Skill（图片生成），可选 |
 | D10 | 配置 Brave Search API | ⏸️ | 中 | 已有 ddg-web-search + baidu-search 覆盖，Brave 已无免费套餐，暂缓 |
 | D11 | 阿里云服务器配置代理 | ✅ | 中 | sing-box 代理已运行（127.0.0.1:7890），git 全局代理已配置，GitHub token 已配置，知识库可正常 git pull |
+| D13 | 云船 simple-proxy.py 开机自启 | ✅ | 中 | start-openclaw.bat 已更新并替换，含 Tailscale + simple-proxy + account-manager |
+| D14 | 云船 Tailscale 开机自启 | ✅ | 中 | start-openclaw.bat 已更新并替换，含 Tailscale + simple-proxy + account-manager |
+| D15 | 澳龙用户迁移：root → openclaw | ✅ | 高 | OpenClaw 全部迁移到 /home/openclaw/；systemd user services（gateway + account-switcher）+ loginctl linger；cron 迁移到 openclaw 用户；root 仅保留 frps + switch-proxy.py |
+| D16 | 澳龙 root 旧文件清理 | ✅ | 中 | 已删除：.openclaw/、backups/、workspace 符号链接、systemd user 服务文件、杂项文档、frp tar.gz；保留：frp_0.61.0_linux_amd64/（frps）、local/scripts/switch-proxy.py（root cron） |
 
 ---
 
@@ -261,10 +309,23 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-12 | D15/D16 完成：澳龙用户迁移（root→openclaw）全部完成——OpenClaw binary/config/services/cron/SSH 密钥迁移到 /home/openclaw/，systemd user services 启用（gateway+account-switcher），root 旧文件清理完成（保留 frps + switch-proxy.py） |
+| 2026-03-12 | 澳龙目录迁移完成：~/workspace 软链接→/home/openclaw/workspace；通用脚本从 /root/scripts/ 迁入 server-scripts/（scp 同步）；个性化脚本(backup_openclaw.sh, switch-proxy.py/sh)迁入 ~/local/scripts/；share-cc/skills.json→~/local/myskills.json；cron 路径全部更新；通用脚本 notify.sh/check_*.sh 改为相对路径（dirname $0），两台服务器同步 |
+| 2026-03-12 | D13/D14 完成：start-openclaw.bat 已在联通云智电脑上替换，含 6 项服务自启（SSH→Tailscale→frpc→simple-proxy→OpenClaw→account-manager） |
+| 2026-03-12 | 目录规范化：通用脚本从 ~/scripts/ 移入 arqiao-shared-knowledge/server-scripts/（git 同步）；个性化脚本移入 ~/local/scripts/；share-cc/ 废弃，改为 ~/local/myskills.json；start-openclaw.bat 补充 Tailscale + simple-proxy.py + account-manager.js 开机自启 |
+| 2026-03-12 | Skill 改名：switch-account → switch-my-account, model-switcher → switch-my-llm；脚本改名：switch-llm.py → switch-my-llm.py, account-switcher.js → account-manager.js；脚本统一迁移到 ~/scripts/（switch-my-account.js）；所有文档引用同步更新 |
+| 2026-03-12 | 修复飞书机器人显示旧 skill 名称：根因是 .jsonl 会话历史中 AI 旧回复包含旧名称，模型参考历史继续使用旧名；修复方式：sed 替换 jsonl 文件中旧名称 |
+| 2026-03-12 | 新增 ~/scripts/rename-in-sessions.sh 脚本：Skill/脚本改名后自动清理会话历史中的旧名称；TOOLS.md 已添加强制规则 |
+| 2026-03-12 | 云船↔澳龙双向代理机制：云船 simple-proxy.py（0.0.0.0:1080）、cloud-ship-switch-proxy.sh；澳龙 switch-proxy.sh（yunchuan 选项）；系统级代理（http_proxy/https_proxy 环境变量 + git config），持久化到 ~/local/.proxy_env |
+| 2026-03-11 | V23 完成：澳龙功能全部迁移到云船——脚本(feishu_send/notify/backup/update检查)、账户切换(account-manager.js+switch-llm.py+switch-account.js)、知识库(arqiao-shared-knowledge+ccResearch)、cron任务(知识库同步/备份/更新检查)、OpenClaw extraDirs 配置；account-manager 已加入 start-openclaw.bat 开机自启 |
+| 2026-03-11 | V13 完成：知识库克隆到云船 ~/workspace/，OpenClaw extraDirs 指向 arqiao-shared-knowledge/skills |
+| 2026-03-11 | V20-V22 完成：Tailscale 内网访问配置（云船、笔记本、手机已加入网络）、关闭公网 18789 端口（frpc 仅保留 SSH 隧道）、控制界面通过 SSH 隧道访问（yunchuan-tunnel） |
+| 2026-03-10 | V15-V18 完成：联通云开机自启配置（frpc + OpenClaw Gateway）、MobaXterm 一键连接配置、SSH config 更新、CLAUDE.md 确认无需更新 |
+| 2026-03-10 | 文档更新：deploy-cloud-vm.md 重命名为 deploy-cloud-wsl1-frp.md，补充终端标注和故障排查章节 |
 | 2026-02-26 | 文档整理：新建 known-limitations.md（已知限制），更新 design.md（热重载机制、网页 UI 交互）、architecture.md（文档索引补全）、deploy-cloud-server.md（重启注意事项）、openclaw-tools-reference.md、task-list.md（文档索引补全）；临时脚本移入 tmptools/ 子目录 |
-| 2026-02-26 | I19 完成：模型切换页面改为两步选择（选模型→显示账户列表→选账户提交），switch-llm.py 增加 --account 可选参数，account-switcher.js 模型标签页 UI 改造 |
+| 2026-02-26 | I19 完成：模型切换页面改为两步选择（选模型→显示账户列表→选账户提交），switch-llm.py 增加 --account 可选参数，account-manager.js 模型标签页 UI 改造 |
 | 2026-02-26 | OpenClaw 升级到 v2026.2.24：pnpm 安装成功（51s），swap 扩到 4G + swappiness=10，systemd 服务路径更新到 pnpm 全局目录，Gateway 正常运行；deploy-cloud-server.md 已更新安装经验 |
-| 2026-02-25 | I18 完成：多 LLM 模型切换方案。新建 models-config.json（模型-账户映射）、switch-llm.py（核心切换脚本）、改造 account-switcher.js（增加模型切换标签页，默认显示）、创建 model-switcher Skill（飞书群自然语言切换）。支持 5 个模型、余额不足自动跳过、次日自动恢复 |
+| 2026-02-25 | I18 完成：多 LLM 模型切换方案。新建 models-config.json（模型-账户映射）、switch-llm.py（核心切换脚本）、改造 account-manager.js（增加模型切换标签页，默认显示）、创建 model-switcher Skill（飞书群自然语言切换）。支持 5 个模型、余额不足自动跳过、次日自动恢复 |
 | 2026-02-25 | C3/C4/C5 完成：4 个 cron 脚本部署到服务器（feishu_send.py + notify.sh + 3 个业务脚本），全部验证通过，飞书通知正常；另发现 OpenClaw 有新版 2026.2.24 |
 | 2026-02-25 | D12：手机远程控制 Claude Code 方案调研，官方 Remote Control 功能当前版本未包含，加入待办；方案文档 guides/mobile-remote-control.md 已创建 |
 | 2026-02-25 | #37、#38 暂缓：已通过代理 + git CLI 覆盖 GitHub 访问需求，无需额外 MCP Server |
@@ -284,5 +345,10 @@
 | 2026-02-20 | 飞书集成完成（#24-27），使用 OpenClaw 内置插件 |
 | 2026-02-15 | 初始创建任务清单 |
 | 2026-02-15 | 新增 MCP 集成任务，调整为第二阶段（树莓派之前） |
+| 2026-03-10 | 方案调整：Hyper-V / WSL2 均因嵌套虚拟化不可用，改为 WSL1 方案；文档和任务清单同步更新 |
+| 2026-03-10 | 新增联通云智电脑部署阶段（V1-V18）：WSL1 + Ubuntu，公网 IP 195.64.7.45，替代阿里云轻量服务器；新建 guides/deploy-cloud-vm.md |
+| 2026-03-10 | 服务器命名方案确定：阿里云（frp中继，39.107.54.166）命名为"澳龙"，联通云（OpenClaw主机，195.64.7.45）命名为"云船" |
+| 2026-03-11 | 云船OpenClaw配置迁移完成：飞书配置已迁移，Gateway bind改为loopback解决WSL1网络问题，frp隧道正常工作，澳龙OpenClaw已停止仅作frp中继 |
+| 2026-03-11 | SSH配置优化：云船SSH密钥认证已配置（免密登录），添加yunchuan快捷方式（端口12222） |
 | 2026-02-15 | MCP 优先级调整：飞书优先于微信（官方 API 支持好，风险低） |
 
