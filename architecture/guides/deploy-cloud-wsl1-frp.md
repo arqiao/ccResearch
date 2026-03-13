@@ -252,19 +252,17 @@ auth.token = "YOUR_FRP_TOKEN"
 EOF
 
 # 后台运行
-nohup ./frps -c frps.toml > /tmp/frps.log 2>&1 &
+nohup ./frps -c frps.toml > ~/log/frps.log 2>&1 &
 ```
 
 阿里云安全组需开放：7000（frp控制端口）、18789（OpenClaw）、12222（SSH）。
 
-### 7.3 联通云 WSL1 安装 frpc（客户端）
+### 7.3 云船安装 frpc（客户端）
 
-> 在联通云 WSL1 上运行（通过 SSH 连接到联通云后执行）
-> frpc 下载到 Windows 目录下（`C:\Users\Administrator\`），方便任务计划程序调用。
+> 在云船上运行（通过 SSH 连接后执行）
 
 ```bash
-# 在 WSL1 中，下载到 Windows 目录
-cd /mnt/c/Users/Administrator
+cd ~
 wget https://github.com/fatedier/frp/releases/download/v0.61.0/frp_0.61.0_linux_amd64.tar.gz
 tar -xzf frp_0.61.0_linux_amd64.tar.gz
 cd frp_0.61.0_linux_amd64
@@ -399,7 +397,7 @@ Host yunchuan-ts
 **关闭公网 18789 端口暴露：**
 ```bash
 # 云船 frpc 配置只保留 SSH 隧道
-cat > /mnt/c/Users/Administrator/frp_0.61.0_linux_amd64/frpc.toml << 'EOF'
+cat > ~/frp_0.61.0_linux_amd64/frpc.toml << 'EOF'
 serverAddr = "39.107.54.166"
 serverPort = 7000
 auth.token = "YOUR_FRP_TOKEN"
@@ -414,8 +412,8 @@ EOF
 
 # 重启 frpc
 pkill -f frpc
-cd /mnt/c/Users/Administrator/frp_0.61.0_linux_amd64
-nohup ./frpc -c frpc.toml > frpc.log 2>&1 &
+cd ~/frp_0.61.0_linux_amd64
+nohup ./frpc -c frpc.toml > ~/log/frpc.log 2>&1 &
 ```
 
 **验证公网端口已关闭：**
@@ -432,7 +430,7 @@ WSL1 不支持 systemd，使用 nohup + screen 管理服务。
 ### 8.1 启动 Gateway
 
 ```bash
-nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
+nohup openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &
 ```
 
 ### 8.2 重启 Gateway
@@ -442,7 +440,7 @@ nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
 ```bash
 pkill -f "openclaw gateway"
 sleep 2
-nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
+nohup openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &
 ```
 
 ### 8.3 停止 Gateway
@@ -454,7 +452,7 @@ pkill -f "openclaw gateway"
 ### 8.4 查看日志
 
 ```bash
-tail -f /tmp/openclaw-gateway.log
+tail -f ~/log/openclaw-gateway.log
 ```
 
 ---
@@ -598,7 +596,7 @@ cat /tmp/frpc.log
 > 在联通云 WSL1 上运行
 
 ```bash
-tail -f /tmp/openclaw-gateway.log
+tail -f ~/log/openclaw-gateway.log
 ```
 
 ### 10.4 开机自启配置
@@ -633,17 +631,19 @@ REM Start services (use root for ssh, no sudo needed)
 wsl -d Ubuntu-24.04 -u root -- bash -c "service ssh start"
 timeout /t 5 /nobreak > nul
 REM Tailscale (WSL1 needs userspace networking)
-wsl -d Ubuntu-24.04 -u root -- bash -c "nohup tailscaled --tun=userspace-networking --socks5-server=localhost:1055 > /tmp/tailscaled.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u root -- bash -c "nohup tailscaled --tun=userspace-networking --socks5-server=localhost:1055 > /home/arqiaoclaw/log/tailscaled.log 2>&1 &"
 timeout /t 3 /nobreak > nul
 wsl -d Ubuntu-24.04 -u root -- bash -c "tailscale up"
+REM Create log directory
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "mkdir -p ~/log"
 REM frpc tunnel
-wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /mnt/c/Users/Administrator/frp_0.61.0_linux_amd64/frpc -c /mnt/c/Users/Administrator/frp_0.61.0_linux_amd64/frpc.toml > /tmp/frpc.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/frp_0.61.0_linux_amd64/frpc -c /home/arqiaoclaw/frp_0.61.0_linux_amd64/frpc.toml > ~/log/frpc.log 2>&1 &"
 REM HTTP proxy for aolong (bidirectional proxy)
-wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup python3 ~/local/scripts/simple-proxy.py > ~/local/proxy.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup python3 ~/local/scripts/simple-proxy.py > ~/log/simple-proxy.log 2>&1 &"
 REM OpenClaw gateway
-wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/.local/share/pnpm/openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/.local/share/pnpm/openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &"
 REM account-manager web UI
-wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > /tmp/account-manager.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > ~/log/account-manager.log 2>&1 &"
 ```
 
 或者用 PowerShell 命令直接创建：
@@ -699,17 +699,17 @@ sudo tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
 sudo tailscale up
 
 # 启动 frpc
-cd /mnt/c/Users/Administrator/frp_0.61.0_linux_amd64
-nohup ./frpc -c frpc.toml > /tmp/frpc.log 2>&1 &
+cd ~/frp_0.61.0_linux_amd64
+nohup ./frpc -c frpc.toml > ~/log/frpc.log 2>&1 &
 
 # 启动 HTTP 代理（供澳龙使用）
-nohup python3 ~/local/scripts/simple-proxy.py > ~/local/proxy.log 2>&1 &
+nohup python3 ~/local/scripts/simple-proxy.py > ~/log/simple-proxy.log 2>&1 &
 
 # 启动 OpenClaw gateway
-nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
+nohup openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &
 
 # 启动 account-manager 网页
-nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > /tmp/account-manager.log 2>&1 &
+nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > ~/log/account-manager.log 2>&1 &
 ```
 
 ---
@@ -725,7 +725,7 @@ nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js
 ps aux | grep frpc
 
 # 2. 查看 frpc 日志
-cat /tmp/frpc.log
+cat ~/log/frpc.log
 
 # 3. 检查 frpc 能否连上阿里云
 curl -v telnet://39.107.54.166:7000
@@ -733,7 +733,7 @@ curl -v telnet://39.107.54.166:7000
 # 4. 检查阿里云 frps 是否在运行（在笔记本本地执行）
 ssh root@39.107.54.166
 # 然后在阿里云上执行：
-cat /tmp/frps.log
+cat ~/log/frps.log
 ps aux | grep frps
 ```
 
@@ -757,10 +757,10 @@ Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linu
 
 ```bash
 # 查看日志
-cat /tmp/openclaw-gateway.log
+cat ~/log/openclaw-gateway.log
 
 # 重新启动
-nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
+nohup openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &
 ```
 
 ### 11.4 联通云自启动未生效

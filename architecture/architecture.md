@@ -159,6 +159,7 @@ CC 本地完成开发，push ccResearch → GitHub
 | 文档 | 说明 |
 |-----|------|
 | `architecture.md` | 本文档，顶层架构设计 |
+| `myclaws-inventory.md` | 龙虾资产库：各机器配置、服务、Skills 总览 |
 | `design.md` | 实施细节：仓库设计、Key 管理、服务器配置 |
 | `task-list.md` | 任务清单，跟踪所有待办事项 |
 | `known-limitations.md` | 已知限制与注意事项 |

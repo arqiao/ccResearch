@@ -10,6 +10,7 @@
 |------|------|---------|
 | `~/workspace/` | 通用内容，各服务器文件名和内容完全一致 | git pull 直接覆盖 |
 | `~/local/` | 个性化内容，文件名一致但内容按服务器定制 | 手动维护，不能盲目覆盖 |
+| `~/log/` | 服务和 cron 日志，统一存放 | 不同步，各服务器独立 |
 | `~/.openclaw/` | OpenClaw 运行时配置和数据 | 脚本自动维护 |
 
 ### 通用目录（~/workspace/）
@@ -80,11 +81,25 @@ arqiao-minimax: MiniMax（sk-cp-...）
 ### cron 任务
 
 ```
-0 3 * * *  知识库同步
-0 2 * * 0  配置备份
-0 4 1 * *  系统更新检查
-0 3 * * 1  OpenClaw 版本检查
+0 3 * * *  知识库同步          >> ~/log/cron-kbs-sync.log 2>&1
+0 2 * * 0  配置备份            >> ~/log/cron-backup.log 2>&1
+0 4 1 * *  系统更新检查        >> ~/log/cron-system-update.log 2>&1
+0 3 * * 1  OpenClaw 版本检查   >> ~/log/cron-openclaw-update.log 2>&1
 ```
+
+### 日志目录（~/log/）
+
+| 文件 | 来源 | 说明 |
+|------|------|------|
+| `openclaw-gateway.log` | start-openclaw.bat | OpenClaw 主服务 |
+| `account-manager.log` | start-openclaw.bat | 账户/模型管理网页 |
+| `frpc.log` | start-openclaw.bat | frp 客户端隧道 |
+| `tailscaled.log` | start-openclaw.bat | Tailscale（root 启动） |
+| `simple-proxy.log` | start-openclaw.bat | HTTP 代理 |
+| `cron-kbs-sync.log` | crontab | 知识库同步 |
+| `cron-backup.log` | crontab | 配置备份 |
+| `cron-system-update.log` | crontab | 系统更新检查 |
+| `cron-openclaw-update.log` | crontab | OpenClaw 版本检查 |
 
 ### 开机自启服务（联通云智电脑 start-openclaw.bat → 启动云船内服务）
 
@@ -115,7 +130,7 @@ arqiao-minimax: MiniMax（sk-cp-...）
 > 公网 IP: 39.107.54.166
 > Tailscale IP: 100.72.241.16
 > SSH: `ssh root@39.107.54.166`（系统管理）或 `ssh openclaw@39.107.54.166`（OpenClaw 服务）
-> 用户：openclaw（OpenClaw 服务运行用户），root（仅 frps + sing-box + switch-proxy）
+> 用户：openclaw（所有自建服务），root（仅 sing-box + tailscaled 等系统级服务）
 
 ### 密钥存储
 
@@ -124,37 +139,48 @@ arqiao-minimax: MiniMax（sk-cp-...）
 | `/home/openclaw/local/.secrets` | 第三方 API keys | 600 |
 | `/home/openclaw/local/.secrets.accounts.json` | 账户数据 | 600 |
 
-### 服务管理（systemd user services）
+### 服务管理
 
 | 服务 | 用户 | 管理方式 | 说明 |
 |------|------|---------|------|
 | openclaw-gateway | openclaw | `systemctl --user start/stop/restart openclaw-gateway` | OpenClaw 主服务 |
 | account-switcher | openclaw | `systemctl --user start/stop/restart account-switcher` | 账户/模型管理网页 |
+| frps | openclaw | nohup（`~/frp_0.61.0_linux_amd64/`） | frp 服务端（中继） |
 | sing-box | root | `systemctl start/stop sing-box` | 代理出口 |
 | tailscaled | root | `systemctl start/stop tailscaled` | Tailscale 内网 |
-| frps | root | nohup（`/root/frp_0.61.0_linux_amd64/`） | frp 服务端（中继） |
 
 > openclaw 用户已启用 loginctl linger，服务在无登录会话时也持续运行。
+> switch-proxy.py 需重启 sing-box，通过 sudoers 授权：`openclaw ALL=(root) NOPASSWD: /usr/bin/systemctl restart sing-box`
 
 ### 个性化脚本（~/local/scripts/）
 
 - `backup_openclaw.sh` - 配置备份
 - `switch-proxy.sh` - 代理切换（yunchuan/local/direct）
+- `switch-proxy.py` - 代理节点自动切换（解析订阅，测速选最优，需 sudo 重启 sing-box）
 
 ### cron 任务
 
 openclaw 用户：
 ```
-0 3 * * *  知识库同步（arqiao-shared-knowledge + ccResearch）
-0 2 * * 0  配置备份
-0 4 1 * *  系统更新检查
-0 3 * * 1  OpenClaw 版本检查
+0 3 * * *  知识库同步          >> ~/log/cron-kbs-sync.log 2>&1
+0 2 * * 0  配置备份            >> ~/log/cron-backup.log 2>&1
+0 4 1 * *  系统更新检查        >> ~/log/cron-system-update.log 2>&1
+0 3 * * 1  OpenClaw 版本检查   >> ~/log/cron-openclaw-update.log 2>&1
+0 * * * *  代理节点自动切换    >> ~/log/cron-switch-proxy.log 2>&1
 ```
 
-root 用户：
-```
-0 * * * *  代理节点自动切换（switch-proxy.py，需 root 权限重启 sing-box）
-```
+### 日志目录（~/log/）
+
+| 文件 | 来源 | 说明 |
+|------|------|------|
+| `frps.log` | nohup | frp 服务端 |
+| `cron-kbs-sync.log` | crontab | 知识库同步 |
+| `cron-backup.log` | crontab | 配置备份 |
+| `cron-system-update.log` | crontab | 系统更新检查 |
+| `cron-openclaw-update.log` | crontab | OpenClaw 版本检查 |
+| `cron-switch-proxy.log` | crontab | 代理节点切换 |
+
+> gateway 和 account-switcher 的日志走 systemd journalctl，不在 ~/log/ 中。
 
 ### OpenClaw 配置
 

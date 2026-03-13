@@ -13,6 +13,7 @@
 | 文档 | 什么时候看 | 需要看外部资料吗 |
 |-----|-----------|-----------------|
 | `task-list.md` | **每次开始工作时** | 不需要 |
+| `myclaws-inventory.md` | 查看各机器配置和部署状态时 | 不需要 |
 | `knowledge-sharing-system.md` | 想了解整体方案时 | 不需要 |
 | `guides/deploy-cloud-server.md` | 做任务 #1-9 时 | 阿里云购买页面需要自己操作 |
 | `guides/deploy-raspberry-pi.md` | 做任务 #39-64 时 | 树莓派官网下载 Imager |
@@ -301,7 +302,9 @@
 | D13 | 云船 simple-proxy.py 开机自启 | ✅ | 中 | start-openclaw.bat 已更新并替换，含 Tailscale + simple-proxy + account-manager |
 | D14 | 云船 Tailscale 开机自启 | ✅ | 中 | start-openclaw.bat 已更新并替换，含 Tailscale + simple-proxy + account-manager |
 | D15 | 澳龙用户迁移：root → openclaw | ✅ | 高 | OpenClaw 全部迁移到 /home/openclaw/；systemd user services（gateway + account-switcher）+ loginctl linger；cron 迁移到 openclaw 用户；root 仅保留 frps + switch-proxy.py |
-| D16 | 澳龙 root 旧文件清理 | ✅ | 中 | 已删除：.openclaw/、backups/、workspace 符号链接、systemd user 服务文件、杂项文档、frp tar.gz；保留：frp_0.61.0_linux_amd64/（frps）、local/scripts/switch-proxy.py（root cron） |
+| D16 | 澳龙 root 旧文件清理 | ✅ | 中 | 已删除：.openclaw/、backups/、workspace 符号链接、systemd user 服务文件、杂项文档、frp tar.gz；frps + switch-proxy.py 已迁移到 openclaw 用户，root 仅保留系统级服务 |
+| D17 | 笔记本部署 OpenClaw | ⬜ | 低 | Windows 11 本地安装 OpenClaw Gateway，Tailscale 已就绪 |
+| D18 | 手机部署 OpenClaw | ⬜ | 低 | Android 端 OpenClaw 部署方案待调研 |
 
 ---
 
@@ -309,6 +312,8 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-13 | 新建 myclaws-inventory.md：龙虾资产库——各台机器软硬件配置、访问方式、运行服务、cron 任务、Skills 部署状态一览；含草莓派/笔记本/手机（待部署）规划 |
+| 2026-03-13 | 日志统一到 ~/log/：云船 5 个服务日志从 /tmp/ 和 ~/local/ 迁入 ~/log/，两台服务器 cron 任务加日志输出（cron-*.log），澳龙 frps + switch-proxy.py 从 root 迁到 openclaw 用户（sudoers 授权 sing-box 重启）；更新 deploy-cloud-wsl1-frp.md、server-config.md、shared-info-design.md |
 | 2026-03-13 | account-manager.js 迁移到 server-scripts/：从 ~/.openclaw/ 移至 ~/workspace/arqiao-shared-knowledge/server-scripts/，更新 design.md、server-config.md、deploy-cloud-wsl1-frp.md、post-install-checklist.md 中的路径引用，修正澳龙 account-switcher.js 旧名 |
 | 2026-03-12 | D15/D16 完成：澳龙用户迁移（root→openclaw）全部完成——OpenClaw binary/config/services/cron/SSH 密钥迁移到 /home/openclaw/，systemd user services 启用（gateway+account-switcher），root 旧文件清理完成（保留 frps + switch-proxy.py） |
 | 2026-03-12 | 澳龙目录迁移完成：~/workspace 软链接→/home/openclaw/workspace；通用脚本从 /root/scripts/ 迁入 server-scripts/（scp 同步）；个性化脚本(backup_openclaw.sh, switch-proxy.py/sh)迁入 ~/local/scripts/；share-cc/skills.json→~/local/myskills.json；cron 路径全部更新；通用脚本 notify.sh/check_*.sh 改为相对路径（dirname $0），两台服务器同步 |

@@ -164,7 +164,7 @@ case $- in *i*) ;; *) return;; esac
 
 | 用户 | 职责 | 服务 |
 |------|------|------|
-| openclaw | OpenClaw 服务运行 | openclaw-gateway、account-switcher（systemd user） |
-| root | 系统级服务 | frps、sing-box、tailscaled、switch-proxy.py（cron） |
+| openclaw | OpenClaw 服务运行 | openclaw-gateway、account-switcher（systemd user）、frps、switch-proxy.py（cron，sudo 重启 sing-box） |
+| root | 系统级服务 | sing-box、tailscaled |
 
-root 下仅保留需要 root 权限的组件（重启 sing-box、绑定特权端口等），其余全部在 openclaw 用户下运行。
+root 下仅保留系统级守护进程（sing-box、tailscaled），其余全部在 openclaw 用户下运行。switch-proxy.py 通过 sudoers 授权重启 sing-box。
