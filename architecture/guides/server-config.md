@@ -27,7 +27,9 @@
 │       ├── switch-my-llm.py       # LLM 切换
 │       ├── switch-my-account.js   # 账户切换
 │       ├── rename-in-sessions.sh  # Skill 改名后清理会话历史
-│       └── sync-myskills-list.py  # 生成 ~/local/myskills.json
+│       ├── sync-myskills-list.py  # 生成 ~/local/myskills.json
+│       ├── startup-check.sh       # 启动自检+飞书通知
+│       └── service-watchdog.sh    # cron 服务守护+自动重启
 └── ccResearch/                    # 项目文档（git 同步）
 ```
 
@@ -81,10 +83,11 @@ arqiao-minimax: MiniMax（sk-cp-...）
 ### cron 任务
 
 ```
-0 3 * * *  知识库同步          >> ~/log/cron-kbs-sync.log 2>&1
-0 2 * * 0  配置备份            >> ~/log/cron-backup.log 2>&1
-0 4 1 * *  系统更新检查        >> ~/log/cron-system-update.log 2>&1
-0 3 * * 1  OpenClaw 版本检查   >> ~/log/cron-openclaw-update.log 2>&1
+0 3 * * *    知识库同步          >> ~/log/cron-kbs-sync.log 2>&1
+0 2 * * 0    配置备份            >> ~/log/cron-backup.log 2>&1
+0 4 1 * *    系统更新检查        >> ~/log/cron-system-update.log 2>&1
+0 3 * * 1    OpenClaw 版本检查   >> ~/log/cron-openclaw-update.log 2>&1
+*/10 * * * * 服务守护(watchdog)  >> ~/log/cron-watchdog.log 2>&1
 ```
 
 ### 日志目录（~/log/）
@@ -100,8 +103,12 @@ arqiao-minimax: MiniMax（sk-cp-...）
 | `cron-backup.log` | crontab | 配置备份 |
 | `cron-system-update.log` | crontab | 系统更新检查 |
 | `cron-openclaw-update.log` | crontab | OpenClaw 版本检查 |
+| `cron-watchdog.log` | crontab | 服务守护（每 10 分钟） |
 
 ### 开机自启服务（联通云智电脑 start-openclaw.bat → 启动云船内服务）
+
+> **前提**：联通云智电脑必须先手动打开"云电脑"客户端，云主机才会上线。
+> 启动后 startup-check.sh 会自检并发飞书通知，手机上即可确认服务状态。
 
 | 服务 | 用户 | 说明 |
 |------|------|------|
@@ -178,6 +185,7 @@ openclaw 用户：
 | `cron-backup.log` | crontab | 配置备份 |
 | `cron-system-update.log` | crontab | 系统更新检查 |
 | `cron-openclaw-update.log` | crontab | OpenClaw 版本检查 |
+| `cron-watchdog.log` | crontab | 服务守护（每 10 分钟） |
 | `cron-switch-proxy.log` | crontab | 代理节点切换 |
 
 > gateway 和 account-switcher 的日志走 systemd journalctl，不在 ~/log/ 中。

@@ -305,6 +305,7 @@
 | D16 | 澳龙 root 旧文件清理 | ✅ | 中 | 已删除：.openclaw/、backups/、workspace 符号链接、systemd user 服务文件、杂项文档、frp tar.gz；frps + switch-proxy.py 已迁移到 openclaw 用户，root 仅保留系统级服务 |
 | D17 | 笔记本部署 OpenClaw | ⬜ | 低 | Windows 11 本地安装 OpenClaw Gateway，Tailscale 已就绪 |
 | D18 | 手机部署 OpenClaw | ⬜ | 低 | Android 端 OpenClaw 部署方案待调研 |
+| D19 | 云船启动可靠性改进 | ✅ | 高 | startup-check.sh（启动自检+飞书通知）+ service-watchdog.sh（cron 守护+自动重启+通知），已验证通过 |
 
 ---
 
@@ -312,6 +313,8 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-13 | D19 完成：云船启动可靠性改进——startup-check.sh（8 项自检全部通过+飞书通知）、service-watchdog.sh（cron C6 每 10 分钟守护）已部署验证；server-scripts 全面通用化：switch-my-account.js/switch-my-llm.py/sync-myskills-list.py 硬编码路径改为动态获取（os.homedir/Path.home/__dirname），feishu_send.py 脱敏（凭证改从 ~/local/.secrets 读取），pgrep 模式修复（openclaw.gateway），DNS 自动修复逻辑加入两个脚本；主机名改为 YunChuan/AoLong |
+| 2026-03-13 | D19 进行中：云船启动可靠性改进——新建 startup-check.sh（启动自检+失败重启+飞书通知）和 service-watchdog.sh（cron 守护+自动重启+通知），更新 deploy-cloud-wsl1-frp.md（bat 追加自检步骤+VDI 限制说明）、known-limitations.md（新增第九节）、myclaws-inventory.md（云船限制补充）、server-config.md（启动前提说明）；修复 server-scripts 通用性：account-manager.js 硬编码路径改为 os.homedir()+__dirname、check_openclaw_update.sh 改为 $HOME、startup-check.sh 加入 WSL1/systemd 环境检测兼容云船和澳龙 |
 | 2026-03-13 | 新建 myclaws-inventory.md：龙虾资产库——各台机器软硬件配置、访问方式、运行服务、cron 任务、Skills 部署状态一览；含草莓派/笔记本/手机（待部署）规划 |
 | 2026-03-13 | 日志统一到 ~/log/：云船 5 个服务日志从 /tmp/ 和 ~/local/ 迁入 ~/log/，两台服务器 cron 任务加日志输出（cron-*.log），澳龙 frps + switch-proxy.py 从 root 迁到 openclaw 用户（sudoers 授权 sing-box 重启）；更新 deploy-cloud-wsl1-frp.md、server-config.md、shared-info-design.md |
 | 2026-03-13 | account-manager.js 迁移到 server-scripts/：从 ~/.openclaw/ 移至 ~/workspace/arqiao-shared-knowledge/server-scripts/，更新 design.md、server-config.md、deploy-cloud-wsl1-frp.md、post-install-checklist.md 中的路径引用，修正澳龙 account-switcher.js 旧名 |

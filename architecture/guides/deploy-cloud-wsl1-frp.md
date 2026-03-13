@@ -603,6 +603,10 @@ tail -f ~/log/openclaw-gateway.log
 
 > 在联通云 Windows 上运行
 
+> **重要限制**：联通云智电脑是云桌面（VDI）产品，云主机生命周期绑定客户端连接。
+> 每次重启或掉线后，必须手动打开联通"云电脑"客户端，云主机才会上线。
+> 没有 Web 控制台、API 或 Wake-on-LAN，此步骤无法自动化。
+
 > 注意：联通云需要手动打开"云电脑"客户端才能让云主机上线，无法完全自动化。
 
 #### 步骤一：创建启动脚本
@@ -644,6 +648,9 @@ REM OpenClaw gateway
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/.local/share/pnpm/openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &"
 REM account-manager web UI
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > ~/log/account-manager.log 2>&1 &"
+REM Wait for services to initialize, then run startup check
+timeout /t 30 /nobreak > nul
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "bash ~/workspace/arqiao-shared-knowledge/server-scripts/startup-check.sh"
 ```
 
 或者用 PowerShell 命令直接创建：
@@ -683,8 +690,9 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultP
 3. 启动文件夹自动运行 `start-openclaw.bat`
 4. 脚本等待 WSL 就绪（最多 60 秒）
 5. WSL 启动后依次启动：SSH 服务 → Tailscale → frpc 穿透 → simple-proxy → OpenClaw → account-manager
-6. SSH 无密码连入：`ssh -p 12222 arqiaoclaw@39.107.54.166`
-7. MobaXterm 登录后，浏览器访问 http://localhost:18789
+6. 等待 30 秒后运行 startup-check.sh 自检，结果通过飞书通知到手机
+7. SSH 无密码连入：`ssh -p 12222 arqiaoclaw@39.107.54.166`
+8. MobaXterm 登录后，浏览器访问 http://localhost:18789
 
 ### 10.5 重启后手动恢复（自启动异常时备用）
 

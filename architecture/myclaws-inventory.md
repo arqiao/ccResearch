@@ -11,9 +11,9 @@
 |------|------|----------|------|
 | 云船 | 主力 OpenClaw 服务器 | 已部署（#1） | 运行中 |
 | 澳龙 | frp 中继 + 代理出口 + 备用 OpenClaw | 已部署（#2） | 运行中 |
-| 草莓派 | 家庭自托管 OpenClaw（零成本长期运行） | 待部署（#3） | 待实施 |
-| 笔记本 | 日常开发、Claude Code | 待部署（#4） | 待实施 |
-| 手机 | 移动端飞书交互 | 待部署（#5） | 待实施 |
+| 笔记本 | 日常开发、Claude Code | 待部署（#3） | 待实施 |
+| 手机 | 移动端飞书交互 | 待部署（#4） | 待实施 |
+| 草莓派 | 家庭自托管 OpenClaw（零成本长期运行） | 待部署（#5） | 待实施 |
 
 ---
 
@@ -32,6 +32,7 @@
 | 带宽 | 100 Mbps 共享 |
 | 操作系统 | Ubuntu 24.04 LTS（WSL1） |
 | 虚拟化 | WSL1（系统调用翻译层，不支持 Docker/systemd） |
+| 主机名 | YunChuan |
 | 用户 | arqiaoclaw |
 | Node.js | 22.x |
 | 包管理器 | pnpm |
@@ -82,6 +83,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 | 每周日 02:00 | 配置备份 | `~/log/cron-backup.log` |
 | 每月1日 04:00 | 系统更新检查 | `~/log/cron-system-update.log` |
 | 每周一 03:00 | OpenClaw 版本检查 | `~/log/cron-openclaw-update.log` |
+| 每 10 分钟 | 服务守护（watchdog） | `~/log/cron-watchdog.log` |
 
 ### 日志目录（~/log/）
 
@@ -96,6 +98,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 | `cron-backup.log` | 配置备份 |
 | `cron-system-update.log` | 系统更新检查 |
 | `cron-openclaw-update.log` | OpenClaw 版本检查 |
+| `cron-watchdog.log` | 服务守护（每 10 分钟） |
 
 ### 个性化脚本（~/local/scripts/）
 
@@ -122,6 +125,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 - WSL1 无 systemd，所有进程用 nohup 管理
 - Tailscale 只能走 SOCKS5 代理（localhost:1055），不能直接 TCP
 - 联通云平台拦截所有入站端口，必须靠 frp 穿透
+- 联通云是云桌面（VDI）产品，云主机生命周期绑定客户端连接，掉线后必须手动打开客户端才能恢复
 
 ---
 
@@ -140,6 +144,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 | Swap | 4 GB（swappiness=10） |
 | 带宽 | 3 Mbps |
 | 操作系统 | Ubuntu |
+| 主机名 | AoLong |
 | 用户 | openclaw（自建服务）、root（仅 sing-box + tailscaled） |
 | Node.js | 22.x |
 | 包管理器 | pnpm（concurrency=1，内存限制） |
@@ -226,7 +231,52 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 
 ---
 
-## 四、草莓派——家庭龙虾（OpenClaw #3，待部署）
+## 四、笔记本——待部署龙虾（OpenClaw #3）
+
+### 软硬件配置
+
+| 项目 | 配置 |
+|------|------|
+| 操作系统 | Windows 11 Pro |
+| Tailscale IP | 100.100.153.29 |
+
+### 用途
+
+- 日常开发（VS Code、Claude Code）
+- 通过 MobaXterm 管理云船和澳龙
+- 通过 SSH 隧道访问 OpenClaw 控制台和 account-manager
+- 知识库编辑和 git push（ccResearch、arqiao-shared-knowledge）
+
+### 关键工具
+
+| 工具 | 用途 |
+|------|------|
+| Claude Code | AI 辅助开发 |
+| VS Code | 代码编辑 |
+| MobaXterm | SSH 会话管理（含端口转发） |
+| Tailscale | 内网组网 |
+| Git | 知识库同步 |
+
+---
+
+## 五、手机——待部署龙虾（OpenClaw #4）
+
+### 配置
+
+| 项目 | 配置 |
+|------|------|
+| 操作系统 | Android |
+| Tailscale IP | 100.71.142.90 |
+
+### 用途
+
+- 通过飞书 App 与 OpenClaw 机器人对话（自然语言交互）
+- 接收飞书通知（系统告警、流量不足等）
+- 不直接访问 OpenClaw 控制台（HTTP + 非 localhost 无法生成 device identity）
+
+---
+
+## 六、草莓派——家庭龙虾（OpenClaw #5，待部署）
 
 ### 软硬件配置
 
@@ -257,51 +307,6 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 4. 安装 Tailscale
 5. 从云船迁移配置
 6. 配置知识库同步和 cron 任务
-
----
-
-## 五、笔记本——待部署龙虾（OpenClaw #4）
-
-### 软硬件配置
-
-| 项目 | 配置 |
-|------|------|
-| 操作系统 | Windows 11 Pro |
-| Tailscale IP | 100.100.153.29 |
-
-### 用途
-
-- 日常开发（VS Code、Claude Code）
-- 通过 MobaXterm 管理云船和澳龙
-- 通过 SSH 隧道访问 OpenClaw 控制台和 account-manager
-- 知识库编辑和 git push（ccResearch、arqiao-shared-knowledge）
-
-### 关键工具
-
-| 工具 | 用途 |
-|------|------|
-| Claude Code | AI 辅助开发 |
-| VS Code | 代码编辑 |
-| MobaXterm | SSH 会话管理（含端口转发） |
-| Tailscale | 内网组网 |
-| Git | 知识库同步 |
-
----
-
-## 六、手机——待部署龙虾（OpenClaw #5）
-
-### 配置
-
-| 项目 | 配置 |
-|------|------|
-| 操作系统 | Android |
-| Tailscale IP | 100.71.142.90 |
-
-### 用途
-
-- 通过飞书 App 与 OpenClaw 机器人对话（自然语言交互）
-- 接收飞书通知（系统告警、流量不足等）
-- 不直接访问 OpenClaw 控制台（HTTP + 非 localhost 无法生成 device identity）
 
 ---
 
@@ -493,3 +498,5 @@ Host yunchuan-ts
 | check_system_update.sh | 系统更新检查（cron 调用） |
 | rename-in-sessions.sh | Skill 改名后清理 .jsonl 会话历史 |
 | sync-myskills-list.py | 扫描本机 Skills，生成 ~/local/myskills.json |
+| startup-check.sh | 启动自检（检查 6 个服务+端口，失败重启，飞书通知） |
+| service-watchdog.sh | 服务守护（cron 每 10 分钟检查 openclaw+account-manager，自动重启+通知） |
