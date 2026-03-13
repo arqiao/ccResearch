@@ -643,7 +643,7 @@ wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup python3 ~/local/scripts/simp
 REM OpenClaw gateway
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/.local/share/pnpm/openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &"
 REM account-manager web UI
-wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup node ~/.openclaw/account-manager.js > /tmp/account-manager.log 2>&1 &"
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > /tmp/account-manager.log 2>&1 &"
 ```
 
 或者用 PowerShell 命令直接创建：
@@ -709,7 +709,7 @@ nohup python3 ~/local/scripts/simple-proxy.py > ~/local/proxy.log 2>&1 &
 nohup openclaw gateway > /tmp/openclaw-gateway.log 2>&1 &
 
 # 启动 account-manager 网页
-nohup node ~/.openclaw/account-manager.js > /tmp/account-manager.log 2>&1 &
+nohup node ~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js > /tmp/account-manager.log 2>&1 &
 ```
 
 ---

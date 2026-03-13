@@ -1,6 +1,6 @@
 # 任务清单
 
-> 最后更新：2026-03-12
+> 最后更新：2026-03-13
 > 状态说明：⬜ 待办 | 🔄 进行中 | ✅ 已完成 | ⏸️ 暂缓
 > 执行者说明：👤 你独立完成 | 🤖 我来协助 | 👥 一起完成
 
@@ -309,6 +309,7 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-13 | account-manager.js 迁移到 server-scripts/：从 ~/.openclaw/ 移至 ~/workspace/arqiao-shared-knowledge/server-scripts/，更新 design.md、server-config.md、deploy-cloud-wsl1-frp.md、post-install-checklist.md 中的路径引用，修正澳龙 account-switcher.js 旧名 |
 | 2026-03-12 | D15/D16 完成：澳龙用户迁移（root→openclaw）全部完成——OpenClaw binary/config/services/cron/SSH 密钥迁移到 /home/openclaw/，systemd user services 启用（gateway+account-switcher），root 旧文件清理完成（保留 frps + switch-proxy.py） |
 | 2026-03-12 | 澳龙目录迁移完成：~/workspace 软链接→/home/openclaw/workspace；通用脚本从 /root/scripts/ 迁入 server-scripts/（scp 同步）；个性化脚本(backup_openclaw.sh, switch-proxy.py/sh)迁入 ~/local/scripts/；share-cc/skills.json→~/local/myskills.json；cron 路径全部更新；通用脚本 notify.sh/check_*.sh 改为相对路径（dirname $0），两台服务器同步 |
 | 2026-03-12 | D13/D14 完成：start-openclaw.bat 已在联通云智电脑上替换，含 6 项服务自启（SSH→Tailscale→frpc→simple-proxy→OpenClaw→account-manager） |

@@ -257,7 +257,7 @@ switch-my-llm.py（核心脚本）
 | models-config.json | `~/.openclaw/` | 模型-账户映射、当前状态、不可用标记 |
 | accounts.json | `~/.openclaw/` | 账户详情（baseUrl、apiKey） |
 | switch-my-llm.py | `~/workspace/arqiao-shared-knowledge/server-scripts/` | 核心切换脚本 |
-| account-manager.js | `~/.openclaw/` | 网页 UI（端口 19528，含模型切换标签页） |
+| account-manager.js | `~/workspace/arqiao-shared-knowledge/server-scripts/` | 网页 UI（端口 19528，含模型切换标签页） |
 
 ### per-channel model
 

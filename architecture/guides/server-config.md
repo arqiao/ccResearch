@@ -102,7 +102,7 @@ arqiao-minimax: MiniMax（sk-cp-...）
 - 配置文件: `~/.openclaw/openclaw.json`
 - 认证文件: `~/.openclaw/agents/main/agent/auth-profiles.json`（运行时由脚本维护）
 - Skills 目录: `~/workspace/arqiao-shared-knowledge/skills/`
-- 管理工具: `~/.openclaw/account-manager.js`（端口 19528）
+- 管理工具: `~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js`（端口 19528）
 
 ### 本机信息
 
@@ -161,7 +161,7 @@ root 用户：
 - 配置文件: `~/.openclaw/openclaw.json`
 - 认证文件: `~/.openclaw/agents/main/agent/auth-profiles.json`
 - Skills 目录: `~/workspace/arqiao-shared-knowledge/skills/`
-- 管理工具: `~/.openclaw/account-switcher.js`（端口 19528）
+- 管理工具: `~/workspace/arqiao-shared-knowledge/server-scripts/account-manager.js`（端口 19528）
 - 环境变量: `~/.profile`（PNPM_HOME、代理设置）
 
 ---
