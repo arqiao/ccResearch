@@ -257,6 +257,7 @@
 | I17 | 代理节点自动切换脚本 | ✅ | 🤖 | I2 | ~/local/scripts/switch-proxy.py（澳龙 root cron），解析订阅 Clash YAML，测速选最优节点，cron 每小时检测，流量低于 100 MB 发飞书通知 |
 | I18 | 多 LLM 模型切换方案 | ✅ | 🤖 | I10, I11 | models-config.json + switch-my-llm.py + account-manager.js 改造 + switch-my-llm Skill；支持 Opus/Sonnet/Haiku/Thinking/MiniMax 切换，自动选可用账户，余额不足自动跳过 |
 | I19 | 模型切换页面：选模型后可选账户 | ✅ | 🤖 | I18 | 模型标签页改为两步选择（选模型→显示账户列表→选账户提交），switch-my-llm.py 增加 --account 参数 |
+| I20 | account-manager.js 改造：智能体管理控制台 | ✅ | 🤖 | I19 | 多智能体 tab 架构（tools 注册表）、Cookie 会话认证、CC 账号切换、动态标题/tab（跨服务器通用） |
 
 ### 第三方服务集成
 
@@ -313,6 +314,7 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-13 | I20 完成：account-manager.js 智能体管理控制台改造——函数重命名（switchAccount→switchOpenclawAccount 等）、Cookie 会话认证（HMAC token, 30天有效, /logout）、新增 tools 注册表（ensureToolsConfig 自动初始化）、switchCCAccount（替换 .secrets 中 ANTHROPIC_AUTH_TOKEN/BASE_URL）、动态 tab（根据 accounts.json tools 字段渲染）、动态标题（hostname→YunChuan/AoLong 智能体管理）、密码记忆（autocomplete + cookie 双保险）；代码跨服务器通用，通过数据文件差异控制显示 |
 | 2026-03-13 | D19 完成：云船启动可靠性改进——startup-check.sh（8 项自检全部通过+飞书通知）、service-watchdog.sh（cron C6 每 10 分钟守护）已部署验证；server-scripts 全面通用化：switch-my-account.js/switch-my-llm.py/sync-myskills-list.py 硬编码路径改为动态获取（os.homedir/Path.home/__dirname），feishu_send.py 脱敏（凭证改从 ~/local/.secrets 读取），pgrep 模式修复（openclaw.gateway），DNS 自动修复逻辑加入两个脚本；主机名改为 YunChuan/AoLong |
 | 2026-03-13 | D19 进行中：云船启动可靠性改进——新建 startup-check.sh（启动自检+失败重启+飞书通知）和 service-watchdog.sh（cron 守护+自动重启+通知），更新 deploy-cloud-wsl1-frp.md（bat 追加自检步骤+VDI 限制说明）、known-limitations.md（新增第九节）、myclaws-inventory.md（云船限制补充）、server-config.md（启动前提说明）；修复 server-scripts 通用性：account-manager.js 硬编码路径改为 os.homedir()+__dirname、check_openclaw_update.sh 改为 $HOME、startup-check.sh 加入 WSL1/systemd 环境检测兼容云船和澳龙 |
 | 2026-03-13 | 新建 myclaws-inventory.md：龙虾资产库——各台机器软硬件配置、访问方式、运行服务、cron 任务、Skills 部署状态一览；含草莓派/笔记本/手机（待部署）规划 |
