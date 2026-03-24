@@ -159,6 +159,7 @@ CC 本地完成开发，push ccResearch → GitHub
 | 文档 | 说明 |
 |-----|------|
 | `architecture.md` | 本文档，顶层架构设计 |
+| `guides/README.md` | guides 目录总索引 |
 | `myclaws-inventory.md` | 龙虾资产库：各机器配置、服务、Skills 总览 |
 | `design.md` | 实施细节：仓库设计、Key 管理、服务器配置 |
 | `task-list.md` | 任务清单，跟踪所有待办事项 |
@@ -169,6 +170,9 @@ CC 本地完成开发，push ccResearch → GitHub
 | `guides/server-config.md` | 服务器配置：目录规范、密钥、服务管理 |
 | `guides/shared-info-design.md` | 服务器目录规范与共享机制设计 |
 | `guides/client-setup.md` | 客户端配置指南 |
+| `guides/codex-cli-guide.md` | Codex CLI 指南入口 |
+| `guides/codex-cli-usage.md` | Codex CLI 日常使用指南 |
+| `guides/codex-cli-troubleshooting.md` | Codex CLI 排障与日志查看指南 |
 | `guides/feishu-integration.md` | 飞书集成指南 |
 | `guides/openclaw-tools-reference.md` | OpenClaw Gateway HTTP API 参考 |
 | `guides/mobile-remote-control.md` | 手机远程控制方案（待定） |

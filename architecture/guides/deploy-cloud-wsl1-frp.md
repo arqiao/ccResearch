@@ -197,6 +197,18 @@ cat > ~/.openclaw/openclaw.json << 'EOF'
     "auth": {
       "mode": "token",
       "token": "YOUR_TOKEN_HERE"
+    },
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789",
+        "http://localhost:19528",
+        "http://127.0.0.1:19528",
+        "http://100.72.241.16:18789",
+        "http://100.72.241.16:18790",
+        "http://100.100.153.29:18789",
+        "http://100.71.142.90:18789"
+      ]
     }
   }
 }
@@ -339,18 +351,25 @@ sudo tailscale up
 | 笔记本 | 100.100.153.29 | 日常开发 |
 | 手机 | 100.71.142.90 | 移动访问 |
 
-#### 7.5.3 访问方式
+#### 7.5.3 访问方式（Tailscale IP 直连）
 
-**通过 Tailscale 访问云船 OpenClaw：**
-- API 访问：`http://100.115.214.108:18789`
-- 控制界面：需通过 SSH 隧道（bind: loopback 限制）
-  ```bash
-  ssh -L 18789:127.0.0.1:18789 arqiaoclaw@100.115.214.108
-  # 然后访问 http://localhost:18789
-  ```
+> 云船（WSL1）的 Tailscale 是 userspace-networking 模式，外部无法直接 TCP 连接其 Tailscale IP（100.115.214.108）。通过 frp 端口转发，借用澳龙端口暴露服务。
 
-**通过 Tailscale 访问澳龙 OpenClaw：**
-- 直接访问：`http://100.72.241.16:18789`（bind: lan 模式）
+**通过 Tailscale IP 访问澳龙：**
+- Gateway 控制台：`http://100.72.241.16:18789`
+- account-manager：`http://100.72.241.16:19528`
+
+**通过 Tailscale IP 访问云船（frp 转发）：**
+- Gateway 控制台：`http://100.72.241.16:18790`（frp 转发到云船 18789）
+- account-manager：`http://100.72.241.16:19530`（frp 转发到云船 19528）
+
+**端口分配：**
+| 端口 | 服务 | 服务器 |
+|------|------|--------|
+| 18789 | Gateway | 澳龙 |
+| 18790 | Gateway（frp） | 云船 |
+| 19528 | account-manager | 澳龙 |
+| 19530 | account-manager（frp） | 云船 |
 
 **云船 SSH 到澳龙：**
 
@@ -644,6 +663,11 @@ REM frpc tunnel
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/frp_0.61.0_linux_amd64/frpc -c /home/arqiaoclaw/frp_0.61.0_linux_amd64/frpc.toml > ~/log/frpc.log 2>&1 &"
 REM HTTP proxy for aolong (bidirectional proxy)
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup python3 ~/local/scripts/simple-proxy.py > ~/log/simple-proxy.log 2>&1 &"
+REM SSH tunnel: map aolong sing-box 7890 to localhost (via Tailscale SOCKS5)
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup ssh -N -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -L 7890:127.0.0.1:7890 aolong > ~/log/ssh-proxy-tunnel.log 2>&1 &"
+timeout /t 3 /nobreak > nul
+REM Load proxy env (aolong proxy via SSH tunnel)
+wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "bash ~/local/scripts/cloud-ship-switch-proxy.sh aolong"
 REM OpenClaw gateway
 wsl -d Ubuntu-24.04 -u arqiaoclaw -- bash -c "nohup /home/arqiaoclaw/.local/share/pnpm/openclaw gateway > ~/log/openclaw-gateway.log 2>&1 &"
 REM account-manager web UI

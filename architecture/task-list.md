@@ -15,10 +15,12 @@
 | `task-list.md` | **每次开始工作时** | 不需要 |
 | `myclaws-inventory.md` | 查看各机器配置和部署状态时 | 不需要 |
 | `knowledge-sharing-system.md` | 想了解整体方案时 | 不需要 |
+| `guides/README.md` | 不确定该看哪篇 guides 文档时 | 不需要 |
 | `guides/deploy-cloud-server.md` | 做任务 #1-9 时 | 阿里云购买页面需要自己操作 |
 | `guides/deploy-raspberry-pi.md` | 做任务 #39-64 时 | 树莓派官网下载 Imager |
 | `guides/init-knowledge-repo.md` | 做任务 #10-17 时 | GitHub 创建仓库需要自己操作 |
 | `guides/client-setup.md` | 做任务 #18-23 时 | 不需要 |
+| `guides/codex-cli-guide.md` | 查找 Codex CLI 文档入口时 | 不需要 |
 | `known-limitations.md` | 遇到异常行为时 | 不需要 |
 | `guides/openclaw-tools-reference.md` | 调用 Gateway API 时 | 不需要 |
 
@@ -307,6 +309,7 @@
 | D17 | 笔记本部署 OpenClaw | ⬜ | 低 | Windows 11 本地安装 OpenClaw Gateway，Tailscale 已就绪 |
 | D18 | 手机部署 OpenClaw | ⬜ | 低 | Android 端 OpenClaw 部署方案待调研 |
 | D19 | 云船启动可靠性改进 | ✅ | 高 | startup-check.sh（启动自检+飞书通知）+ service-watchdog.sh（cron 守护+自动重启+通知），已验证通过 |
+| D20 | Tailscale IP 直连 OpenClaw 控制台 | ✅ | 高 | frp 端口转发：云船 Gateway→澳龙 18790，云船 account-manager→澳龙 19530；allowedOrigins 全量更新；浏览器可直接访问 http://100.72.241.16:18790/19530；startup-check.sh 端口检查已更新 |
 
 ---
 
@@ -314,6 +317,7 @@
 
 | 日期 | 变更内容 |
 |-----|---------|
+| 2026-03-24 | D20 完成：Tailscale IP 直连 OpenClaw 控制台——云船 Gateway bind 改为 lan，frpc 新增两条 TCP 代理（18789→18790、19528→19530），澳龙安全组开放 18790/19530 端口，两台 allowedOrigins 全量更新，浏览器直接访问 http://100.72.241.16:18790/19530；startup-check.sh 新增 YunGateway_frp:18790 和 YunAcctMgr_frp:19530 端口检查；deploy-cloud-wsl1-frp.md 和 myclaws-inventory.md 访问方式已更新 |
 | 2026-03-13 | I20 完成：account-manager.js 智能体管理控制台改造——函数重命名（switchAccount→switchOpenclawAccount 等）、Cookie 会话认证（HMAC token, 30天有效, /logout）、新增 tools 注册表（ensureToolsConfig 自动初始化）、switchCCAccount（替换 .secrets 中 ANTHROPIC_AUTH_TOKEN/BASE_URL）、动态 tab（根据 accounts.json tools 字段渲染）、动态标题（hostname→YunChuan/AoLong 智能体管理）、密码记忆（autocomplete + cookie 双保险）；代码跨服务器通用，通过数据文件差异控制显示 |
 | 2026-03-13 | D19 完成：云船启动可靠性改进——startup-check.sh（8 项自检全部通过+飞书通知）、service-watchdog.sh（cron C6 每 10 分钟守护）已部署验证；server-scripts 全面通用化：switch-my-account.js/switch-my-llm.py/sync-myskills-list.py 硬编码路径改为动态获取（os.homedir/Path.home/__dirname），feishu_send.py 脱敏（凭证改从 ~/local/.secrets 读取），pgrep 模式修复（openclaw.gateway），DNS 自动修复逻辑加入两个脚本；主机名改为 YunChuan/AoLong |
 | 2026-03-13 | D19 进行中：云船启动可靠性改进——新建 startup-check.sh（启动自检+失败重启+飞书通知）和 service-watchdog.sh（cron 守护+自动重启+通知），更新 deploy-cloud-wsl1-frp.md（bat 追加自检步骤+VDI 限制说明）、known-limitations.md（新增第九节）、myclaws-inventory.md（云船限制补充）、server-config.md（启动前提说明）；修复 server-scripts 通用性：account-manager.js 硬编码路径改为 os.homedir()+__dirname、check_openclaw_update.sh 改为 $HOME、startup-check.sh 加入 WSL1/systemd 环境检测兼容云船和澳龙 |
@@ -362,4 +366,3 @@
 | 2026-03-11 | 云船OpenClaw配置迁移完成：飞书配置已迁移，Gateway bind改为loopback解决WSL1网络问题，frp隧道正常工作，澳龙OpenClaw已停止仅作frp中继 |
 | 2026-03-11 | SSH配置优化：云船SSH密钥认证已配置（免密登录），添加yunchuan快捷方式（端口12222） |
 | 2026-02-15 | MCP 优先级调整：飞书优先于微信（官方 API 支持好，风险低） |
-

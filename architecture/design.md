@@ -106,6 +106,30 @@ Notion skill 的 API key 必须通过 systemd drop-in 注入，仅配置在 open
 
 配置文件：`/etc/sing-box/config.json`，服务：`systemctl status sing-box`
 
+**监听地址**：sing-box 监听 `0.0.0.0`（HTTP 7890 / SOCKS5 7891），通过 iptables 限制访问来源：
+- `127.0.0.0/8`（本机）
+- `100.64.0.0/10`（Tailscale CGNAT 网段）
+- `195.64.7.45`（云船公网 IP）
+- 其余来源 DROP
+
+iptables 规则持久化：`/etc/iptables/rules.v4`，由 `iptables-restore.service`（systemd）开机自动恢复。
+
+### 云船访问澳龙代理
+
+云船 WSL1 的 Tailscale 是 userspace-networking 模式，不能直接 TCP 连 Tailscale IP，需通过 SSH 隧道：
+
+```bash
+# 通过 Tailscale SOCKS5 建 SSH 隧道，把澳龙 7890 映射到本地
+nohup ssh -N -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
+  -L 7890:127.0.0.1:7890 aolong > ~/log/ssh-proxy-tunnel.log 2>&1 &
+```
+
+流量路径：`云船:7890 → SSH(SOCKS5:1055) → Tailscale → 澳龙:7890 → sing-box → 外网`
+
+代理脚本 `cloud-ship-switch-proxy.sh` 中 `AOLONG_PROXY="http://127.0.0.1:7890"`。
+
+**持久化**：`.profile` 中 `source ~/local/.proxy_env`（如果存在），代理配置由 `cloud-ship-switch-proxy.sh aolong` 写入。SSH 隧道需加入启动脚本。
+
 ### 节点订阅与自动切换
 
 订阅格式：Clash YAML，包含 27 个可用节点（日本、新加坡、香港、台湾、美国等）。

@@ -54,15 +54,17 @@
 |------|------|
 | SSH（日常首选） | `ssh -p 12222 arqiaoclaw@39.107.54.166` |
 | SSH（Tailscale 备用） | `ssh arqiaoclaw@100.115.214.108` |
-| OpenClaw 控制台 | 先建隧道，再访问 `http://localhost:18789` |
-| account-manager | 先建隧道，再访问 `http://localhost:19528` |
+| OpenClaw 控制台（Tailscale IP） | `http://100.72.241.16:18790` |
+| account-manager（Tailscale IP） | `http://100.72.241.16:19530` |
+| OpenClaw 控制台（localhost 隧道） | 先建隧道，再访问 `http://localhost:18789` |
+| account-manager（localhost 隧道） | 先建隧道，再访问 `http://localhost:19528` |
 
 一键建隧道：
 ```bash
-ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.107.54.166
+ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 arqiaoclaw@100.115.214.108
 ```
 
-> 控制台必须走 localhost 隧道，直接用 IP 会报 device identity 错误。
+> Tailscale IP 方式（http://100.72.241.16:18790/19530）：通过 frp 端口转发，浏览器可直接访问，无需建隧道。
 
 ### 跑了哪些服务
 
@@ -70,10 +72,11 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 |------|---------|------|---------|
 | SSH | root | 22 | `service ssh start`（WSL1 无 systemd） |
 | tailscaled | root | — | nohup，`--tun=userspace-networking --socks5-server=localhost:1055` |
-| frpc | arqiaoclaw | — | nohup，隧道 22→12222，连接澳龙 frps |
+| frpc | arqiaoclaw | — | nohup，SSH 22→12222、Gateway 18789→18790、account 19528→19530 |
 | simple-proxy.py | arqiaoclaw | 1080 | nohup，HTTP 代理供澳龙访问云船网络 |
-| openclaw gateway | arqiaoclaw | 18789 | nohup，飞书机器人后端 |
+| openclaw gateway | arqiaoclaw | 18789 | nohup，飞书机器人后端（bind: lan） |
 | account-manager.js | arqiaoclaw | 19528 | nohup，账户/模型管理网页 |
+| ssh-proxy-tunnel | arqiaoclaw | 7890(本地) | nohup ssh 隧道，映射澳龙 sing-box 7890 到本地 |
 
 所有服务由联通云智电脑的 `start-openclaw.bat` 在 Windows 登录后自动启动（详见第八节）。
 
@@ -96,6 +99,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 | `frpc.log` | frp 客户端隧道 |
 | `tailscaled.log` | Tailscale 守护进程 |
 | `simple-proxy.log` | HTTP 代理 |
+| `ssh-proxy-tunnel.log` | SSH 隧道（澳龙代理映射） |
 | `cron-kbs-sync.log` | 知识库同步 |
 | `cron-backup.log` | 配置备份 |
 | `cron-system-update.log` | 系统更新检查 |
@@ -176,7 +180,7 @@ ssh -N -L 18789:localhost:18789 -L 19528:localhost:19528 -p 12222 arqiaoclaw@39.
 | openclaw-gateway | openclaw | 18789 | `systemctl --user start/stop/restart openclaw-gateway` |
 | account-switcher | openclaw | 19528 | `systemctl --user start/stop/restart account-switcher` |
 | frps | openclaw | 7000 | nohup（`~/frp_0.61.0_linux_amd64/`） |
-| sing-box | root | 7890(HTTP)/7891(SOCKS5) | `systemctl start/stop sing-box` |
+| sing-box | root | 7890(HTTP)/7891(SOCKS5) | `systemctl start/stop sing-box`，监听 0.0.0.0，iptables 限制仅 localhost + Tailscale 网段 + 云船公网 IP |
 | tailscaled | root | — | `systemctl start/stop tailscaled` |
 
 > openclaw 用户已启用 `loginctl linger`，systemd user 服务在无登录会话时持续运行。
@@ -471,6 +475,8 @@ Host yunchuan-ts
    - Tailscale（root，userspace-networking 模式）
    - frpc 隧道（arqiaoclaw）
    - simple-proxy.py（arqiaoclaw）
+   - SSH 代理隧道（arqiaoclaw，映射澳龙 7890 到本地）
+   - cloud-ship-switch-proxy.sh aolong（设置代理环境变量）
    - OpenClaw Gateway（arqiaoclaw）
    - account-manager.js（arqiaoclaw）
 
